@@ -115,6 +115,79 @@
             height: 75px;
         }
 
+        /* NEW PHOTO UPLOAD UI STYLES */
+        .photo-upload-container {
+            border: 2px dashed #0070c0;
+            padding: 15px;
+            border-radius: 6px;
+            background-color: #f8fafc;
+        }
+
+        .upload-progress-box {
+            display: none;
+            margin-top: 10px;
+        }
+
+        .progress-bar-bg {
+            width: 100%;
+            background-color: #e0e0e0;
+            border-radius: 10px;
+            height: 12px;
+            overflow: hidden;
+            margin-bottom: 5px;
+        }
+
+        .progress-bar-fill {
+            width: 0%;
+            height: 100%;
+            background-color: #2e7d32;
+            transition: width 0.1s ease;
+        }
+
+        .progress-text {
+            font-size: 12px;
+            font-weight: bold;
+            color: #333;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .upload-success-msg {
+            color: #2e7d32;
+            font-weight: bold;
+            display: none;
+            margin-top: 5px;
+            font-size: 13px;
+        }
+
+        .photo-actions-btn {
+            display: none;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .btn-photo-change {
+            background-color: #0070c0;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .btn-photo-delete {
+            background-color: #d32f2f;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
         .form-actions {
             display: flex;
             gap: 15px;
@@ -255,9 +328,7 @@
             cursor: text;
         }
 
-        /* ==========================================================================
-           MAIN CV TITLE STYLES ACCORDING TO LAYOUTS
-           ========================================================================== */
+        /* MAIN CV TITLE STYLES ACCORDING TO LAYOUTS */
         .cv-main-header-title {
             font-size: 20px;
             font-weight: 800;
@@ -511,7 +582,27 @@
 
         <div class="form-group">
             <label>Profile Photo (Optional)</label>
-            <input type="file" id="in-photo" accept="image/*" onchange="previewUserPhoto(event)">
+            <div class="photo-upload-container">
+                <input type="file" id="in-photo" accept="image/*" onchange="handlePhotoUpload(event)">
+                
+                <!-- Progress Bar & Status -->
+                <div class="upload-progress-box" id="progressBox">
+                    <div class="progress-bar-bg">
+                        <div class="progress-bar-fill" id="progressBar"></div>
+                    </div>
+                    <div class="progress-text">
+                        <span>Uploading Photo...</span>
+                        <span id="progressPercent">0%</span>
+                    </div>
+                </div>
+                <div class="upload-success-msg" id="uploadSuccess">✓ Photo uploaded successfully!</div>
+
+                <!-- Action Buttons: Change Picture & Delete -->
+                <div class="photo-actions-btn" id="photoActions">
+                    <button type="button" class="btn-photo-change" onclick="triggerFileInput()">Change Picture</button>
+                    <button type="button" class="btn-photo-delete" onclick="deletePhoto()">Delete Photo</button>
+                </div>
+            </div>
         </div>
         
         <div class="form-group">
@@ -613,17 +704,59 @@
 <script>
     let uploadedPhotoData = "";
 
-    function previewUserPhoto(event) {
+    /* NEW FEATURE: PHOTO UPLOAD WITH PROGRESS BAR & CONTROLS */
+    function handlePhotoUpload(event) {
         const file = event.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                uploadedPhotoData = e.target.result;
+        if (!file) return;
+
+        const progressBox = document.getElementById('progressBox');
+        const progressBar = document.getElementById('progressBar');
+        const progressPercent = document.getElementById('progressPercent');
+        const uploadSuccess = document.getElementById('uploadSuccess');
+        const photoActions = document.getElementById('photoActions');
+        const fileInput = document.getElementById('in-photo');
+
+        // Hide old states and show progress bar
+        fileInput.style.display = 'none';
+        uploadSuccess.style.display = 'none';
+        photoActions.style.display = 'none';
+        progressBox.style.display = 'block';
+
+        let progress = 0;
+        const interval = setInterval(() => {
+            progress += 10;
+            progressBar.style.width = progress + '%';
+            progressPercent.textContent = progress + '%';
+
+            if (progress >= 100) {
+                clearInterval(interval);
+                
+                // Read File when loading completes
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    uploadedPhotoData = e.target.result;
+                    progressBox.style.display = 'none';
+                    uploadSuccess.style.display = 'block';
+                    photoActions.style.display = 'flex';
+                };
+                reader.readAsDataURL(file);
             }
-            reader.readAsDataURL(file);
-        } else {
-            uploadedPhotoData = "";
-        }
+        }, 80);
+    }
+
+    function triggerFileInput() {
+        document.getElementById('in-photo').click();
+    }
+
+    function deletePhoto() {
+        uploadedPhotoData = "";
+        document.getElementById('in-photo').value = "";
+        document.getElementById('in-photo').style.display = 'block';
+        document.getElementById('uploadSuccess').style.display = 'none';
+        document.getElementById('photoActions').style.display = 'none';
+        document.getElementById('progressBox').style.display = 'none';
+        document.getElementById('progressBar').style.width = '0%';
+        document.getElementById('progressPercent').textContent = '0%';
     }
 
     function startCVCreation() {
