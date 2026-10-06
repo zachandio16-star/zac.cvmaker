@@ -195,7 +195,6 @@
             align-items: flex-end;
             gap: 15px;
             margin-bottom: 10px;
-            
         .cv-logo-text {
             color: #0070c0;
             font-family: 'Brush Script MT', 'Comic Sans MS', cursive, sans-serif;
@@ -332,7 +331,7 @@
     <!-- 1. WELCOME POPUP MODAL -->
     <div class="modal-overlay" id="welcomeModal">
         <div class="modal-content">
-            <h1>[ZAC CV MAKER]</h1>
+            <h1>[آپ کی ویب سائٹ کا نام]</h1>
             <p>Welcome to Professional CV Builder! Create your perfectly styled CV in just a few minutes.</p>
             <button class="btn-modal" onclick="startCVCreation()">Create New CV</button>
         </div>
@@ -397,9 +396,9 @@
         
         <div class="btn-top-bar">
             <button class="btn-action btn-edit-back" onclick="backToForm()">✏️ Edit Details</button>
-            <button class="btn-action btn-pdf" onclick="downloadPDF()">📄 PDF Download</button>
-            <button class="btn-action btn-img" onclick="downloadImage()">🖼️ Image Download</button>
-            <button class="btn-action btn-word" onclick="downloadWord()">📝 Word Download</button>
+            <button class="btn-action btn-pdf" onclick="downloadPDF()">📄 PDF ڈاؤن لوڈ</button>
+            <button class="btn-action btn-img" onclick="downloadImage()">🖼️ Image ڈاؤن لوڈ</button>
+            <button class="btn-action btn-word" onclick="downloadWord()">📝 Word ڈاؤن لوڈ</button>
         </div>
 
         <!-- CV Paper Replica -->
@@ -407,6 +406,11 @@
             
             <!-- Top Logo Header -->
             <div class="cv-top-logo">
+                <svg class="cv-logo-svg" viewBox="0 0 100 100">
+                    <path d="M 15 25 C 5 25 5 75 25 80 C 45 85 55 45 45 30 C 35 15 20 40 30 65 C 35 75 50 75 55 60 C 60 45 40 35 30 45" fill="none" stroke="#0070c0" stroke-width="7" stroke-linecap="round"/>
+                    <path d="M 45 20 L 75 80" fill="none" stroke="#0070c0" stroke-width="7" stroke-linecap="round"/>
+                    <path d="M 65 20 L 95 80" fill="none" stroke="#0070c0" stroke-width="7" stroke-linecap="round"/>
+                </svg>
                 <div class="cv-logo-text">
                     <div class="line1">CURRICULUM</div>
                     <div class="line2">VITAE</div>
