@@ -1,0 +1,1190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online CV Maker</title>
+    <!-- html2canvas Library for PNG Download -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f0f2f5;
+            padding: 20px;
+        }
+
+        /* 1. POPUP / MODAL STYLES */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: #ffffff;
+            padding: 40px;
+            border-radius: 12px;
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .modal-content h1 {
+            color: #0070c0;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+
+        .modal-content p {
+            color: #555;
+            font-size: 16px;
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
+
+        .btn-modal {
+            background-color: #0070c0;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-modal:hover {
+            background-color: #005087;
+        }
+
+        /* 2. FORM PAGE STYLES */
+        .form-container {
+            display: none;
+            max-width: 750px;
+            margin: 20px auto;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .form-container h2 {
+            margin-bottom: 20px;
+            color: #1a365d;
+            border-bottom: 2px solid #0070c0;
+            padding-bottom: 8px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            height: 75px;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .btn-create {
+            flex: 2;
+            background-color: #2e7d32;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .btn-cancel {
+            flex: 1;
+            background-color: #d32f2f;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* 3. PREVIEW PAGE STYLES & MOBILE SCALING CONTAINER */
+        .preview-container {
+            display: none;
+            width: 100%;
+            max-width: 850px;
+            margin: 0 auto;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .theme-selector-box {
+            width: 100%;
+            background: #ffffff;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            flex-wrap: wrap;
+        }
+
+        .selector-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .theme-selector-box label {
+            font-weight: bold;
+            color: #333;
+            white-space: nowrap;
+            font-size: 14px;
+        }
+
+        .theme-selector-box select {
+            width: 100%;
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid #0070c0;
+            font-weight: bold;
+            color: #0070c0;
+            cursor: pointer;
+        }
+
+        .btn-top-bar {
+            width: 100%;
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn-action {
+            flex: 1;
+            min-width: 130px;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .btn-pdf { background-color: #d32f2f; }
+        .btn-img { background-color: #388e3c; }
+        .btn-word { background-color: #1976d2; }
+        .btn-edit-back { background-color: #616161; }
+
+        /* Mobile Scaling Wrapper */
+        .cv-paper-wrapper {
+            width: 100%;
+            background: #e4e7eb;
+            padding: 15px 0;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            overflow: hidden;
+        }
+
+        .cv-scale-container {
+            transform-origin: top center;
+            transition: transform 0.2s ease;
+        }
+
+        /* BASE CV PAPER (A4 Dimension Aspect Ratio) */
+        .cv-paper {
+            width: 790px;
+            background: #ffffff;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            box-sizing: border-box;
+            position: relative;
+            color: #333;
+        }
+
+        .cv-page {
+            width: 790px;
+            min-height: 1050px;
+            background: #ffffff;
+            position: relative;
+            box-sizing: border-box;
+            page-break-after: always;
+        }
+
+        .cv-page-2 {
+            margin-top: 25px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        /* Helper Classes for Dynamic Hide/Show Photo */
+        .cv-photo-container {
+            display: none;
+        }
+        .has-photo .cv-photo-container {
+            display: block !important;
+        }
+
+        [contenteditable="true"]:hover {
+            outline: 1px dashed #0070c0;
+            background-color: #f0f8ff;
+            cursor: text;
+        }
+
+        .cv-main-header-title {
+            font-size: 20px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        .cv-sidebar .cv-main-header-title {
+            font-size: 18px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255,255,255,0.3);
+            padding-bottom: 8px;
+            margin-bottom: 15px;
+        }
+
+        /* Single Page Layout Accent Styles */
+        .layout-1 .cv-main-header-title { color: #0070c0; border-bottom: 2px solid #0070c0; display: inline-block; padding-bottom: 3px; }
+        .layout-2 .cv-main-header-title { color: #1abc9c; border-bottom-color: #1abc9c; }
+        .layout-3 .cv-main-header-title { color: #333; font-size: 24px; letter-spacing: 4px; margin-bottom: 15px; }
+        .layout-4 .cv-main-header-title { color: #00d2d3; border-bottom-color: #00d2d3; }
+        .layout-5 .cv-main-header-title { color: #fff; background: rgba(255,255,255,0.2); padding: 5px 12px; border-radius: 4px; display: inline-block; font-size: 16px; margin-bottom: 10px; }
+        .layout-6 .cv-main-header-title { color: #333; text-align: center; font-size: 22px; border-bottom: 2px solid #333; padding-bottom: 5px; margin-bottom: 15px; }
+        .layout-7 .cv-main-header-title { color: #555; font-size: 18px; letter-spacing: 3px; font-weight: normal; margin-bottom: 15px; }
+        .layout-8 .cv-main-header-title { color: #00796b; border-bottom-color: #00796b; }
+        .layout-9 .cv-main-header-title { color: #2e7d32; background: #e8f5e9; padding: 4px 10px; border-radius: 4px; display: inline-block; margin-bottom: 12px; }
+        .layout-10 .cv-main-header-title { color: #ffb3c1; border-bottom-color: #ffb3c1; }
+        .layout-11 .cv-main-header-title { color: #b78103; font-size: 22px; text-align: center; letter-spacing: 3px; margin-bottom: 15px; }
+        .layout-12 .cv-main-header-title { color: #333; border-left: 4px solid #333; padding-left: 8px; }
+        .layout-13 .cv-main-header-title { color: #0077b6; font-size: 20px; border-bottom: 2px solid #0077b6; display: inline-block; }
+        .layout-14 .cv-main-header-title { color: #ffccbc; border-bottom-color: #ffccbc; }
+        .layout-15 .cv-main-header-title { color: #c62828; font-size: 22px; letter-spacing: 2px; }
+        .layout-16 .cv-main-header-title { color: #8fbc8f; border-bottom-color: #8fbc8f; }
+        .layout-17 .cv-main-header-title { color: #e65100; font-size: 20px; font-weight: bold; }
+        .layout-18 .cv-main-header-title { color: #4a0072; font-size: 24px; letter-spacing: 3px; text-align: center; }
+        .layout-19 .cv-main-header-title { color: #80cbc4; border-bottom-color: #80cbc4; }
+        .layout-20 .cv-main-header-title { color: #1a237e; text-align: center; font-size: 22px; border-bottom: 2px solid #1a237e; padding-bottom: 5px; margin-bottom: 15px; }
+
+        /* SINGLE PAGE STRUCTURES (Layout 1 - 20) */
+        .layout-1 { padding: 40px; }
+        .layout-1 .cv-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid #0070c0; padding-bottom: 15px; margin-bottom: 20px; }
+        .layout-1 .cv-photo-container img { width: 110px; height: 110px; border-radius: 50%; border: 3px solid #0070c0; }
+        .layout-1 .cv-section-title { background: #0070c0; color: #fff; padding: 4px 10px; font-weight: bold; margin: 15px 0 10px 0; border-radius: 3px; }
+
+        .layout-2 { display: flex; min-height: 1050px; }
+        .layout-2 .cv-sidebar { width: 30%; background: #2c3e50; color: #fff; padding: 30px 15px; }
+        .layout-2 .cv-main-content { width: 70%; padding: 30px; }
+        .layout-2 .cv-photo-container img { width: 130px; height: 130px; border-radius: 50%; border: 3px solid #fff; margin: 0 auto 15px auto; display: block; }
+        .layout-2 .cv-section-title { border-bottom: 2px solid #2c3e50; color: #2c3e50; font-weight: bold; margin: 15px 0 10px 0; font-size: 16px; text-transform: uppercase; }
+        .layout-2 .cv-sidebar .cv-section-title { color: #1abc9c; border-bottom-color: #1abc9c; }
+
+        .layout-3 { padding: 40px; text-align: center; }
+        .layout-3 .cv-header { border-bottom: 1px solid #ccc; padding-bottom: 20px; margin-bottom: 20px; }
+        .layout-3 .cv-photo-container img { width: 120px; height: 120px; border-radius: 10px; margin: 0 auto 10px auto; }
+        .layout-3 .cv-section-title { font-size: 18px; font-weight: bold; text-transform: uppercase; letter-spacing: 2px; color: #333; margin: 20px 0 10px 0; border-top: 1px solid #333; border-bottom: 1px solid #333; padding: 3px 0; }
+        .layout-3 .cv-body { text-align: left; }
+
+        .layout-4 { display: flex; flex-direction: row-reverse; min-height: 1050px; }
+        .layout-4 .cv-sidebar { width: 32%; background: #1e272e; color: #f5f6fa; padding: 30px 15px; }
+        .layout-4 .cv-main-content { width: 68%; padding: 30px; }
+        .layout-4 .cv-photo-container img { width: 120px; height: 140px; border-radius: 5px; border: 2px solid #dcdde1; margin-bottom: 15px; }
+        .layout-4 .cv-section-title { border-left: 4px solid #00d2d3; padding-left: 8px; font-size: 16px; font-weight: bold; margin: 15px 0; color: #2f3640; }
+        .layout-4 .cv-sidebar .cv-section-title { color: #00d2d3; }
+
+        .layout-5 { padding: 0; }
+        .layout-5 .cv-header { background: #0070c0; color: white; padding: 30px; display: flex; gap: 20px; align-items: center; }
+        .layout-5 .cv-body { padding: 30px; }
+        .layout-5 .cv-photo-container img { width: 110px; height: 110px; border-radius: 50%; border: 3px solid #fff; }
+        .layout-5 .cv-section-title { font-size: 16px; font-weight: bold; color: #0070c0; border-bottom: 2px solid #0070c0; margin: 15px 0 10px 0; padding-bottom: 3px; }
+
+        .layout-6 { padding: 25px; }
+        .layout-6 .cv-inner-box { border: 2px solid #333; padding: 25px; min-height: 1000px; }
+        .layout-6 .cv-header { display: flex; justify-content: space-between; border-bottom: 2px double #333; padding-bottom: 15px; }
+        .layout-6 .cv-photo-container img { width: 100px; height: 120px; border: 1px solid #333; }
+        .layout-6 .cv-section-title { background: #f0f0f0; border-left: 5px solid #333; padding: 5px 10px; font-weight: bold; margin: 15px 0 10px 0; }
+
+        .layout-7 { padding: 40px; }
+        .layout-7 .cv-header { text-align: left; margin-bottom: 20px; position: relative; }
+        .layout-7 .cv-photo-container { position: absolute; right: 0; top: 0; }
+        .layout-7 .cv-photo-container img { width: 100px; height: 100px; border-radius: 50%; }
+        .layout-7 .cv-section-title { font-weight: bold; text-transform: uppercase; color: #444; border-bottom: 1px solid #aaa; margin: 20px 0 10px 0; letter-spacing: 1px; }
+
+        .layout-8 { display: flex; min-height: 1050px; }
+        .layout-8 .cv-sidebar { width: 35%; background: #e0f2f1; padding: 30px 15px; border-right: 3px solid #00796b; }
+        .layout-8 .cv-main-content { width: 65%; padding: 30px; }
+        .layout-8 .cv-photo-container img { width: 120px; height: 120px; border-radius: 50%; border: 4px solid #00796b; margin: 0 auto 15px auto; display: block; }
+        .layout-8 .cv-section-title { color: #00796b; font-size: 16px; font-weight: bold; margin: 15px 0 8px 0; border-bottom: 1px dashed #00796b; }
+
+        .layout-9 { padding: 30px; }
+        .layout-9 .cv-header { background: #2e7d32; color: #fff; padding: 25px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; }
+        .layout-9 .cv-photo-container img { width: 110px; height: 110px; border-radius: 8px; border: 2px solid #fff; }
+        .layout-9 .cv-section-title { font-size: 16px; font-weight: bold; color: #2e7d32; margin: 20px 0 10px 0; display: flex; align-items: center; }
+        .layout-9 .cv-section-title::after { content: ''; flex: 1; height: 2px; background: #2e7d32; margin-left: 10px; }
+
+        .layout-10 { display: flex; min-height: 1050px; }
+        .layout-10 .cv-sidebar { width: 28%; background: #4a0013; color: #fff; padding: 30px 15px; }
+        .layout-10 .cv-main-content { width: 72%; padding: 30px; }
+        .layout-10 .cv-photo-container img { width: 110px; height: 130px; border-radius: 5px; margin-bottom: 15px; }
+        .layout-10 .cv-section-title { color: #800020; border-bottom: 2px solid #800020; font-weight: bold; margin: 15px 0 10px 0; }
+        .layout-10 .cv-sidebar .cv-section-title { color: #ffb3c1; border-bottom-color: #ffb3c1; }
+
+        .layout-11 { padding: 35px; }
+        .layout-11 .cv-header { border-top: 5px solid #b78103; border-bottom: 5px solid #b78103; padding: 20px 0; display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .layout-11 .cv-photo-container img { width: 110px; height: 110px; border-radius: 50%; border: 2px solid #b78103; }
+        .layout-11 .cv-section-title { background: #fdf6e2; color: #5c4100; font-weight: bold; padding: 6px 12px; border-left: 4px solid #b78103; margin: 15px 0 10px 0; }
+
+        .layout-12 { display: flex; min-height: 1050px; }
+        .layout-12 .cv-sidebar { width: 8px; background: #333333; }
+        .layout-12 .cv-wrapper-body { width: calc(100% - 8px); padding: 35px; }
+        .layout-12 .cv-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #333; padding-bottom: 15px; margin-bottom: 20px; }
+        .layout-12 .cv-photo-container img { width: 100px; height: 100px; border-radius: 50%; }
+        .layout-12 .cv-section-title { color: #333; font-size: 16px; font-weight: bold; margin: 15px 0 10px 0; text-transform: uppercase; letter-spacing: 1px; }
+
+        .layout-13 { padding: 35px; background: #f4f9fc; min-height: 1050px; }
+        .layout-13 .cv-header { background: #fff; padding: 20px; border-radius: 6px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .layout-13 .cv-photo-container img { width: 100px; height: 100px; border-radius: 50%; border: 3px solid #0077b6; }
+        .layout-13 .cv-section-title { background: #0077b6; color: #fff; padding: 6px 12px; border-radius: 4px; font-weight: bold; margin: 15px 0 10px 0; }
+
+        .layout-14 { display: flex; min-height: 1050px; }
+        .layout-14 .cv-sidebar { width: 33%; background: #3e2723; color: #d7ccc8; padding: 30px 15px; }
+        .layout-14 .cv-main-content { width: 67%; padding: 30px; }
+        .layout-14 .cv-photo-container img { width: 120px; height: 120px; border-radius: 50%; border: 3px solid #d7ccc8; margin: 0 auto 15px auto; display: block; }
+        .layout-14 .cv-section-title { color: #3e2723; font-weight: bold; border-bottom: 2px solid #3e2723; margin: 15px 0 10px 0; }
+        .layout-14 .cv-sidebar .cv-section-title { color: #ffccbc; border-bottom-color: #ffccbc; }
+
+        .layout-15 { padding: 35px; }
+        .layout-15 .cv-header { border-left: 8px solid #c62828; padding-left: 20px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
+        .layout-15 .cv-photo-container img { width: 110px; height: 110px; border-radius: 4px; }
+        .layout-15 .cv-section-title { color: #c62828; font-weight: bold; font-size: 16px; border-bottom: 1px solid #c62828; margin: 15px 0 10px 0; padding-bottom: 3px; }
+
+        .layout-16 { display: flex; min-height: 1050px; }
+        .layout-16 .cv-sidebar { width: 30%; background: #2e3b12; color: #f0f4e8; padding: 30px 15px; }
+        .layout-16 .cv-main-content { width: 70%; padding: 30px; }
+        .layout-16 .cv-photo-container img { width: 110px; height: 110px; border-radius: 50%; border: 2px solid #8fbc8f; margin-bottom: 15px; }
+        .layout-16 .cv-section-title { color: #556b2f; font-weight: bold; border-bottom: 2px solid #556b2f; margin: 15px 0 10px 0; }
+        .layout-16 .cv-sidebar .cv-section-title { color: #8fbc8f; border-bottom-color: #8fbc8f; }
+
+        .layout-17 { padding: 35px; }
+        .layout-17 .cv-header { background: #fff3e0; border: 1px solid #ffe0b2; padding: 20px; border-radius: 6px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .layout-17 .cv-photo-container img { width: 100px; height: 100px; border-radius: 50%; border: 3px solid #ff6f00; }
+        .layout-17 .cv-section-title { color: #e65100; font-weight: bold; border-bottom: 2px solid #ff6f00; margin: 15px 0 10px 0; }
+
+        .layout-18 { padding: 40px; }
+        .layout-18 .cv-header { text-align: center; border-bottom: 2px solid #4a0072; padding-bottom: 20px; margin-bottom: 20px; }
+        .layout-18 .cv-photo-container img { width: 120px; height: 120px; border-radius: 50%; border: 3px solid #880e4f; margin: 0 auto 10px auto; }
+        .layout-18 .cv-section-title { color: #4a0072; font-weight: bold; text-align: center; background: #f3e5f5; padding: 4px; margin: 15px 0 10px 0; }
+
+        .layout-19 { display: flex; min-height: 1050px; }
+        .layout-19 .cv-sidebar { width: 32%; background: #00251a; color: #e0f2f1; padding: 30px 15px; }
+        .layout-19 .cv-main-content { width: 68%; padding: 30px; }
+        .layout-19 .cv-photo-container img { width: 110px; height: 130px; border-radius: 6px; border: 2px solid #80cbc4; margin-bottom: 15px; }
+        .layout-19 .cv-section-title { color: #004d40; font-weight: bold; border-bottom: 2px solid #004d40; margin: 15px 0 10px 0; }
+        .layout-19 .cv-sidebar .cv-section-title { color: #80cbc4; border-bottom-color: #80cbc4; }
+
+        .layout-20 { padding: 35px; border: 10px solid #1a237e; min-height: 1050px; }
+        .layout-20 .cv-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px dashed #1a237e; padding-bottom: 15px; margin-bottom: 20px; }
+        .layout-20 .cv-photo-container img { width: 100px; height: 100px; border-radius: 50%; border: 2px solid #1a237e; }
+        .layout-20 .cv-section-title { background: #1a237e; color: #fff; font-weight: bold; padding: 4px 10px; margin: 15px 0 10px 0; }
+
+        /* DOUBLE PAGE STRUCTURAL LAYOUTS (Layout 21 - 40) */
+        .layout-21 .cv-page-1, .layout-21 .cv-page-2 { padding: 40px; }
+        .layout-21 .cv-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid #0070c0; padding-bottom: 15px; margin-bottom: 20px; }
+        .layout-21 .cv-photo-container img { width: 110px; height: 110px; border-radius: 50%; border: 3px solid #0070c0; }
+        .layout-21 .cv-section-title { background: #0070c0; color: #fff; padding: 4px 10px; font-weight: bold; margin: 15px 0 10px 0; border-radius: 3px; }
+
+        .layout-22 .cv-page-1, .layout-22 .cv-page-2 { display: flex; min-height: 1050px; }
+        .layout-22 .cv-sidebar { width: 30%; background: #2c3e50; color: #fff; padding: 30px 15px; }
+        .layout-22 .cv-main-content { width: 70%; padding: 30px; }
+        .layout-22 .cv-photo-container img { width: 120px; height: 120px; border-radius: 50%; border: 3px solid #fff; margin: 0 auto 15px auto; display: block; }
+        .layout-22 .cv-section-title { border-bottom: 2px solid #2c3e50; color: #2c3e50; font-weight: bold; margin: 15px 0 10px 0; font-size: 16px; text-transform: uppercase; }
+        .layout-22 .cv-sidebar .cv-section-title { color: #1abc9c; border-bottom-color: #1abc9c; }
+
+        .layout-23 .cv-page-1, .layout-23 .cv-page-2 { padding: 40px; }
+        .layout-23 .cv-header { border-bottom: 2px solid #333; padding-bottom: 20px; margin-bottom: 20px; text-align: center; }
+        .layout-23 .cv-photo-container img { width: 110px; height: 110px; border-radius: 10px; margin: 0 auto 10px auto; }
+        .layout-23 .cv-section-title { font-size: 18px; font-weight: bold; text-transform: uppercase; letter-spacing: 2px; color: #333; margin: 20px 0 10px 0; border-top: 1px solid #333; border-bottom: 1px solid #333; padding: 3px 0; }
+
+        .layout-24 .cv-page-1, .layout-24 .cv-page-2 { display: flex; flex-direction: row-reverse; min-height: 1050px; }
+        .layout-24 .cv-sidebar { width: 32%; background: #1e272e; color: #f5f6fa; padding: 30px 15px; }
+        .layout-24 .cv-main-content { width: 68%; padding: 30px; }
+        .layout-24 .cv-photo-container img { width: 110px; height: 130px; border-radius: 5px; border: 2px solid #dcdde1; margin-bottom: 15px; }
+        .layout-24 .cv-section-title { border-left: 4px solid #00d2d3; padding-left: 8px; font-size: 16px; font-weight: bold; margin: 15px 0; color: #2f3640; }
+        .layout-24 .cv-sidebar .cv-section-title { color: #00d2d3; }
+
+        .layout-25 .cv-page-1, .layout-25 .cv-page-2 { padding: 30px; }
+        .layout-25 .cv-header { background: #0070c0; color: white; padding: 25px; border-radius: 6px; display: flex; gap: 20px; align-items: center; margin-bottom: 20px; }
+        .layout-25 .cv-photo-container img { width: 100px; height: 100px; border-radius: 50%; border: 3px solid #fff; }
+        .layout-25 .cv-section-title { font-size: 16px; font-weight: bold; color: #0070c0; border-bottom: 2px solid #0070c0; margin: 15px 0 10px 0; padding-bottom: 3px; }
+
+        .layout-26 .cv-page-1, .layout-26 .cv-page-2 { padding: 25px; }
+        .layout-26 .cv-inner-box { border: 2px solid #333; padding: 25px; min-height: 980px; }
+        .layout-26 .cv-header { display: flex; justify-content: space-between; border-bottom: 2px double #333; padding-bottom: 15px; }
+        .layout-26 .cv-photo-container img { width: 100px; height: 120px; border: 1px solid #333; }
+        .layout-26 .cv-section-title { background: #f0f0f0; border-left: 5px solid #333; padding: 5px 10px; font-weight: bold; margin: 15px 0 10px 0; }
+
+        .layout-27 .cv-page-1, .layout-27 .cv-page-2 { padding: 40px; }
+        .layout-27 .cv-header { text-align: left; margin-bottom: 20px; position: relative; }
+        .layout-27 .cv-photo-container { position: absolute; right: 0; top: 0; }
+        .layout-27 .cv-photo-container img { width: 100px; height: 100px; border-radius: 50%; }
+        .layout-27 .cv-section-title { font-weight: bold; text-transform: uppercase; color: #444; border-bottom: 1px solid #aaa; margin: 20px 0 10px 0; letter-spacing: 1px; }
+
+        .layout-28 .cv-page-1, .layout-28 .cv-page-2 { display: flex; min-height: 1050px; }
+        .layout-28 .cv-sidebar { width: 35%; background: #e0f2f1; padding: 30px 15px; border-right: 3px solid #00796b; }
+        .layout-28 .cv-main-content { width: 65%; padding: 30px; }
+        .layout-28 .cv-photo-container img { width: 110px; height: 110px; border-radius: 50%; border: 4px solid #00796b; margin: 0 auto 15px auto; display: block; }
+        .layout-28 .cv-section-title { color: #00796b; font-size: 16px; font-weight: bold; margin: 15px 0 8px 0; border-bottom: 1px dashed #00796b; }
+
+        .layout-29 .cv-page-1, .layout-29 .cv-page-2 { padding: 30px; }
+        .layout-29 .cv-header { background: #2e7d32; color: #fff; padding: 25px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; }
+        .layout-29 .cv-photo-container img { width: 100px; height: 100px; border-radius: 8px; border: 2px solid #fff; }
+        .layout-29 .cv-section-title { font-size: 16px; font-weight: bold; color: #2e7d32; margin: 20px 0 10px 0; border-bottom: 2px solid #2e7d32; }
+
+        .layout-30 .cv-page-1, .layout-30 .cv-page-2 { display: flex; min-height: 1050px; }
+        .layout-30 .cv-sidebar { width: 28%; background: #4a0013; color: #fff; padding: 30px 15px; }
+        .layout-30 .cv-main-content { width: 72%; padding: 30px; }
+        .layout-30 .cv-photo-container img { width: 100px; height: 120px; border-radius: 5px; margin-bottom: 15px; }
+        .layout-30 .cv-section-title { color: #800020; border-bottom: 2px solid #800020; font-weight: bold; margin: 15px 0 10px 0; }
+        .layout-30 .cv-sidebar .cv-section-title { color: #ffb3c1; border-bottom-color: #ffb3c1; }
+
+        .layout-31 .cv-page-1, .layout-31 .cv-page-2 { padding: 35px; }
+        .layout-31 .cv-header { border-top: 5px solid #b78103; border-bottom: 5px solid #b78103; padding: 20px 0; display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .layout-31 .cv-photo-container img { width: 100px; height: 100px; border-radius: 50%; border: 2px solid #b78103; }
+        .layout-31 .cv-section-title { background: #fdf6e2; color: #5c4100; font-weight: bold; padding: 6px 12px; border-left: 4px solid #b78103; margin: 15px 0 10px 0; }
+
+        .layout-32 .cv-page-1, .layout-32 .cv-page-2 { display: flex; min-height: 1050px; }
+        .layout-32 .cv-sidebar { width: 8px; background: #333333; }
+        .layout-32 .cv-wrapper-body { width: calc(100% - 8px); padding: 35px; }
+        .layout-32 .cv-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #333; padding-bottom: 15px; margin-bottom: 20px; }
+        .layout-32 .cv-photo-container img { width: 100px; height: 100px; border-radius: 50%; }
+        .layout-32 .cv-section-title { color: #333; font-size: 16px; font-weight: bold; margin: 15px 0 10px 0; text-transform: uppercase; letter-spacing: 1px; }
+
+        .layout-33 .cv-page-1, .layout-33 .cv-page-2 { padding: 35px; background: #f4f9fc; min-height: 1050px; }
+        .layout-33 .cv-header { background: #fff; padding: 20px; border-radius: 6px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .layout-33 .cv-photo-container img { width: 100px; height: 100px; border-radius: 50%; border: 3px solid #0077b6; }
+        .layout-33 .cv-section-title { background: #0077b6; color: #fff; padding: 6px 12px; border-radius: 4px; font-weight: bold; margin: 15px 0 10px 0; }
+
+        .layout-34 .cv-page-1, .layout-34 .cv-page-2 { display: flex; min-height: 1050px; }
+        .layout-34 .cv-sidebar { width: 33%; background: #3e2723; color: #d7ccc8; padding: 30px 15px; }
+        .layout-34 .cv-main-content { width: 67%; padding: 30px; }
+        .layout-34 .cv-photo-container img { width: 110px; height: 110px; border-radius: 50%; border: 3px solid #d7ccc8; margin: 0 auto 15px auto; display: block; }
+        .layout-34 .cv-section-title { color: #3e2723; font-weight: bold; border-bottom: 2px solid #3e2723; margin: 15px 0 10px 0; }
+        .layout-34 .cv-sidebar .cv-section-title { color: #ffccbc; border-bottom-color: #ffccbc; }
+
+        .layout-35 .cv-page-1, .layout-35 .cv-page-2 { padding: 35px; }
+        .layout-35 .cv-header { border-left: 8px solid #c62828; padding-left: 20px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
+        .layout-35 .cv-photo-container img { width: 100px; height: 100px; border-radius: 4px; }
+        .layout-35 .cv-section-title { color: #c62828; font-weight: bold; font-size: 16px; border-bottom: 1px solid #c62828; margin: 15px 0 10px 0; padding-bottom: 3px; }
+
+        .layout-36 .cv-page-1, .layout-36 .cv-page-2 { display: flex; min-height: 1050px; }
+        .layout-36 .cv-sidebar { width: 30%; background: #2e3b12; color: #f0f4e8; padding: 30px 15px; }
+        .layout-36 .cv-main-content { width: 70%; padding: 30px; }
+        .layout-36 .cv-photo-container img { width: 100px; height: 100px; border-radius: 50%; border: 2px solid #8fbc8f; margin-bottom: 15px; }
+        .layout-36 .cv-section-title { color: #556b2f; font-weight: bold; border-bottom: 2px solid #556b2f; margin: 15px 0 10px 0; }
+        .layout-36 .cv-sidebar .cv-section-title { color: #8fbc8f; border-bottom-color: #8fbc8f; }
+
+        .layout-37 .cv-page-1, .layout-37 .cv-page-2 { padding: 35px; }
+        .layout-37 .cv-header { background: #fff3e0; border: 1px solid #ffe0b2; padding: 20px; border-radius: 6px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .layout-37 .cv-photo-container img { width: 100px; height: 100px; border-radius: 50%; border: 3px solid #ff6f00; }
+        .layout-37 .cv-section-title { color: #e65100; font-weight: bold; border-bottom: 2px solid #ff6f00; margin: 15px 0 10px 0; }
+
+        .layout-38 .cv-page-1, .layout-38 .cv-page-2 { padding: 40px; }
+        .layout-38 .cv-header { text-align: center; border-bottom: 2px solid #4a0072; padding-bottom: 20px; margin-bottom: 20px; }
+        .layout-38 .cv-photo-container img { width: 110px; height: 110px; border-radius: 50%; border: 3px solid #880e4f; margin: 0 auto 10px auto; }
+        .layout-38 .cv-section-title { color: #4a0072; font-weight: bold; text-align: center; background: #f3e5f5; padding: 4px; margin: 15px 0 10px 0; }
+
+        .layout-39 .cv-page-1, .layout-39 .cv-page-2 { display: flex; min-height: 1050px; }
+        .layout-39 .cv-sidebar { width: 32%; background: #00251a; color: #e0f2f1; padding: 30px 15px; }
+        .layout-39 .cv-main-content { width: 68%; padding: 30px; }
+        .layout-39 .cv-photo-container img { width: 100px; height: 120px; border-radius: 6px; border: 2px solid #80cbc4; margin-bottom: 15px; }
+        .layout-39 .cv-section-title { color: #004d40; font-weight: bold; border-bottom: 2px solid #004d40; margin: 15px 0 10px 0; }
+        .layout-39 .cv-sidebar .cv-section-title { color: #80cbc4; border-bottom-color: #80cbc4; }
+
+        .layout-40 .cv-page-1, .layout-40 .cv-page-2 { padding: 35px; border: 10px solid #1a237e; min-height: 1050px; }
+        .layout-40 .cv-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px dashed #1a237e; padding-bottom: 15px; margin-bottom: 20px; }
+        .layout-40 .cv-photo-container img { width: 100px; height: 100px; border-radius: 50%; border: 2px solid #1a237e; }
+        .layout-40 .cv-section-title { background: #1a237e; color: #fff; font-weight: bold; padding: 4px 10px; margin: 15px 0 10px 0; }
+
+        /* Shared Element Styling inside Canvas */
+        .cv-name { font-size: 26px; font-weight: bold; margin-bottom: 5px; }
+        .cv-contact { font-size: 12px; line-height: 1.5; margin-bottom: 10px; }
+        .cv-info-table { width: 100%; border-collapse: collapse; margin-bottom: 10px; }
+        .cv-info-table td { padding: 3px 0; font-size: 13px; vertical-align: top; }
+        .cv-info-table td.label { font-weight: bold; width: 35%; }
+        .cv-list { list-style: none; padding-left: 15px; margin-bottom: 10px; }
+        .cv-list li { font-size: 13px; position: relative; margin-bottom: 4px; line-height: 1.3; }
+        .cv-list li::before { content: "•"; position: absolute; left: -12px; font-weight: bold; }
+
+        /* PRINT STYLES FOR EXACT PDF PRINTING */
+        @media print {
+            @page { size: A4; margin: 0; }
+            body { background-color: #ffffff; padding: 0; margin: 0; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+            body * { visibility: hidden; }
+            #cv-paper, #cv-paper * { visibility: visible; }
+            .cv-scale-container { transform: scale(1) !important; margin: 0 !important; }
+            #cv-paper { position: absolute; left: 0; top: 0; width: 100%; padding: 0; box-shadow: none; }
+            .cv-page-2 { margin-top: 0; box-shadow: none; }
+            .modal-overlay, .form-container, .btn-top-bar, .theme-selector-box { display: none !important; }
+            [contenteditable="true"]:hover { outline: none; background-color: transparent; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 1. WELCOME POPUP MODAL -->
+    <div class="modal-overlay" id="welcomeModal">
+        <div class="modal-content">
+            <h1>ZAC CV MAKER</h1>
+            <p>Welcome to Professional CV Builder! Create your single or double page CV in just a few minutes</p>
+            <button class="btn-modal" onclick="startCVCreation()">Create CV Now</button>
+        </div>
+    </div>
+
+    <!-- 2. DETAILS ENTRY FORM -->
+    <div class="form-container" id="formContainer">
+        <h2>Enter Your CV Details</h2>
+
+        <div class="form-group">
+            <label>Profile Photo (Optional)</label>
+            <input type="file" id="in-photo" accept="image/*" onchange="previewUserPhoto(event)">
+        </div>
+        
+        <div class="form-group">
+            <label>Full Name</label>
+            <input type="text" id="in-name" placeholder="e.g. John Doe">
+        </div>
+        <div class="form-group">
+            <label>Address</label>
+            <input type="text" id="in-address" placeholder="e.g. House #123, Street 4, City, Country">
+        </div>
+        <div class="form-group">
+            <label>Email Address</label>
+            <input type="text" id="in-email" placeholder="e.g. example@email.com">
+        </div>
+        <div class="form-group">
+            <label>Cell / Phone</label>
+            <input type="text" id="in-phone" placeholder="e.g. 0300-1234567">
+        </div>
+
+        <div class="form-group"><label>Father's Name</label><input type="text" id="in-father" placeholder="e.g. Father Name"></div>
+        <div class="form-group"><label>Date of Birth</label><input type="text" id="in-dob" placeholder="e.g. DD-MM-YYYY"></div>
+        <div class="form-group"><label>C.N.I.C #</label><input type="text" id="in-cnic" placeholder="e.g. 00000-0000000-0"></div>
+        <div class="form-group"><label>Marital Status</label><input type="text" id="in-marital" placeholder="e.g. Single / Married"></div>
+        <div class="form-group"><label>Domicile</label><input type="text" id="in-domicile" placeholder="e.g. District Name"></div>
+        <div class="form-group"><label>Religion</label><input type="text" id="in-religion" placeholder="e.g. Islam"></div>
+        <div class="form-group"><label>Nationality</label><input type="text" id="in-nationality" placeholder="e.g. Pakistani"></div>
+
+        <div class="form-group">
+            <label>Academic Qualification (Line by line)</label>
+            <textarea id="in-academic" placeholder="e.g. Matriculation (Science)&#10;Intermediate (Pre-Engineering)"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label>Computer Skills (Line by line)</label>
+            <textarea id="in-computer" placeholder="e.g. Microsoft Office&#10;Data Entry"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label>Experience (Line by line)</label>
+            <textarea id="in-experience" placeholder="e.g. Worked as Office Assistant for 1 Year"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label>Projects & Achievements (For Double Page Layouts)</label>
+            <textarea id="in-projects" placeholder="e.g. Developed E-commerce System&#10;Employee of the Month Award"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label>Certifications (For Double Page Layouts)</label>
+            <textarea id="in-certifications" placeholder="e.g. MS Office Specialist Certified&#10;Web Development Fundamentals"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label>Language Proficiency (Line by line)</label>
+            <textarea id="in-language" placeholder="e.g. English&#10;Urdu"></textarea>
+        </div>
+
+        <div class="form-actions">
+            <button class="btn-create" onclick="generateCV()">Generate CV</button>
+            <button class="btn-cancel" onclick="cancelCreation()">Cancel</button>
+        </div>
+    </div>
+
+    <!-- 3. PREVIEW & DOWNLOAD PAGE -->
+    <div class="preview-container" id="previewContainer">
+
+        <!-- Theme / Layout Selector Dropdown -->
+        <div class="theme-selector-box">
+            <div class="selector-item">
+                <label for="pageTypeSelect">📄 Page Type:</label>
+                <select id="pageTypeSelect" onchange="updateLayoutOptions()">
+                    <option value="single">Single Page CV</option>
+                    <option value="double">Double Page CV</option>
+                </select>
+            </div>
+            
+            <div class="selector-item">
+                <label for="layoutSelect">📐 Layout Design:</label>
+                <select id="layoutSelect" onchange="changeLayout(this.value)">
+                    <!-- Dynamically populated via JavaScript -->
+                </select>
+            </div>
+        </div>
+        
+        <div class="btn-top-bar">
+            <button class="btn-action btn-edit-back" onclick="backToForm()">✏ Edit Details</button>
+            <button class="btn-action btn-pdf" onclick="downloadPDF()">📄 PDF Download</button>
+            <button class="btn-action btn-img" onclick="downloadImage()">🖼️ Image Download</button>
+            <button class="btn-action btn-word" onclick="downloadWord()">📝 Word Download</button>
+        </div>
+
+        <div class="cv-paper-wrapper" id="paperWrapper">
+            <div class="cv-scale-container" id="scaleContainer">
+                <!-- CV Paper Canvas Container -->
+                <div class="cv-paper layout-1" id="cv-paper">
+                    <!-- Content gets dynamically populated inside layout structure via JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script>
+    let uploadedPhotoData = "";
+
+    // Options mapping for Single and Double page layouts
+    const singlePageLayouts = [
+        { value: 'layout-1', text: 'Layout 1: Classic Header Banner' },
+        { value: 'layout-2', text: 'Layout 2: Modern Left Sidebar Split (2-Column)' },
+        { value: 'layout-3', text: 'Layout 3: Centered Executive' },
+        { value: 'layout-4', text: 'Layout 4: Right Dark Sidebar (2-Column)' },
+        { value: 'layout-5', text: 'Layout 5: Full Top Banner' },
+        { value: 'layout-6', text: 'Layout 6: Corporate Boxed Border' },
+        { value: 'layout-7', text: 'Layout 7: Clean Minimalist Line-Art' },
+        { value: 'layout-8', text: 'Layout 8: Teal Two-Tone Split' },
+        { value: 'layout-9', text: 'Layout 9: Emerald Header Card' },
+        { value: 'layout-10', text: 'Layout 10: Elegant Burgundy Split' },
+        { value: 'layout-11', text: 'Layout 11: Royal Gold Double Border' },
+        { value: 'layout-12', text: 'Layout 12: Charcoal Vertical Accent Strip' },
+        { value: 'layout-13', text: 'Layout 13: Ocean Blue Carded' },
+        { value: 'layout-14', text: 'Layout 14: Dark Chocolate Full Sidebar' },
+        { value: 'layout-15', text: 'Layout 15: Crimson Bold Left Stripe' },
+        { value: 'layout-16', text: 'Layout 16: Olive Prestige Split' },
+        { value: 'layout-17', text: 'Layout 17: Sunset Amber Header' },
+        { value: 'layout-18', text: 'Layout 18: Plum Centered Avatar' },
+        { value: 'layout-19', text: 'Layout 19: Deep Emerald Two-Column' },
+        { value: 'layout-20', text: 'Layout 20: Indigo Classic Full Frame' }
+    ];
+
+    const doublePageLayouts = [
+        { value: 'layout-21', text: 'Layout 21: Double Page - Classic Blue' },
+        { value: 'layout-22', text: 'Layout 22: Double Page - Modern Split Sidebar' },
+        { value: 'layout-23', text: 'Layout 23: Double Page - Executive Centered' },
+        { value: 'layout-24', text: 'Layout 24: Double Page - Dark Right Sidebar' },
+        { value: 'layout-25', text: 'Layout 25: Double Page - Full Blue Header' },
+        { value: 'layout-26', text: 'Layout 26: Double Page - Boxed Border Style' },
+        { value: 'layout-27', text: 'Layout 27: Double Page - Minimalist Line-Art' },
+        { value: 'layout-28', text: 'Layout 28: Double Page - Teal Two-Tone' },
+        { value: 'layout-29', text: 'Layout 29: Double Page - Emerald Green Card' },
+        { value: 'layout-30', text: 'Layout 30: Double Page - Burgundy Split' },
+        { value: 'layout-31', text: 'Layout 31: Double Page - Royal Gold Double Border' },
+        { value: 'layout-32', text: 'Layout 32: Double Page - Charcoal Vertical Strip' },
+        { value: 'layout-33', text: 'Layout 33: Double Page - Ocean Blue Carded' },
+        { value: 'layout-34', text: 'Layout 34: Double Page - Dark Chocolate Sidebar' },
+        { value: 'layout-35', text: 'Layout 35: Double Page - Crimson Bold Stripe' },
+        { value: 'layout-36', text: 'Layout 36: Double Page - Olive Prestige Split' },
+        { value: 'layout-37', text: 'Layout 37: Double Page - Sunset Amber Header' },
+        { value: 'layout-38', text: 'Layout 38: Double Page - Plum Centered Avatar' },
+        { value: 'layout-39', text: 'Layout 39: Double Page - Deep Emerald Split' },
+        { value: 'layout-40', text: 'Layout 40: Double Page - Indigo Classic Frame' }
+    ];
+
+    function updateLayoutOptions() {
+        const pageType = document.getElementById('pageTypeSelect').value;
+        const layoutSelect = document.getElementById('layoutSelect');
+        layoutSelect.innerHTML = '';
+
+        const layouts = (pageType === 'single') ? singlePageLayouts : doublePageLayouts;
+
+        layouts.forEach(item => {
+            const opt = document.createElement('option');
+            opt.value = item.value;
+            opt.textContent = item.text;
+            layoutSelect.appendChild(opt);
+        });
+
+        // Apply selected layout from new dropdown options
+        changeLayout(layoutSelect.value);
+    }
+
+    // Automatic Scaling for Mobile & Desktop Preview
+    function scaleCVPaper() {
+        const wrapper = document.getElementById('paperWrapper');
+        const scaleContainer = document.getElementById('scaleContainer');
+        if (!wrapper || !scaleContainer) return;
+        
+        const wrapperWidth = wrapper.clientWidth - 20; // 20px padding
+        const paperWidth = 790; // Standard fixed paper width
+        
+        if (wrapperWidth < paperWidth) {
+            const scale = wrapperWidth / paperWidth;
+            scaleContainer.style.transform = `scale(${scale})`;
+            scaleContainer.style.width = `${paperWidth}px`;
+            // Adjust margin to pull up scaled container whitespace
+            const paperHeight = document.getElementById('cv-paper').clientHeight;
+            scaleContainer.style.marginBottom = `-${paperHeight * (1 - scale)}px`;
+        } else {
+            scaleContainer.style.transform = `scale(1)`;
+            scaleContainer.style.width = `auto`;
+            scaleContainer.style.marginBottom = `0px`;
+        }
+    }
+
+    window.addEventListener('resize', scaleCVPaper);
+
+    function previewUserPhoto(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                uploadedPhotoData = e.target.result;
+            }
+            reader.readAsDataURL(file);
+        } else {
+            uploadedPhotoData = "";
+        }
+    }
+
+    function startCVCreation() {
+        document.getElementById('welcomeModal').style.display = 'none';
+        document.getElementById('formContainer').style.display = 'block';
+    }
+
+    function changeLayout(layoutClass) {
+        const cvPaper = document.getElementById('cv-paper');
+        cvPaper.className = 'cv-paper ' + layoutClass;
+        if (uploadedPhotoData) {
+            cvPaper.classList.add('has-photo');
+        } else {
+            cvPaper.classList.remove('has-photo');
+        }
+        renderCVContent();
+        setTimeout(scaleCVPaper, 50);
+    }
+
+    function generateCV() {
+        document.getElementById('formContainer').style.display = 'none';
+        document.getElementById('previewContainer').style.display = 'flex';
+        updateLayoutOptions(); // Initialize dropdowns & canvas layout
+    }
+
+    function renderCVContent() {
+        const name = document.getElementById('in-name').value || "Your Name";
+        const address = document.getElementById('in-address').value || "Your Full Address";
+        const email = document.getElementById('in-email').value || "example@email.com";
+        const phone = document.getElementById('in-phone').value || "0300-0000000";
+
+        const father = document.getElementById('in-father').value || "Father Name";
+        const dob = document.getElementById('in-dob').value || "DD-MM-YYYY";
+        const cnic = document.getElementById('in-cnic').value || "00000-0000000-0";
+        const marital = document.getElementById('in-marital').value || "Single / Married";
+        const domicile = document.getElementById('in-domicile').value || "District Name";
+        const religion = document.getElementById('in-religion').value || "Islam";
+        const nationality = document.getElementById('in-nationality').value || "Pakistani";
+
+        const academicHTML = getListHTML('in-academic', 'Qualification details will appear here.');
+        const computerHTML = getListHTML('in-computer', 'Computer skills will appear here.');
+        const expHTML = getListHTML('in-experience', 'Experience details will appear here.');
+        const projHTML = getListHTML('in-projects', 'Key projects and achievements will appear here.');
+        const certHTML = getListHTML('in-certifications', 'Certifications details will appear here.');
+        const langHTML = getListHTML('in-language', 'Languages will appear here.');
+
+        const currentLayout = document.getElementById('layoutSelect').value;
+        const cvPaper = document.getElementById('cv-paper');
+
+        const photoHTML = uploadedPhotoData ? `<div class="cv-photo-container"><img src="${uploadedPhotoData}" alt="Profile Photo"></div>` : `<div class="cv-photo-container"></div>`;
+        const headerTitleHTML = `<div class="cv-main-header-title">CURRICULUM VITAE</div>`;
+
+        // Determine layout type (Single Page vs Double Page)
+        const layoutNum = parseInt(currentLayout.replace('layout-', ''));
+        const isDoublePage = layoutNum >= 21 && layoutNum <= 40;
+
+        if (isDoublePage) {
+            // DOUBLE PAGE RENDERING (Layouts 21 - 40)
+            const isTwoColumn = [22, 24, 28, 30, 34, 36, 39].includes(layoutNum);
+
+            if (isTwoColumn) {
+                cvPaper.innerHTML = `
+                    <!-- PAGE 1 -->
+                    <div class="cv-page cv-page-1">
+                        <div class="cv-sidebar">
+                            ${headerTitleHTML}
+                            ${photoHTML}
+                            <div class="cv-name" contenteditable="true">${name}</div>
+                            <div class="cv-contact">
+                                <div><b>Address:</b> ${address}</div>
+                                <div><b>Email:</b> ${email}</div>
+                                <div><b>Phone:</b> ${phone}</div>
+                            </div>
+                            <div class="cv-section-title">Personal Details</div>
+                            <div style="font-size: 12px; line-height:1.6;">
+                                <div><b>Father:</b> ${father}</div>
+                                <div><b>DOB:</b> ${dob}</div>
+                                <div><b>CNIC:</b> ${cnic}</div>
+                                <div><b>Status:</b> ${marital}</div>
+                                <div><b>Domicile:</b> ${domicile}</div>
+                                <div><b>Religion:</b> ${religion}</div>
+                                <div><b>Nationality:</b> ${nationality}</div>
+                            </div>
+                            <div class="cv-section-title">Languages</div>
+                            ${langHTML}
+                        </div>
+                        <div class="cv-main-content">
+                            <div class="cv-section-title">Career Objective</div>
+                            <div style="font-size: 13px; line-height: 1.4; text-align: justify; margin-bottom: 15px;">
+                                Devote my experience skill in reputed organization meet to the challenge in practical life. A full time purpose full position in a dynamic organization that confederates opportunities of professional improvement.
+                            </div>
+                            <div class="cv-section-title">Academic Qualification</div>
+                            ${academicHTML}
+                            <div class="cv-section-title">Computer & Technical Skills</div>
+                            ${computerHTML}
+                        </div>
+                    </div>
+
+                    <!-- PAGE 2 -->
+                    <div class="cv-page cv-page-2">
+                        <div class="cv-sidebar">
+                            <div class="cv-section-title">Certifications</div>
+                            ${certHTML}
+                        </div>
+                        <div class="cv-main-content">
+                            <div class="cv-section-title">Work Experience</div>
+                            ${expHTML}
+                            <div class="cv-section-title">Projects & Achievements</div>
+                            ${projHTML}
+                            <div class="cv-section-title">Professional References</div>
+                            <ul class="cv-list">
+                                <li><b>Reference 1:</b> Available upon request from previous employer.</li>
+                                <li><b>Reference 2:</b> Academic references available on demand.</li>
+                            </ul>
+                        </div>
+                    </div>
+                `;
+            } else {
+                cvPaper.innerHTML = `
+                    <!-- PAGE 1 -->
+                    <div class="cv-page cv-page-1">
+                        <div class="cv-inner-box">
+                            ${headerTitleHTML}
+                            <div class="cv-header">
+                                <div>
+                                    <div class="cv-name" contenteditable="true">${name}</div>
+                                    <div class="cv-contact">
+                                        <div><b>Address:</b> ${address} | <b>Email:</b> ${email} | <b>Cell:</b> ${phone}</div>
+                                    </div>
+                                </div>
+                                ${photoHTML}
+                            </div>
+                            <div class="cv-body">
+                                <div class="cv-section-title">Objective</div>
+                                <div style="font-size: 13px; line-height: 1.4; text-align: justify; margin-bottom: 10px;">
+                                    Devote my experience skill in reputed organization meet to the challenge in practical life. A full time purpose full position in a dynamic organization that confederates opportunities of professional improvement.
+                                </div>
+                                <div class="cv-section-title">Personal Information</div>
+                                <table class="cv-info-table">
+                                    <tr><td class="label">Father's Name:</td><td>${father}</td><td class="label">Date of Birth:</td><td>${dob}</td></tr>
+                                    <tr><td class="label">C.N.I.C #:</td><td>${cnic}</td><td class="label">Marital Status:</td><td>${marital}</td></tr>
+                                    <tr><td class="label">Domicile:</td><td>${domicile}</td><td class="label">Religion:</td><td>${religion}</td></tr>
+                                    <tr><td class="label">Nationality:</td><td colspan="3">${nationality}</td></tr>
+                                </table>
+                                <div class="cv-section-title">Academic Qualification</div>
+                                ${academicHTML}
+                                <div class="cv-section-title">Computer & Technical Skills</div>
+                                ${computerHTML}
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- PAGE 2 -->
+                    <div class="cv-page cv-page-2">
+                        <div class="cv-inner-box">
+                            <div class="cv-body">
+                                <div class="cv-section-title">Work Experience</div>
+                                ${expHTML}
+                                <div class="cv-section-title">Projects & Key Achievements</div>
+                                ${projHTML}
+                                <div class="cv-section-title">Certifications & Training</div>
+                                ${certHTML}
+                                <div class="cv-section-title">Language Proficiency</div>
+                                ${langHTML}
+                                <div class="cv-section-title">Reference</div>
+                                <ul class="cv-list"><li>Reference will be furnished on demand.</li></ul>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+
+        } else {
+            // SINGLE PAGE RENDERING (Layouts 1 - 20)
+            const isTwoColumn = [2, 4, 8, 10, 14, 16, 19].includes(layoutNum);
+
+            if (isTwoColumn) {
+                cvPaper.innerHTML = `
+                    <div class="cv-sidebar">
+                        ${headerTitleHTML}
+                        ${photoHTML}
+                        <div class="cv-name" contenteditable="true">${name}</div>
+                        <div class="cv-contact">
+                            <div><b>Address:</b> ${address}</div>
+                            <div><b>Email:</b> ${email}</div>
+                            <div><b>Phone:</b> ${phone}</div>
+                        </div>
+                        <div class="cv-section-title">Personal Details</div>
+                        <div style="font-size: 12px; line-height:1.6;">
+                            <div><b>Father:</b> ${father}</div>
+                            <div><b>DOB:</b> ${dob}</div>
+                            <div><b>CNIC:</b> ${cnic}</div>
+                            <div><b>Status:</b> ${marital}</div>
+                            <div><b>Domicile:</b> ${domicile}</div>
+                            <div><b>Religion:</b> ${religion}</div>
+                            <div><b>Nationality:</b> ${nationality}</div>
+                        </div>
+                        <div class="cv-section-title">Languages</div>
+                        ${langHTML}
+                    </div>
+                    <div class="cv-main-content">
+                        <div class="cv-section-title">Objective</div>
+                        <div style="font-size: 13px; line-height: 1.4; text-align: justify; margin-bottom: 15px;">
+                            Devote my experience skill in reputed organization meet to the challenge in practical life. A full time purpose full position in a dynamic organization that confederates opportunities of professional improvement.
+                        </div>
+                        <div class="cv-section-title">Academic Qualification</div>
+                        ${academicHTML}
+                        <div class="cv-section-title">Computer Skills</div>
+                        ${computerHTML}
+                        <div class="cv-section-title">Experience</div>
+                        ${expHTML}
+                        <div class="cv-section-title">Reference</div>
+                        <ul class="cv-list"><li>Reference will be furnished on demand.</li></ul>
+                    </div>
+                `;
+            } else if (currentLayout === 'layout-12') {
+                cvPaper.innerHTML = `
+                    <div class="cv-sidebar"></div>
+                    <div class="cv-wrapper-body">
+                        ${headerTitleHTML}
+                        <div class="cv-header">
+                            <div>
+                                <div class="cv-name" contenteditable="true">${name}</div>
+                                <div class="cv-contact">
+                                    <div><b>Address:</b> ${address} | <b>Email:</b> ${email} | <b>Cell:</b> ${phone}</div>
+                                </div>
+                            </div>
+                            ${photoHTML}
+                        </div>
+                        <div class="cv-body">
+                            <div class="cv-section-title">Objective</div>
+                            <div style="font-size: 13px; line-height: 1.4; text-align: justify; margin-bottom: 10px;">
+                                Devote my experience skill in reputed organization meet to the challenge in practical life. A full time purpose full position in a dynamic organization that confederates opportunities of professional improvement.
+                            </div>
+                            <div class="cv-section-title">Personal Information</div>
+                            <table class="cv-info-table">
+                                <tr><td class="label">Father's Name:</td><td>${father}</td><td class="label">Date of Birth:</td><td>${dob}</td></tr>
+                                <tr><td class="label">C.N.I.C #:</td><td>${cnic}</td><td class="label">Marital Status:</td><td>${marital}</td></tr>
+                                <tr><td class="label">Domicile:</td><td>${domicile}</td><td class="label">Religion:</td><td>${religion}</td></tr>
+                                <tr><td class="label">Nationality:</td><td colspan="3">${nationality}</td></tr>
+                            </table>
+                            <div class="cv-section-title">Academic Qualification</div>
+                            ${academicHTML}
+                            <div class="cv-section-title">Computer Skills</div>
+                            ${computerHTML}
+                            <div class="cv-section-title">Experience</div>
+                            ${expHTML}
+                            <div class="cv-section-title">Language Proficiency</div>
+                            ${langHTML}
+                            <div class="cv-section-title">Reference</div>
+                            <ul class="cv-list"><li>Reference will be furnished on demand.</li></ul>
+                        </div>
+                    </div>
+                `;
+            } else {
+                cvPaper.innerHTML = `
+                    <div class="cv-inner-box">
+                        ${headerTitleHTML}
+                        <div class="cv-header">
+                            <div>
+                                <div class="cv-name" contenteditable="true">${name}</div>
+                                <div class="cv-contact">
+                                    <div><b>Address:</b> ${address} | <b>Email:</b> ${email} | <b>Cell:</b> ${phone}</div>
+                                </div>
+                            </div>
+                            ${photoHTML}
+                        </div>
+                        
+                        <div class="cv-body">
+                            <div class="cv-section-title">Objective</div>
+                            <div style="font-size: 13px; line-height: 1.4; text-align: justify; margin-bottom: 10px;">
+                                Devote my experience skill in reputed organization meet to the challenge in practical life. A full time purpose full position in a dynamic organization that confederates opportunities of professional improvement.
+                            </div>
+
+                            <div class="cv-section-title">Personal Information</div>
+                            <table class="cv-info-table">
+                                <tr><td class="label">Father's Name:</td><td>${father}</td><td class="label">Date of Birth:</td><td>${dob}</td></tr>
+                                <tr><td class="label">C.N.I.C #:</td><td>${cnic}</td><td class="label">Marital Status:</td><td>${marital}</td></tr>
+                                <tr><td class="label">Domicile:</td><td>${domicile}</td><td class="label">Religion:</td><td>${religion}</td></tr>
+                                <tr><td class="label">Nationality:</td><td colspan="3">${nationality}</td></tr>
+                            </table>
+
+                            <div class="cv-section-title">Academic Qualification</div>
+                            ${academicHTML}
+
+                            <div class="cv-section-title">Computer Skills</div>
+                            ${computerHTML}
+
+                            <div class="cv-section-title">Experience</div>
+                            ${expHTML}
+
+                            <div class="cv-section-title">Language Proficiency</div>
+                            ${langHTML}
+
+                            <div class="cv-section-title">Reference</div>
+                            <ul class="cv-list"><li>Reference will be furnished on demand.</li></ul>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+    }
+
+    function getListHTML(inputId, defaultText) {
+        const inputElem = document.getElementById(inputId);
+        if(!inputElem) return `<ul class="cv-list" contenteditable="true"><li>${defaultText}</li></ul>`;
+        const text = inputElem.value;
+        const lines = text.split('\n');
+        let html = '<ul class="cv-list" contenteditable="true">';
+        let hasData = false;
+        lines.forEach(line => {
+            if (line.trim() !== '') {
+                html += `<li>${line}</li>`;
+                hasData = true;
+            }
+        });
+        if (!hasData) html += `<li>${defaultText}</li>`;
+        html += '</ul>';
+        return html;
+    }
+
+    function cancelCreation() {
+        document.getElementById('formContainer').style.display = 'none';
+        document.getElementById('welcomeModal').style.display = 'flex';
+    }
+
+    function backToForm() {
+        document.getElementById('previewContainer').style.display = 'none';
+        document.getElementById('formContainer').style.display = 'block';
+    }
+
+    // 100% PDF Print Export
+    function downloadPDF() {
+        window.print();
+    }
+
+    // 100% Image Export (Support Single and Double Page PNGs)
+    function downloadImage() {
+        const cvPaper = document.getElementById('cv-paper');
+        
+        // Temporarily reset scale for clear canvas rendering
+        const scaleContainer = document.getElementById('scaleContainer');
+        const oldTransform = scaleContainer.style.transform;
+        scaleContainer.style.transform = 'scale(1)';
+
+        html2canvas(cvPaper, {
+            scale: 2,
+            useCORS: true,
+            backgroundColor: "#ffffff"
+        }).then(canvas => {
+            scaleContainer.style.transform = oldTransform;
+            const link = document.createElement('a');
+            link.download = 'CV_' + (document.getElementById('in-name').value.replace(/\s+/g, '_') || 'Download') + '.png';
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        });
+    }
+
+    // 100% Structural Word Doc Export
+    function downloadWord() {
+        const cvHTML = document.getElementById('cv-paper').innerHTML;
+        const styles = `<style>
+            body { font-family: Arial, sans-serif; }
+            .cv-main-header-title { font-size: 20px; font-weight: bold; text-align: center; margin-bottom: 15px; }
+            .cv-sidebar { width: 30%; float: left; background: #f4f4f4; padding: 15px; }
+            .cv-main-content { width: 65%; float: right; padding: 15px; }
+            .cv-name { font-size: 22px; font-weight: bold; }
+            .cv-section-title { font-weight: bold; background: #e0e0e0; padding: 4px; margin: 10px 0; }
+            .cv-info-table { width: 100%; border-collapse: collapse; }
+            .cv-info-table td { padding: 4px; }
+            .cv-page-2 { page-break-before: always; margin-top: 20px; }
+            ul { margin-left: 20px; }
+            img { width: 100px; height: 100px; border-radius: 50%; }
+        </style>`;
+
+        const header = "<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'><head><meta charset='utf-8'>" + styles + "</head><body>";
+        const footer = "</body></html>";
+        
+        const sourceHTML = header + cvHTML + footer;
+        const source = 'data:application/vnd.ms-word;charset=utf-8,' + encodeURIComponent(sourceHTML);
+        
+        const fileDownload = document.createElement("a");
+        document.body.appendChild(fileDownload);
+        fileDownload.href = source;
+        fileDownload.download = 'CV_' + (document.getElementById('in-name').value.replace(/\s+/g, '_') || 'Download') + '.doc';
+        fileDownload.click();
+        document.body.removeChild(fileDownload);
+    }
+</script>
+
+</body>
+</html>
