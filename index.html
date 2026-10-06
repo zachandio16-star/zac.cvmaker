@@ -189,28 +189,40 @@
             box-sizing: border-box;
         }
 
-        /* Top Logo Area */
+        /* Fixed Top Logo Area Alignment */
         .cv-top-logo {
             display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 5px;
+            align-items: flex-end;
+            gap: 15px;
+            margin-bottom: 10px;
         }
 
         .cv-logo-svg {
-            width: 55px;
-            height: 55px;
+            width: 70px;
+            height: 70px;
+            flex-shrink: 0;
         }
 
         .cv-logo-text {
             color: #0070c0;
-            font-family: 'Brush Script MT', 'Comic Sans MS', cursive;
+            font-family: 'Brush Script MT', 'Comic Sans MS', cursive, sans-serif;
             font-style: italic;
-            line-height: 0.9;
+            line-height: 0.95;
+            user-select: none;
         }
 
-        .cv-logo-text .line1 { font-size: 18px; letter-spacing: 2px; }
-        .cv-logo-text .line2 { font-size: 22px; letter-spacing: 4px; font-weight: bold; }
+        .cv-logo-text .line1 { 
+            font-size: 24px; 
+            letter-spacing: 3px; 
+            font-weight: normal;
+        }
+
+        .cv-logo-text .line2 { 
+            font-size: 32px; 
+            letter-spacing: 6px; 
+            font-weight: bold; 
+            margin-top: 2px;
+        }
 
         .cv-blue-line-thick { height: 4px; background-color: #002060; margin-bottom: 2px; }
         .cv-blue-line-thin { height: 1px; background-color: #002060; margin-bottom: 15px; }
@@ -331,7 +343,7 @@
     <!-- 1. WELCOME POPUP MODAL -->
     <div class="modal-overlay" id="welcomeModal">
         <div class="modal-content">
-            <h1>[آپ کی ویب سائٹ کا نام]</h1>
+            <h1>[ZAC CV MAKER]</h1>
             <p>Welcome to Professional CV Builder! Create your perfectly styled CV in just a few minutes.</p>
             <button class="btn-modal" onclick="startCVCreation()">Create New CV</button>
         </div>
@@ -356,11 +368,6 @@
         <div class="form-group">
             <label>Cell / Phone</label>
             <input type="text" id="in-phone" placeholder="e.g. 0300-1234567">
-        </div>
-
-        <div class="form-group">
-            <label>Objective</label>
-            <textarea id="in-objective" placeholder="e.g. To secure a challenging position in a reputable organization to expand my learning, knowledge, and skills."></textarea>
         </div>
 
         <div class="form-group"><label>Father's Name</label><input type="text" id="in-father" placeholder="e.g. Father Name"></div>
@@ -390,11 +397,6 @@
             <textarea id="in-language" placeholder="e.g. English&#10;Urdu"></textarea>
         </div>
 
-        <div class="form-group">
-            <label>Reference</label>
-            <textarea id="in-reference" placeholder="e.g. Will be furnished on demand."></textarea>
-        </div>
-
         <div class="form-actions">
             <button class="btn-create" onclick="generateCV()">Create CV</button>
             <button class="btn-cancel" onclick="cancelCreation()">Cancel</button>
@@ -406,14 +408,15 @@
         
         <div class="btn-top-bar">
             <button class="btn-action btn-edit-back" onclick="backToForm()">✏️ Edit Details</button>
-            <button class="btn-action btn-pdf" onclick="downloadPDF()">📄 PDF ڈاؤن لوڈ</button>
-            <button class="btn-action btn-img" onclick="downloadImage()">🖼️ Image ڈاؤن لوڈ</button>
-            <button class="btn-action btn-word" onclick="downloadWord()">📝 Word ڈاؤن لوڈ</button>
+            <button class="btn-action btn-pdf" onclick="downloadPDF()">📄 PDF Download</button>
+            <button class="btn-action btn-img" onclick="downloadImage()">🖼️ Image Download</button>
+            <button class="btn-action btn-word" onclick="downloadWord()">📝 Word Download</button>
         </div>
 
         <!-- CV Paper Replica -->
         <div class="cv-paper" id="cv-paper">
             
+            <!-- Top Logo Header -->
             <div class="cv-top-logo">
                 <svg class="cv-logo-svg" viewBox="0 0 100 100">
                     <path d="M 15 25 C 5 25 5 75 25 80 C 45 85 55 45 45 30 C 35 15 20 40 30 65 C 35 75 50 75 55 60 C 60 45 40 35 30 45" fill="none" stroke="#0070c0" stroke-width="7" stroke-linecap="round"/>
@@ -421,8 +424,8 @@
                     <path d="M 65 20 L 95 80" fill="none" stroke="#0070c0" stroke-width="7" stroke-linecap="round"/>
                 </svg>
                 <div class="cv-logo-text">
-                    <div class="line1">URRICULUM</div>
-                    <div class="line2">ITAE</div>
+                    <div class="line1">CURRICULUM</div>
+                    <div class="line2">VITAE</div>
                 </div>
             </div>
 
@@ -439,9 +442,10 @@
                 <div>Cell: <span id="cv-phone" contenteditable="true">0300-0000000</span></div>
             </div>
 
+            <!-- FIXED OBJECTIVE -->
             <div class="cv-section-banner">Objective</div>
-            <div class="cv-objective-text" id="cv-objective" contenteditable="true">
-                Your career objective will appear here.
+            <div class="cv-objective-text" id="cv-objective" contenteditable="false">
+                Devote my experience skill in reputed organization meet to the challenge in practical life. A full time purpose full position in a dynamic organization that confederates opportunities of professional improvement through training and vocational recognition's want to improve education system through devotional spirit and modern ideas.
             </div>
 
             <div class="cv-section-banner">Personal Information</div>
@@ -474,9 +478,10 @@
                 <li>Languages list will appear here.</li>
             </ul>
 
+            <!-- FIXED REFERENCE -->
             <div class="cv-section-banner">Reference:</div>
-            <ul class="cv-list" id="cv-reference" contenteditable="true">
-                <li>Will be furnished on demand.</li>
+            <ul class="cv-list" id="cv-reference" contenteditable="false">
+                <li>Reference will be furnished on demand.</li>
             </ul>
 
         </div>
@@ -496,7 +501,6 @@
         document.getElementById('cv-email').innerText = document.getElementById('in-email').value || "example@email.com";
         document.getElementById('cv-email').href = "mailto:" + (document.getElementById('in-email').value || "example@email.com");
         document.getElementById('cv-phone').innerText = document.getElementById('in-phone').value || "0300-0000000";
-        document.getElementById('cv-objective').innerText = document.getElementById('in-objective').value || "Your career objective will appear here.";
         
         document.getElementById('cv-father').innerText = document.getElementById('in-father').value || "Father Name";
         document.getElementById('cv-dob').innerText = document.getElementById('in-dob').value || "DD-MM-YYYY";
@@ -509,7 +513,6 @@
         updateList('cv-computer', 'in-computer', 'Skills list will appear here.');
         updateList('cv-experience', 'in-experience', 'Work experience will appear here.');
         updateList('cv-language', 'in-language', 'Languages list will appear here.');
-        updateList('cv-reference', 'in-reference', 'Will be furnished on demand.');
 
         document.getElementById('formContainer').style.display = 'none';
         document.getElementById('previewContainer').style.display = 'flex';
