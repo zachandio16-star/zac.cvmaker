@@ -195,6 +195,14 @@
             align-items: flex-end;
             gap: 15px;
             margin-bottom: 10px;
+        }
+
+        .cv-logo-svg {
+            width: 70px;
+            height: 70px;
+            flex-shrink: 0;
+        }
+
         .cv-logo-text {
             color: #0070c0;
             font-family: 'Brush Script MT', 'Comic Sans MS', cursive, sans-serif;
@@ -215,6 +223,10 @@
             font-weight: bold; 
             margin-top: 2px;
         }
+
+        .cv-blue-line-thick { height: 4px; background-color: #002060; margin-bottom: 2px; }
+        .cv-blue-line-thin { height: 1px; background-color: #002060; margin-bottom: 15px; }
+
         .cv-name-box {
             border: 1px solid #000;
             padding: 5px 10px;
@@ -416,6 +428,10 @@
                     <div class="line2">VITAE</div>
                 </div>
             </div>
+
+            <div class="cv-blue-line-thick"></div>
+            <div class="cv-blue-line-thin"></div>
+
             <div class="cv-name-box">
                 <div class="cv-name" id="cv-name" contenteditable="true">Your Name</div>
             </div>
