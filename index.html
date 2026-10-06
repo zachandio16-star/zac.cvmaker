@@ -240,6 +240,15 @@
             display: block !important;
         }
 
+        /* GLOBAL PASSPORT PHOTO STYLING (No Circle, No Stretch, No Crop) */
+        .cv-photo-container img {
+            width: 110px !important;
+            height: 135px !important;
+            border-radius: 4px !important; /* Passport rectangular shape */
+            object-fit: contain !important; /* Preserves aspect ratio, no cropping or stretching */
+            background-color: #f8f9fa; /* Background if image ratio leaves small padding */
+        }
+
         [contenteditable="true"]:hover {
             outline: 1px dashed #0070c0;
             background-color: #f0f8ff;
@@ -287,24 +296,24 @@
         .layout-19 .cv-main-header-title { color: #80cbc4; border-bottom-color: #80cbc4; }
         .layout-20 .cv-main-header-title { color: #1a237e; text-align: center; font-size: 22px; border-bottom: 2px solid #1a237e; padding-bottom: 5px; margin-bottom: 15px; }
 
-        /* LAYOUT 1: Classic Header Banner (Default) */
+        /* LAYOUT SPECIFIC ADJUSTMENTS FOR PASSPORT PHOTO */
         .layout-1 { padding: 40px; }
         .layout-1 .cv-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid #0070c0; padding-bottom: 15px; margin-bottom: 20px; }
-        .layout-1 .cv-photo-container img { width: 110px; height: 110px; border-radius: 50%; border: 3px solid #0070c0; object-fit: cover; }
+        .layout-1 .cv-photo-container img { border: 2px solid #0070c0 !important; }
         .layout-1 .cv-section-title { background: #0070c0; color: #fff; padding: 4px 10px; font-weight: bold; margin: 15px 0 10px 0; border-radius: 3px; }
 
         /* LAYOUT 2: Modern Left Sidebar Split Layout (2 Columns) */
         .layout-2 { display: flex; min-height: 1050px; }
         .layout-2 .cv-sidebar { width: 30%; background: #2c3e50; color: #fff; padding: 30px 15px; }
         .layout-2 .cv-main-content { width: 70%; padding: 30px; }
-        .layout-2 .cv-photo-container img { width: 130px; height: 130px; border-radius: 50%; border: 3px solid #fff; margin: 0 auto 15px auto; display: block; object-fit: cover; }
+        .layout-2 .cv-photo-container img { border: 2px solid #fff !important; margin: 0 auto 15px auto; display: block; }
         .layout-2 .cv-section-title { border-bottom: 2px solid #2c3e50; color: #2c3e50; font-weight: bold; margin: 15px 0 10px 0; font-size: 16px; text-transform: uppercase; }
         .layout-2 .cv-sidebar .cv-section-title { color: #1abc9c; border-bottom-color: #1abc9c; }
 
         /* LAYOUT 3: Centered Executive Layout */
         .layout-3 { padding: 40px; text-align: center; }
         .layout-3 .cv-header { border-bottom: 1px solid #ccc; padding-bottom: 20px; margin-bottom: 20px; }
-        .layout-3 .cv-photo-container img { width: 120px; height: 120px; border-radius: 10px; margin: 0 auto 10px auto; object-fit: cover; }
+        .layout-3 .cv-photo-container img { border: 1px solid #ccc !important; margin: 0 auto 10px auto; }
         .layout-3 .cv-section-title { font-size: 18px; font-weight: bold; text-transform: uppercase; letter-spacing: 2px; color: #333; margin: 20px 0 10px 0; border-top: 1px solid #333; border-bottom: 1px solid #333; padding: 3px 0; }
         .layout-3 .cv-body { text-align: left; }
 
@@ -312,7 +321,7 @@
         .layout-4 { display: flex; flex-direction: row-reverse; min-height: 1050px; }
         .layout-4 .cv-sidebar { width: 32%; background: #1e272e; color: #f5f6fa; padding: 30px 15px; }
         .layout-4 .cv-main-content { width: 68%; padding: 30px; }
-        .layout-4 .cv-photo-container img { width: 120px; height: 140px; border-radius: 5px; border: 2px solid #dcdde1; margin-bottom: 15px; object-fit: cover; }
+        .layout-4 .cv-photo-container img { border: 2px solid #dcdde1 !important; margin-bottom: 15px; }
         .layout-4 .cv-section-title { border-left: 4px solid #00d2d3; padding-left: 8px; font-size: 16px; font-weight: bold; margin: 15px 0; color: #2f3640; }
         .layout-4 .cv-sidebar .cv-section-title { color: #00d2d3; }
 
@@ -320,34 +329,34 @@
         .layout-5 { padding: 0; }
         .layout-5 .cv-header { background: #0070c0; color: white; padding: 30px; display: flex; gap: 20px; align-items: center; }
         .layout-5 .cv-body { padding: 30px; }
-        .layout-5 .cv-photo-container img { width: 110px; height: 110px; border-radius: 50%; border: 3px solid #fff; object-fit: cover; }
+        .layout-5 .cv-photo-container img { border: 2px solid #fff !important; }
         .layout-5 .cv-section-title { font-size: 16px; font-weight: bold; color: #0070c0; border-bottom: 2px solid #0070c0; margin: 15px 0 10px 0; padding-bottom: 3px; }
 
         /* LAYOUT 6: Corporate Boxed Border Layout */
         .layout-6 { padding: 25px; }
         .layout-6 .cv-inner-box { border: 2px solid #333; padding: 25px; min-height: 980px; }
         .layout-6 .cv-header { display: flex; justify-content: space-between; border-bottom: 2px double #333; padding-bottom: 15px; }
-        .layout-6 .cv-photo-container img { width: 100px; height: 120px; border: 1px solid #333; object-fit: cover; }
+        .layout-6 .cv-photo-container img { border: 1px solid #333 !important; }
         .layout-6 .cv-section-title { background: #f0f0f0; border-left: 5px solid #333; padding: 5px 10px; font-weight: bold; margin: 15px 0 10px 0; }
 
         /* LAYOUT 7: Clean Minimalist Line-art Layout */
         .layout-7 { padding: 40px; }
         .layout-7 .cv-header { text-align: left; margin-bottom: 20px; position: relative; }
         .layout-7 .cv-photo-container { position: absolute; right: 0; top: 0; }
-        .layout-7 .cv-photo-container img { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; }
+        .layout-7 .cv-photo-container img { border: 1px solid #ccc !important; }
         .layout-7 .cv-section-title { font-weight: bold; text-transform: uppercase; color: #444; border-bottom: 1px solid #aaa; margin: 20px 0 10px 0; letter-spacing: 1px; }
 
         /* LAYOUT 8: Teal Two-Tone Grid Layout */
         .layout-8 { display: flex; min-height: 1050px; }
         .layout-8 .cv-sidebar { width: 35%; background: #e0f2f1; padding: 30px 15px; border-right: 3px solid #00796b; }
         .layout-8 .cv-main-content { width: 65%; padding: 30px; }
-        .layout-8 .cv-photo-container img { width: 120px; height: 120px; border-radius: 50%; border: 4px solid #00796b; margin: 0 auto 15px auto; display: block; object-fit: cover; }
+        .layout-8 .cv-photo-container img { border: 2px solid #00796b !important; margin: 0 auto 15px auto; display: block; }
         .layout-8 .cv-section-title { color: #00796b; font-size: 16px; font-weight: bold; margin: 15px 0 8px 0; border-bottom: 1px dashed #00796b; }
 
         /* LAYOUT 9: Emerald Header Card Layout */
         .layout-9 { padding: 30px; }
         .layout-9 .cv-header { background: #2e7d32; color: #fff; padding: 25px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; }
-        .layout-9 .cv-photo-container img { width: 110px; height: 110px; border-radius: 8px; border: 2px solid #fff; object-fit: cover; }
+        .layout-9 .cv-photo-container img { border: 2px solid #fff !important; }
         .layout-9 .cv-section-title { font-size: 16px; font-weight: bold; color: #2e7d32; margin: 20px 0 10px 0; display: flex; align-items: center; }
         .layout-9 .cv-section-title::after { content: ''; flex: 1; height: 2px; background: #2e7d32; margin-left: 10px; }
 
@@ -355,14 +364,14 @@
         .layout-10 { display: flex; min-height: 1050px; }
         .layout-10 .cv-sidebar { width: 28%; background: #4a0013; color: #fff; padding: 30px 15px; }
         .layout-10 .cv-main-content { width: 72%; padding: 30px; }
-        .layout-10 .cv-photo-container img { width: 110px; height: 130px; border-radius: 5px; margin-bottom: 15px; object-fit: cover; }
+        .layout-10 .cv-photo-container img { border: 2px solid #ffb3c1 !important; margin-bottom: 15px; }
         .layout-10 .cv-section-title { color: #800020; border-bottom: 2px solid #800020; font-weight: bold; margin: 15px 0 10px 0; }
         .layout-10 .cv-sidebar .cv-section-title { color: #ffb3c1; border-bottom-color: #ffb3c1; }
 
         /* LAYOUT 11: Royal Gold Border Banner Layout */
         .layout-11 { padding: 35px; }
         .layout-11 .cv-header { border-top: 5px solid #b78103; border-bottom: 5px solid #b78103; padding: 20px 0; display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-        .layout-11 .cv-photo-container img { width: 110px; height: 110px; border-radius: 50%; border: 2px solid #b78103; object-fit: cover; }
+        .layout-11 .cv-photo-container img { border: 2px solid #b78103 !important; }
         .layout-11 .cv-section-title { background: #fdf6e2; color: #5c4100; font-weight: bold; padding: 6px 12px; border-left: 4px solid #b78103; margin: 15px 0 10px 0; }
 
         /* LAYOUT 12: Modern Charcoal Vertical Strip Layout */
@@ -370,61 +379,61 @@
         .layout-12 .cv-sidebar { width: 8px; background: #333333; }
         .layout-12 .cv-wrapper-body { width: calc(100% - 8px); padding: 35px; }
         .layout-12 .cv-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #333; padding-bottom: 15px; margin-bottom: 20px; }
-        .layout-12 .cv-photo-container img { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; }
+        .layout-12 .cv-photo-container img { border: 1px solid #333 !important; }
         .layout-12 .cv-section-title { color: #333; font-size: 16px; font-weight: bold; margin: 15px 0 10px 0; text-transform: uppercase; letter-spacing: 1px; }
 
         /* LAYOUT 13: Ocean Blue Carded Section Layout */
         .layout-13 { padding: 35px; background: #f4f9fc; min-height: 1050px; }
         .layout-13 .cv-header { background: #fff; padding: 20px; border-radius: 6px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
-        .layout-13 .cv-photo-container img { width: 100px; height: 100px; border-radius: 50%; border: 3px solid #0077b6; object-fit: cover; }
+        .layout-13 .cv-photo-container img { border: 2px solid #0077b6 !important; }
         .layout-13 .cv-section-title { background: #0077b6; color: #fff; padding: 6px 12px; border-radius: 4px; font-weight: bold; margin: 15px 0 10px 0; }
 
         /* LAYOUT 14: Dark Chocolate Full Sidebar */
         .layout-14 { display: flex; min-height: 1050px; }
         .layout-14 .cv-sidebar { width: 33%; background: #3e2723; color: #d7ccc8; padding: 30px 15px; }
         .layout-14 .cv-main-content { width: 67%; padding: 30px; }
-        .layout-14 .cv-photo-container img { width: 120px; height: 120px; border-radius: 50%; border: 3px solid #d7ccc8; margin: 0 auto 15px auto; display: block; object-fit: cover; }
+        .layout-14 .cv-photo-container img { border: 2px solid #d7ccc8 !important; margin: 0 auto 15px auto; display: block; }
         .layout-14 .cv-section-title { color: #3e2723; font-weight: bold; border-bottom: 2px solid #3e2723; margin: 15px 0 10px 0; }
         .layout-14 .cv-sidebar .cv-section-title { color: #ffccbc; border-bottom-color: #ffccbc; }
 
         /* LAYOUT 15: Crimson Red Bold Header */
         .layout-15 { padding: 35px; }
         .layout-15 .cv-header { border-left: 8px solid #c62828; padding-left: 20px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
-        .layout-15 .cv-photo-container img { width: 110px; height: 110px; border-radius: 4px; object-fit: cover; }
+        .layout-15 .cv-photo-container img { border: 1px solid #c62828 !important; }
         .layout-15 .cv-section-title { color: #c62828; font-weight: bold; font-size: 16px; border-bottom: 1px solid #c62828; margin: 15px 0 10px 0; padding-bottom: 3px; }
 
         /* LAYOUT 16: Olive Prestige Split Column */
         .layout-16 { display: flex; min-height: 1050px; }
         .layout-16 .cv-sidebar { width: 30%; background: #2e3b12; color: #f0f4e8; padding: 30px 15px; }
         .layout-16 .cv-main-content { width: 70%; padding: 30px; }
-        .layout-16 .cv-photo-container img { width: 110px; height: 110px; border-radius: 50%; border: 2px solid #8fbc8f; margin-bottom: 15px; object-fit: cover; }
+        .layout-16 .cv-photo-container img { border: 2px solid #8fbc8f !important; margin-bottom: 15px; }
         .layout-16 .cv-section-title { color: #556b2f; font-weight: bold; border-bottom: 2px solid #556b2f; margin: 15px 0 10px 0; }
         .layout-16 .cv-sidebar .cv-section-title { color: #8fbc8f; border-bottom-color: #8fbc8f; }
 
         /* LAYOUT 17: Sunset Amber Header Layout */
         .layout-17 { padding: 35px; }
         .layout-17 .cv-header { background: #fff3e0; border: 1px solid #ffe0b2; padding: 20px; border-radius: 6px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-        .layout-17 .cv-photo-container img { width: 100px; height: 100px; border-radius: 50%; border: 3px solid #ff6f00; object-fit: cover; }
+        .layout-17 .cv-photo-container img { border: 2px solid #ff6f00 !important; }
         .layout-17 .cv-section-title { color: #e65100; font-weight: bold; border-bottom: 2px solid #ff6f00; margin: 15px 0 10px 0; }
 
         /* LAYOUT 18: Plum Elegance Centered Avatar */
         .layout-18 { padding: 40px; }
         .layout-18 .cv-header { text-align: center; border-bottom: 2px solid #4a0072; padding-bottom: 20px; margin-bottom: 20px; }
-        .layout-18 .cv-photo-container img { width: 120px; height: 120px; border-radius: 50%; border: 3px solid #880e4f; margin: 0 auto 10px auto; object-fit: cover; }
+        .layout-18 .cv-photo-container img { border: 2px solid #880e4f !important; margin: 0 auto 10px auto; }
         .layout-18 .cv-section-title { color: #4a0072; font-weight: bold; text-align: center; background: #f3e5f5; padding: 4px; margin: 15px 0 10px 0; }
 
         /* LAYOUT 19: Deep Emerald Two Column Dark Sidebar */
         .layout-19 { display: flex; min-height: 1050px; }
         .layout-19 .cv-sidebar { width: 32%; background: #00251a; color: #e0f2f1; padding: 30px 15px; }
         .layout-19 .cv-main-content { width: 68%; padding: 30px; }
-        .layout-19 .cv-photo-container img { width: 110px; height: 130px; border-radius: 6px; border: 2px solid #80cbc4; margin-bottom: 15px; object-fit: cover; }
+        .layout-19 .cv-photo-container img { border: 2px solid #80cbc4 !important; margin-bottom: 15px; }
         .layout-19 .cv-section-title { color: #004d40; font-weight: bold; border-bottom: 2px solid #004d40; margin: 15px 0 10px 0; }
         .layout-19 .cv-sidebar .cv-section-title { color: #80cbc4; border-bottom-color: #80cbc4; }
 
         /* LAYOUT 20: Indigo Classic Frame Layout */
         .layout-20 { padding: 35px; border: 10px solid #1a237e; min-height: 1050px; }
         .layout-20 .cv-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px dashed #1a237e; padding-bottom: 15px; margin-bottom: 20px; }
-        .layout-20 .cv-photo-container img { width: 100px; height: 100px; border-radius: 50%; border: 2px solid #1a237e; object-fit: cover; }
+        .layout-20 .cv-photo-container img { border: 2px solid #1a237e !important; }
         .layout-20 .cv-section-title { background: #1a237e; color: #fff; font-weight: bold; padding: 4px 10px; margin: 15px 0 10px 0; }
 
         /* Shared Element Styling inside Canvas */
@@ -904,7 +913,7 @@
             .cv-info-table td.label { font-weight: bold; width: 35%; }
             ul { margin-left: 15pt; }
             li { font-size: 10pt; margin-bottom: 3pt; }
-            img { max-width: 100pt; max-height: 100pt; }
+            img { max-width: 100pt; max-height: 120pt; }
         </style>`;
 
         const header = "<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'><head><meta charset='utf-8'>" + styles + "</head><body><div class='WordSection1'>";
