@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV Builder - Exact Replica</title>
+    <!-- html2canvas Library for PNG Download -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Times New Roman', Times, serif;
+        }
+
+        body {
+            background-color: #f0f2f5;
+            padding: 20px;
+        }
+
+        .main-container {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        /* Form Section */
+        .form-section {
+            flex: 1;
+            min-width: 350px;
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            font-family: Arial, sans-serif;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .form-section h2 {
+            margin-bottom: 15px;
+            color: #1a365d;
+            font-family: Arial, sans-serif;
+        }
+
+        .form-group {
+            margin-bottom: 12px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 4px;
+            color: #333;
+            font-family: Arial, sans-serif;
+        }
+
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 13px;
+            font-family: Arial, sans-serif;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            height: 60px;
+        }
+
+        /* Preview Section */
+        .preview-section {
+            flex: 1.2;
+            min-width: 400px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .btn-container {
+            width: 100%;
+            max-width: 700px;
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+        }
+
+        .btn-pdf { background-color: #d32f2f; }
+        .btn-img { background-color: #388e3c; }
+        .btn-word { background-color: #1976d2; }
+
+        /* CV Paper Exact Replica */
+        .cv-paper {
+            width: 100%;
+            max-width: 700px;
+            background: #ffffff;
+            padding: 30px 40px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            box-sizing: border-box;
+            background-clip: padding-box;
+        }
+
+        /* Top Header Logo */
+        .cv-top-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 5px;
+        }
+
+        .cv-logo-svg {
+            width: 55px;
+            height: 55px;
+        }
+
+        .cv-logo-text {
+            color: #0070c0;
+            font-family: 'Brush Script MT', 'Comic Sans MS', cursive;
+            font-style: italic;
+            line-height: 0.9;
+        }
+
+        .cv-logo-text .line1 {
+            font-size: 18px;
+            letter-spacing: 2px;
+        }
+
+        .cv-logo-text .line2 {
+            font-size: 22px;
+            letter-spacing: 4px;
+            font-weight: bold;
+        }
+
+        /* Blue Divider Lines */
+        .cv-blue-line-thick {
+            height: 4px;
+            background-color: #002060;
+            margin-bottom: 2px;
+        }
+
+        .cv-blue-line-thin {
+            height: 1px;
+            background-color: #002060;
+            margin-bottom: 15px;
+        }
+
+        /* Name Box Header */
+        .cv-name-box {
+            border: 1px solid #000;
+            padding: 5px 10px;
+            text-align: center;
+            box-shadow: 2px 2px 0px #888888;
+            margin-bottom: 8px;
+            background-color: #fff;
+        }
+
+        .cv-name {
+            font-size: 28px;
+            font-weight: bold;
+            font-style: italic;
+            letter-spacing: 1px;
+            color: #000;
+        }
+
+        .cv-contact-info {
+            text-align: center;
+            font-size: 12px;
+            font-weight: bold;
+            font-style: italic;
+            line-height: 1.4;
+            margin-bottom: 15px;
+        }
+
+        .cv-contact-info a {
+            color: #0000ff;
+            text-decoration: underline;
+        }
+
+        /* Grey Banner Titles */
+        .cv-section-banner {
+            background-color: #c0c0c0;
+            padding: 2px 8px;
+            font-size: 16px;
+            font-weight: bold;
+            font-style: italic;
+            color: #000;
+            margin-top: 10px;
+            margin-bottom: 8px;
+            border-radius: 2px;
+        }
+
+        .cv-objective-text {
+            font-size: 13px;
+            font-style: italic;
+            font-weight: bold;
+            line-height: 1.35;
+            text-align: justify;
+            color: #000;
+            margin-bottom: 10px;
+        }
+
+        /* Personal Info Table */
+        .cv-info-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 10px;
+        }
+
+        .cv-info-table td {
+            padding: 2px 0;
+            font-size: 13px;
+            font-style: italic;
+            font-weight: bold;
+            vertical-align: top;
+        }
+
+        .cv-info-table td.label {
+            width: 35%;
+        }
+
+        .cv-info-table td.colon {
+            width: 5%;
+        }
+
+        .cv-info-table td.value {
+            width: 60%;
+        }
+
+        /* Bullet Lists */
+        .cv-list {
+            list-style: none;
+            padding-left: 25px;
+            margin-bottom: 10px;
+        }
+
+        .cv-list li {
+            font-size: 13px;
+            font-style: italic;
+            font-weight: bold;
+            position: relative;
+            margin-bottom: 3px;
+            line-height: 1.3;
+        }
+
+        .cv-list li::before {
+            content: "❖";
+            position: absolute;
+            left: -20px;
+            font-size: 11px;
+            font-style: normal;
+        }
+
+        [contenteditable="true"]:hover {
+            outline: 1px dashed #0070c0;
+            background-color: #f0f8ff;
+            cursor: text;
+        }
+
+        /* Print Style */
+        @media print {
+            body * { visibility: hidden; }
+            #cv-paper, #cv-paper * { visibility: visible; }
+            #cv-paper {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                box-shadow: none;
+            }
+            .form-section, .btn-container { display: none !important; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="main-container">
+
+    <!-- Form Section -->
+    <div class="form-section">
+        <h2>CV Information</h2>
+        
+        <div class="form-group">
+            <label>Full Name</label>
+            <input type="text" id="in-name" value="Zulfiqar Ali" oninput="syncCV()">
+        </div>
+        <div class="form-group">
+            <label>Address</label>
+            <input type="text" id="in-address" value="Muhalla Khan Chandabad New Fojdari Road Shikarpur" oninput="syncCV()">
+        </div>
+        <div class="form-group">
+            <label>Email Address</label>
+            <input type="text" id="in-email" value="zachandio6@gmail.com" oninput="syncCV()">
+        </div>
+        <div class="form-group">
+            <label>Cell / Phone</label>
+            <input type="text" id="in-phone" value="0304-2963455" oninput="syncCV()">
+        </div>
+
+        <hr style="margin: 15px 0;">
+
+        <div class="form-group">
+            <label>Objective</label>
+            <textarea id="in-objective" oninput="syncCV()">Devote my experience skill in reputed organization meet to the challenge in practical life. A full time purpose full position in a dynamic organization that confederates opportunities of professional improvement through training and vocational recognition's want to improve education system through devotional spirit and modern ideas.</textarea>
+        </div>
+
+        <hr style="margin: 15px 0;">
+
+        <div class="form-group"><label>Father's Name</label><input type="text" id="in-father" value="Abdul Wahab Chandio" oninput="syncCV()"></div>
+        <div class="form-group"><label>Date of Birth</label><input type="text" id="in-dob" value="23-03-2000" oninput="syncCV()"></div>
+        <div class="form-group"><label>C.N.I.C #</label><input type="text" id="in-cnic" value="43304-7112913-5" oninput="syncCV()"></div>
+        <div class="form-group"><label>Marital Status</label><input type="text" id="in-marital" value="Married" oninput="syncCV()"></div>
+        <div class="form-group"><label>Religion</label><input type="text" id="in-religion" value="Islam" oninput="syncCV()"></div>
+        <div class="form-group"><label>Nationality</label><input type="text" id="in-nationality" value="Pakistani" oninput="syncCV()"></div>
+
+        <hr style="margin: 15px 0;">
+
+        <div class="form-group">
+            <label>Academic Qualification (Enter line by line)</label>
+            <textarea id="in-academic" oninput="syncCV()">Matric (Science).
+Intermediate (Science)</textarea>
+        </div>
+
+        <div class="form-group">
+            <label>Computer Skills (Enter line by line)</label>
+            <textarea id="in-computer" oninput="syncCV()">Microsoft Office.
+Internet Browsing.
+Window Installation.
+DIT Continue</textarea>
+        </div>
+
+        <div class="form-group">
+            <label>Experience (Enter line by line)</label>
+            <textarea id="in-experience" oninput="syncCV()">Worked as a Construction Supervisor at Hidaya Trust for 2 Years
+Worked as a Fleet Manager at Hidaya Trust for 6 Months
+Worked as a Weighbridge Operator at Meskay & Femtee Trading Company for 1.5 Years
+Working as an Accountant at Meskay & Femtee Trading Company from 2023 to till date</textarea>
+        </div>
+
+        <div class="form-group">
+            <label>Language Proficiency (Enter line by line)</label>
+            <textarea id="in-language" oninput="syncCV()">English
+Urdu
+Sindh
+Balochi</textarea>
+        </div>
+
+        <div class="form-group">
+            <label>Reference</label>
+            <textarea id="in-reference" oninput="syncCV()">Reference will be furnished on demand.</textarea>
+        </div>
+    </div>
+
+    <!-- Preview Section -->
+    <div class="preview-section">
+        
+        <div class="btn-container">
+            <button class="btn btn-pdf" onclick="downloadPDF()">📄 PDF ڈاؤن لوڈ</button>
+            <button class="btn btn-img" onclick="downloadImage()">🖼️ Image ڈاؤن لوڈ</button>
+            <button class="btn btn-word" onclick="downloadWord()">📝 Word ڈاؤن لوڈ</button>
+        </div>
+
+        <!-- CV Paper -->
+        <div class="cv-paper" id="cv-paper">
+            
+            <!-- Top Logo Area -->
+            <div class="cv-top-logo">
+                <svg class="cv-logo-svg" viewBox="0 0 100 100">
+                    <path d="M 15 25 C 5 25 5 75 25 80 C 45 85 55 45 45 30 C 35 15 20 40 30 65 C 35 75 50 75 55 60 C 60 45 40 35 30 45" fill="none" stroke="#0070c0" stroke-width="7" stroke-linecap="round"/>
+                    <path d="M 45 20 L 75 80" fill="none" stroke="#0070c0" stroke-width="7" stroke-linecap="round"/>
+                    <path d="M 65 20 L 95 80" fill="none" stroke="#0070c0" stroke-width="7" stroke-linecap="round"/>
+                </svg>
+                <div class="cv-logo-text">
+                    <div class="line1">URRICULUM</div>
+                    <div class="line2">ITAE</div>
+                </div>
+            </div>
+
+            <div class="cv-blue-line-thick"></div>
+            <div class="cv-blue-line-thin"></div>
+
+            <!-- Name Box -->
+            <div class="cv-name-box">
+                <div class="cv-name" id="cv-name" contenteditable="true">Zulfiqar Ali</div>
+            </div>
+
+            <!-- Contact Info -->
+            <div class="cv-contact-info">
+                <div><u>Address:</u> <span id="cv-address" contenteditable="true">Muhalla Khan Chandabad New Fojdari Road Shikarpur</span></div>
+                <div><a href="mailto:zachandio6@gmail.com" id="cv-email" contenteditable="true">zachandio6@gmail.com</a></div>
+                <div>Cell: <span id="cv-phone" contenteditable="true">0304-2963455</span></div>
+            </div>
+
+            <!-- Objective -->
+            <div class="cv-section-banner">Objective</div>
+            <div class="cv-objective-text" id="cv-objective" contenteditable="true">
+                Devote my experience skill in reputed organization meet to the challenge in practical life. A full time purpose full position in a dynamic organization that confederates opportunities of professional improvement through training and vocational recognition's want to improve education system through devotional spirit and modern ideas.
+            </div>
+
+            <!-- Personal Information -->
+            <div class="cv-section-banner">Personal Information</div>
+            <table class="cv-info-table">
+                <tr>
+                    <td class="label">Father's Name:</td>
+                    <td class="colon"></td>
+                    <td class="value" id="cv-father" contenteditable="true">Abdul Wahab Chandio</td>
+                </tr>
+                <tr>
+                    <td class="label">Date of Birth:</td>
+                    <td class="colon"></td>
+                    <td class="value" id="cv-dob" contenteditable="true">23-03-2000</td>
+                </tr>
+                <tr>
+                    <td class="label">C.N.I.C #:</td>
+                    <td class="colon"></td>
+                    <td class="value" id="cv-cnic" contenteditable="true">43304-7112913-5</td>
+                </tr>
+                <tr>
+                    <td class="label">Marital Status:</td>
+                    <td class="colon"></td>
+                    <td class="value" id="cv-marital" contenteditable="true">Married</td>
+                </tr>
+                <tr>
+                    <td class="label">Religion:</td>
+                    <td class="colon"></td>
+                    <td class="value" id="cv-religion" contenteditable="true">Islam</td>
+                </tr>
+                <tr>
+                    <td class="label">Nationality:</td>
+                    <td class="colon"></td>
+                    <td class="value" id="cv-nationality" contenteditable="true">Pakistani</td>
+                </tr>
+            </table>
+
+            <!-- Academic Qualification -->
+            <div class="cv-section-banner">Academic Qualification</div>
+            <ul class="cv-list" id="cv-academic" contenteditable="true">
+                <li>Matric (Science).</li>
+                <li>Intermediate (Science)</li>
+            </ul>
+
+            <!-- Computer Skills -->
+            <div class="cv-section-banner">Computer Skills</div>
+            <ul class="cv-list" id="cv-computer" contenteditable="true">
+                <li>Microsoft Office.</li>
+                <li>Internet Browsing.</li>
+                <li>Window Installation.</li>
+                <li>DIT Continue</li>
+            </ul>
+
+            <!-- Experience -->
+            <div class="cv-section-banner">Experience</div>
+            <ul class="cv-list" id="cv-experience" contenteditable="true">
+                <li>Worked as a Construction Supervisor at Hidaya Trust for 2 Years</li>
+                <li>Worked as a Fleet Manager at Hidaya Trust for 6 Months</li>
+                <li>Worked as a Weighbridge Operator at Meskay & Femtee Trading Company for 1.5 Years</li>
+                <li>Working as an Accountant at Meskay & Femtee Trading Company from 2023 to till date</li>
+            </ul>
+
+            <!-- Language Proficiency -->
+            <div class="cv-section-banner">Language Profeciency</div>
+            <ul class="cv-list" id="cv-language" contenteditable="true">
+                <li>English</li>
+                <li>Urdu</li>
+                <li>Sindh</li>
+                <li>Balochi</li>
+            </ul>
+
+            <!-- Reference -->
+            <div class="cv-section-banner">Reference:</div>
+            <ul class="cv-list" id="cv-reference" contenteditable="true">
+                <li>Reference will be furnished on demand.</li>
+            </ul>
+
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // Synchronize Form to Preview
+    function syncCV() {
+        document.getElementById('cv-name').innerText = document.getElementById('in-name').value;
+        document.getElementById('cv-address').innerText = document.getElementById('in-address').value;
+        document.getElementById('cv-email').innerText = document.getElementById('in-email').value;
+        document.getElementById('cv-email').href = "mailto:" + document.getElementById('in-email').value;
+        document.getElementById('cv-phone').innerText = document.getElementById('in-phone').value;
+        document.getElementById('cv-objective').innerText = document.getElementById('in-objective').value;
+        
+        document.getElementById('cv-father').innerText = document.getElementById('in-father').value;
+        document.getElementById('cv-dob').innerText = document.getElementById('in-dob').value;
+        document.getElementById('cv-cnic').innerText = document.getElementById('in-cnic').value;
+        document.getElementById('cv-marital').innerText = document.getElementById('in-marital').value;
+        document.getElementById('cv-religion').innerText = document.getElementById('in-religion').value;
+        document.getElementById('cv-nationality').innerText = document.getElementById('in-nationality').value;
+
+        updateList('cv-academic', 'in-academic');
+        updateList('cv-computer', 'in-computer');
+        updateList('cv-experience', 'in-experience');
+        updateList('cv-language', 'in-language');
+        updateList('cv-reference', 'in-reference');
+    }
+
+    function updateList(cvListId, inputId) {
+        const text = document.getElementById(inputId).value;
+        const lines = text.split('\n');
+        const listElem = document.getElementById(cvListId);
+        listElem.innerHTML = '';
+        lines.forEach(line => {
+            if(line.trim() !== '') {
+                const li = document.createElement('li');
+                li.innerText = line;
+                listElem.appendChild(li);
+            }
+        });
+    }
+
+    // Downloads
+    function downloadPDF() {
+        window.print();
+    }
+
+    function downloadImage() {
+        const cvPaper = document.getElementById('cv-paper');
+        html2canvas(cvPaper, { scale: 2 }).then(canvas => {
+            const link = document.createElement('a');
+            link.download = 'CV_Zulfiqar_Ali.png';
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        });
+    }
+
+    function downloadWord() {
+        const header = "<html xmlns:o='urn:schemas-microsoft-com:office:office' "+
+            "xmlns:w='urn:schemas-microsoft-com:office:word' "+
+            "xmlns='http://www.w3.org/TR/REC-html40'>"+
+            "<head><meta charset='utf-8'><title>Export Word</title></head><body>";
+        const footer = "</body></html>";
+        const sourceHTML = header + document.getElementById('cv-paper').innerHTML + footer;
+
+        const source = 'data:application/vnd.ms-word;charset=utf-8,' + encodeURIComponent(sourceHTML);
+        const fileDownload = document.createElement("a");
+        
+        document.body.appendChild(fileDownload);
+        fileDownload.href = source;
+        fileDownload.download = 'CV_Zulfiqar_Ali.doc';
+        fileDownload.click();
+        document.body.removeChild(fileDownload);
+    }
+</script>
+
+</body>
+</html>
