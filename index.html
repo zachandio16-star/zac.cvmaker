@@ -114,7 +114,7 @@
 
         .form-group textarea {
             resize: vertical;
-            height: 70px;
+            height: 75px;
         }
 
         .form-actions {
@@ -331,8 +331,7 @@
     <!-- 1. WELCOME POPUP MODAL -->
     <div class="modal-overlay" id="welcomeModal">
         <div class="modal-content">
-            <!-- یہاں آپ اپنی ویب سائٹ کا نام تبدیل کر سکتے ہیں -->
-            <h1>[ZAC CV Maker]</h1>
+            <h1>[آپ کی ویب سائٹ کا نام]</h1>
             <p>Welcome to Professional CV Builder! Create your perfectly styled CV in just a few minutes.</p>
             <button class="btn-modal" onclick="startCVCreation()">Create New CV</button>
         </div>
@@ -344,66 +343,56 @@
         
         <div class="form-group">
             <label>Full Name</label>
-            <input type="text" id="in-name" value="Zulfiqar Ali">
+            <input type="text" id="in-name" placeholder="e.g. John Doe">
         </div>
         <div class="form-group">
             <label>Address</label>
-            <input type="text" id="in-address" value="Muhalla Khan Chandabad New Fojdari Road Shikarpur">
+            <input type="text" id="in-address" placeholder="e.g. House #123, Street 4, City, Country">
         </div>
         <div class="form-group">
             <label>Email Address</label>
-            <input type="text" id="in-email" value="zachandio6@gmail.com">
+            <input type="text" id="in-email" placeholder="e.g. example@email.com">
         </div>
         <div class="form-group">
             <label>Cell / Phone</label>
-            <input type="text" id="in-phone" value="0304-2963455">
+            <input type="text" id="in-phone" placeholder="e.g. 0300-1234567">
         </div>
 
         <div class="form-group">
             <label>Objective</label>
-            <textarea id="in-objective">Devote my experience skill in reputed organization meet to the challenge in practical life. A full time purpose full position in a dynamic organization that confederates opportunities of professional improvement through training and vocational recognition's want to improve education system through devotional spirit and modern ideas.</textarea>
+            <textarea id="in-objective" placeholder="e.g. To secure a challenging position in a reputable organization to expand my learning, knowledge, and skills."></textarea>
         </div>
 
-        <div class="form-group"><label>Father's Name</label><input type="text" id="in-father" value="Abdul Wahab Chandio"></div>
-        <div class="form-group"><label>Date of Birth</label><input type="text" id="in-dob" value="23-03-2000"></div>
-        <div class="form-group"><label>C.N.I.C #</label><input type="text" id="in-cnic" value="43304-7112913-5"></div>
-        <div class="form-group"><label>Marital Status</label><input type="text" id="in-marital" value="Married"></div>
-        <div class="form-group"><label>Religion</label><input type="text" id="in-religion" value="Islam"></div>
-        <div class="form-group"><label>Nationality</label><input type="text" id="in-nationality" value="Pakistani"></div>
+        <div class="form-group"><label>Father's Name</label><input type="text" id="in-father" placeholder="e.g. Father Name"></div>
+        <div class="form-group"><label>Date of Birth</label><input type="text" id="in-dob" placeholder="e.g. DD-MM-YYYY"></div>
+        <div class="form-group"><label>C.N.I.C #</label><input type="text" id="in-cnic" placeholder="e.g. 00000-0000000-0"></div>
+        <div class="form-group"><label>Marital Status</label><input type="text" id="in-marital" placeholder="e.g. Single / Married"></div>
+        <div class="form-group"><label>Religion</label><input type="text" id="in-religion" placeholder="e.g. Islam"></div>
+        <div class="form-group"><label>Nationality</label><input type="text" id="in-nationality" placeholder="e.g. Pakistani"></div>
 
         <div class="form-group">
             <label>Academic Qualification (Enter line by line)</label>
-            <textarea id="in-academic">Matric (Science).
-Intermediate (Science)</textarea>
+            <textarea id="in-academic" placeholder="e.g. Matriculation (Science)&#10;Intermediate (Pre-Engineering)&#10;Bachelor of Science"></textarea>
         </div>
 
         <div class="form-group">
             <label>Computer Skills (Enter line by line)</label>
-            <textarea id="in-computer">Microsoft Office.
-Internet Browsing.
-Window Installation.
-DIT Continue</textarea>
+            <textarea id="in-computer" placeholder="e.g. Microsoft Office&#10;Internet Browsing&#10;Data Entry"></textarea>
         </div>
 
         <div class="form-group">
             <label>Experience (Enter line by line)</label>
-            <textarea id="in-experience">Worked as a Construction Supervisor at Hidaya Trust for 2 Years
-Worked as a Fleet Manager at Hidaya Trust for 6 Months
-Worked as a Weighbridge Operator at Meskay & Femtee Trading Company for 1.5 Years
-Working as an Accountant at Meskay & Femtee Trading Company from 2023 to till date</textarea>
+            <textarea id="in-experience" placeholder="e.g. Worked as Office Assistant at ABC Company for 1 Year&#10;Worked as Data Entry Operator at XYZ Company for 2 Years"></textarea>
         </div>
 
         <div class="form-group">
             <label>Language Proficiency (Enter line by line)</label>
-            <textarea id="in-language">English
-Urdu
-Sindh
-Balochi</textarea>
+            <textarea id="in-language" placeholder="e.g. English&#10;Urdu"></textarea>
         </div>
 
         <div class="form-group">
             <label>Reference</label>
-            <textarea id="in-reference">Reference will be furnished on demand.</textarea>
+            <textarea id="in-reference" placeholder="e.g. Will be furnished on demand."></textarea>
         </div>
 
         <div class="form-actions">
@@ -441,42 +430,54 @@ Balochi</textarea>
             <div class="cv-blue-line-thin"></div>
 
             <div class="cv-name-box">
-                <div class="cv-name" id="cv-name" contenteditable="true">Zulfiqar Ali</div>
+                <div class="cv-name" id="cv-name" contenteditable="true">Your Name</div>
             </div>
 
             <div class="cv-contact-info">
-                <div><u>Address:</u> <span id="cv-address" contenteditable="true">Muhalla Khan Chandabad New Fojdari Road Shikarpur</span></div>
-                <div><a href="mailto:zachandio6@gmail.com" id="cv-email" contenteditable="true">zachandio6@gmail.com</a></div>
-                <div>Cell: <span id="cv-phone" contenteditable="true">0304-2963455</span></div>
+                <div><u>Address:</u> <span id="cv-address" contenteditable="true">Your Full Address Here</span></div>
+                <div><a href="mailto:example@email.com" id="cv-email" contenteditable="true">example@email.com</a></div>
+                <div>Cell: <span id="cv-phone" contenteditable="true">0300-0000000</span></div>
             </div>
 
             <div class="cv-section-banner">Objective</div>
-            <div class="cv-objective-text" id="cv-objective" contenteditable="true"></div>
+            <div class="cv-objective-text" id="cv-objective" contenteditable="true">
+                Your career objective will appear here.
+            </div>
 
             <div class="cv-section-banner">Personal Information</div>
             <table class="cv-info-table">
-                <tr><td class="label">Father's Name:</td><td class="colon"></td><td class="value" id="cv-father" contenteditable="true"></td></tr>
-                <tr><td class="label">Date of Birth:</td><td class="colon"></td><td class="value" id="cv-dob" contenteditable="true"></td></tr>
-                <tr><td class="label">C.N.I.C #:</td><td class="colon"></td><td class="value" id="cv-cnic" contenteditable="true"></td></tr>
-                <tr><td class="label">Marital Status:</td><td class="colon"></td><td class="value" id="cv-marital" contenteditable="true"></td></tr>
-                <tr><td class="label">Religion:</td><td class="colon"></td><td class="value" id="cv-religion" contenteditable="true"></td></tr>
-                <tr><td class="label">Nationality:</td><td class="colon"></td><td class="value" id="cv-nationality" contenteditable="true"></td></tr>
+                <tr><td class="label">Father's Name:</td><td class="colon"></td><td class="value" id="cv-father" contenteditable="true">Father Name</td></tr>
+                <tr><td class="label">Date of Birth:</td><td class="colon"></td><td class="value" id="cv-dob" contenteditable="true">DD-MM-YYYY</td></tr>
+                <tr><td class="label">C.N.I.C #:</td><td class="colon"></td><td class="value" id="cv-cnic" contenteditable="true">00000-0000000-0</td></tr>
+                <tr><td class="label">Marital Status:</td><td class="colon"></td><td class="value" id="cv-marital" contenteditable="true">Single / Married</td></tr>
+                <tr><td class="label">Religion:</td><td class="colon"></td><td class="value" id="cv-religion" contenteditable="true">Islam</td></tr>
+                <tr><td class="label">Nationality:</td><td class="colon"></td><td class="value" id="cv-nationality" contenteditable="true">Pakistani</td></tr>
             </table>
 
             <div class="cv-section-banner">Academic Qualification</div>
-            <ul class="cv-list" id="cv-academic" contenteditable="true"></ul>
+            <ul class="cv-list" id="cv-academic" contenteditable="true">
+                <li>Qualification details will appear here.</li>
+            </ul>
 
             <div class="cv-section-banner">Computer Skills</div>
-            <ul class="cv-list" id="cv-computer" contenteditable="true"></ul>
+            <ul class="cv-list" id="cv-computer" contenteditable="true">
+                <li>Skills list will appear here.</li>
+            </ul>
 
             <div class="cv-section-banner">Experience</div>
-            <ul class="cv-list" id="cv-experience" contenteditable="true"></ul>
+            <ul class="cv-list" id="cv-experience" contenteditable="true">
+                <li>Work experience will appear here.</li>
+            </ul>
 
             <div class="cv-section-banner">Language Profeciency</div>
-            <ul class="cv-list" id="cv-language" contenteditable="true"></ul>
+            <ul class="cv-list" id="cv-language" contenteditable="true">
+                <li>Languages list will appear here.</li>
+            </ul>
 
             <div class="cv-section-banner">Reference:</div>
-            <ul class="cv-list" id="cv-reference" contenteditable="true"></ul>
+            <ul class="cv-list" id="cv-reference" contenteditable="true">
+                <li>Will be furnished on demand.</li>
+            </ul>
 
         </div>
     </div>
@@ -490,28 +491,26 @@ Balochi</textarea>
 
     // 2. Form se Preview Page par jane ka function (Create Button)
     function generateCV() {
-        // Form ki details ko CV paper par sync karna
-        document.getElementById('cv-name').innerText = document.getElementById('in-name').value;
-        document.getElementById('cv-address').innerText = document.getElementById('in-address').value;
-        document.getElementById('cv-email').innerText = document.getElementById('in-email').value;
-        document.getElementById('cv-email').href = "mailto:" + document.getElementById('in-email').value;
-        document.getElementById('cv-phone').innerText = document.getElementById('in-phone').value;
-        document.getElementById('cv-objective').innerText = document.getElementById('in-objective').value;
+        document.getElementById('cv-name').innerText = document.getElementById('in-name').value || "Your Name";
+        document.getElementById('cv-address').innerText = document.getElementById('in-address').value || "Your Full Address Here";
+        document.getElementById('cv-email').innerText = document.getElementById('in-email').value || "example@email.com";
+        document.getElementById('cv-email').href = "mailto:" + (document.getElementById('in-email').value || "example@email.com");
+        document.getElementById('cv-phone').innerText = document.getElementById('in-phone').value || "0300-0000000";
+        document.getElementById('cv-objective').innerText = document.getElementById('in-objective').value || "Your career objective will appear here.";
         
-        document.getElementById('cv-father').innerText = document.getElementById('in-father').value;
-        document.getElementById('cv-dob').innerText = document.getElementById('in-dob').value;
-        document.getElementById('cv-cnic').innerText = document.getElementById('in-cnic').value;
-        document.getElementById('cv-marital').innerText = document.getElementById('in-marital').value;
-        document.getElementById('cv-religion').innerText = document.getElementById('in-religion').value;
-        document.getElementById('cv-nationality').innerText = document.getElementById('in-nationality').value;
+        document.getElementById('cv-father').innerText = document.getElementById('in-father').value || "Father Name";
+        document.getElementById('cv-dob').innerText = document.getElementById('in-dob').value || "DD-MM-YYYY";
+        document.getElementById('cv-cnic').innerText = document.getElementById('in-cnic').value || "00000-0000000-0";
+        document.getElementById('cv-marital').innerText = document.getElementById('in-marital').value || "Single / Married";
+        document.getElementById('cv-religion').innerText = document.getElementById('in-religion').value || "Islam";
+        document.getElementById('cv-nationality').innerText = document.getElementById('in-nationality').value || "Pakistani";
 
-        updateList('cv-academic', 'in-academic');
-        updateList('cv-computer', 'in-computer');
-        updateList('cv-experience', 'in-experience');
-        updateList('cv-language', 'in-language');
-        updateList('cv-reference', 'in-reference');
+        updateList('cv-academic', 'in-academic', 'Qualification details will appear here.');
+        updateList('cv-computer', 'in-computer', 'Skills list will appear here.');
+        updateList('cv-experience', 'in-experience', 'Work experience will appear here.');
+        updateList('cv-language', 'in-language', 'Languages list will appear here.');
+        updateList('cv-reference', 'in-reference', 'Will be furnished on demand.');
 
-        // Form ko hide karna aur Preview ko dikhana
         document.getElementById('formContainer').style.display = 'none';
         document.getElementById('previewContainer').style.display = 'flex';
     }
@@ -529,18 +528,27 @@ Balochi</textarea>
     }
 
     // Helper Function for Bullet Lists
-    function updateList(cvListId, inputId) {
+    function updateList(cvListId, inputId, defaultText) {
         const text = document.getElementById(inputId).value;
         const lines = text.split('\n');
         const listElem = document.getElementById(cvListId);
         listElem.innerHTML = '';
+        
+        let hasContent = false;
         lines.forEach(line => {
             if(line.trim() !== '') {
                 const li = document.createElement('li');
                 li.innerText = line;
                 listElem.appendChild(li);
+                hasContent = true;
             }
         });
+
+        if (!hasContent) {
+            const li = document.createElement('li');
+            li.innerText = defaultText;
+            listElem.appendChild(li);
+        }
     }
 
     // Download Functions
