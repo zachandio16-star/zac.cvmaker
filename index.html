@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My CV Builder Website</title>
+    <title>ZAC CV MAKER</title>
     <!-- html2canvas Library for PNG Download -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
@@ -150,6 +150,7 @@
         /* 3. PREVIEW PAGE STYLES */
         .preview-container {
             display: none; /* Initially Hidden */
+            width: 100%;
             max-width: 750px;
             margin: 0 auto;
             flex-direction: column;
@@ -161,10 +162,12 @@
             display: flex;
             gap: 10px;
             margin-bottom: 15px;
+            flex-wrap: wrap;
         }
 
         .btn-action {
             flex: 1;
+            min-width: 140px;
             padding: 10px;
             border: none;
             border-radius: 5px;
@@ -180,13 +183,24 @@
         .btn-word { background-color: #1976d2; }
         .btn-edit-back { background-color: #616161; }
 
+        /* CV Paper Container for Mobile Scroll / Fit View */
+        .cv-paper-wrapper {
+            width: 100%;
+            overflow-x: auto;
+            background: #e4e7eb;
+            padding: 10px 0;
+            display: flex;
+            justify-content: center;
+        }
+
         /* CV Paper Exact Replica */
         .cv-paper {
-            width: 100%;
+            width: 750px; /* Fixed standard Desktop preview width */
             background: #ffffff;
             padding: 30px 40px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.15);
             box-sizing: border-box;
+            flex-shrink: 0;
         }
 
         /* Fixed Top Logo Area Alignment */
@@ -333,7 +347,29 @@
             cursor: text;
         }
 
+        /* MOBILE SPECIFIC RESPONSIVE PREVIEW ADJUSTMENT */
+        @media screen and (max-width: 768px) {
+            body { padding: 8px; }
+            .cv-paper-wrapper { padding: 0; }
+            /* Automatic Scaling for Mobile Screens so whole Desktop CV fits exactly */
+            .cv-paper {
+                transform-origin: top left;
+            }
+        }
+
+        /* EXACT PRINT STYLES FOR PERFECT PDF */
         @media print {
+            @page {
+                size: A4;
+                margin: 0;
+            }
+            body {
+                background-color: #ffffff;
+                padding: 0;
+                margin: 0;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
             body * { visibility: hidden; }
             #cv-paper, #cv-paper * { visibility: visible; }
             #cv-paper {
@@ -341,9 +377,11 @@
                 left: 0;
                 top: 0;
                 width: 100%;
+                padding: 40px 50px;
                 box-shadow: none;
             }
             .modal-overlay, .form-container, .btn-top-bar { display: none !important; }
+            [contenteditable="true"]:hover { outline: none; background-color: transparent; }
         }
     </style>
 </head>
@@ -352,7 +390,7 @@
     <!-- 1. WELCOME POPUP MODAL -->
     <div class="modal-overlay" id="welcomeModal">
         <div class="modal-content">
-            <h1>[ZAC CV MAKER]</h1>
+            <h1>ZAC CV MAKER</h1>
             <p>Welcome to Professional CV Builder! Create your perfectly styled CV in just a few minutes.</p>
             <button class="btn-modal" onclick="startCVCreation()">Create New CV</button>
         </div>
@@ -417,80 +455,83 @@
     <div class="preview-container" id="previewContainer">
         
         <div class="btn-top-bar">
-            <button class="btn-action btn-edit-back" onclick="backToForm()">✏️️ Edit Details</button>
+            <button class="btn-action btn-edit-back" onclick="backToForm()">✏ Edit Details</button>
             <button class="btn-action btn-pdf" onclick="downloadPDF()">📄 PDF Download</button>
             <button class="btn-action btn-img" onclick="downloadImage()">🖼️ Image Download</button>
             <button class="btn-action btn-word" onclick="downloadWord()">📝 Word Download</button>
         </div>
 
-        <!-- CV Paper Replica -->
-        <div class="cv-paper" id="cv-paper">
-            
-            <!-- Top Logo Header with Straight Stylish CV Badge -->
-            <div class="cv-top-logo">
-                <div class="cv-logo-badge">CV</div>
-                <div class="cv-logo-text">
-                    <div class="line1">URRICULUM</div>
-                    <div class="line2">ITAE</div>
+        <!-- Scroll/Fit Wrapper for Mobile -->
+        <div class="cv-paper-wrapper" id="paperWrapper">
+            <!-- CV Paper Replica -->
+            <div class="cv-paper" id="cv-paper">
+                
+                <!-- Top Logo Header with Straight Stylish CV Badge -->
+                <div class="cv-top-logo">
+                    <div class="cv-logo-badge">CV</div>
+                    <div class="cv-logo-text">
+                        <div class="line1">URRICULUM</div>
+                        <div class="line2">ITAE</div>
+                    </div>
                 </div>
+
+                <div class="cv-blue-line-thick"></div>
+                <div class="cv-blue-line-thin"></div>
+
+                <div class="cv-name-box">
+                    <div class="cv-name" id="cv-name" contenteditable="true">Your Name</div>
+                </div>
+
+                <div class="cv-contact-info">
+                    <div><u>Address:</u> <span id="cv-address" contenteditable="true">Your Full Address Here</span></div>
+                    <div><a href="mailto:example@email.com" id="cv-email" contenteditable="true">example@email.com</a></div>
+                    <div>Cell: <span id="cv-phone" contenteditable="true">0300-0000000</span></div>
+                </div>
+
+                <!-- FIXED OBJECTIVE -->
+                <div class="cv-section-banner">Objective</div>
+                <div class="cv-objective-text" id="cv-objective" contenteditable="false">
+                    Devote my experience skill in reputed organization meet to the challenge in practical life. A full time purpose full position in a dynamic organization that confederates opportunities of professional improvement through training and vocational recognition's want to improve education system through devotional spirit and modern ideas.
+                </div>
+
+                <div class="cv-section-banner">Personal Information</div>
+                <table class="cv-info-table">
+                    <tr><td class="label">Father's Name:</td><td class="colon"></td><td class="value" id="cv-father" contenteditable="true">Father Name</td></tr>
+                    <tr><td class="label">Date of Birth:</td><td class="colon"></td><td class="value" id="cv-dob" contenteditable="true">DD-MM-YYYY</td></tr>
+                    <tr><td class="label">C.N.I.C #:</td><td class="colon"></td><td class="value" id="cv-cnic" contenteditable="true">00000-0000000-0</td></tr>
+                    <tr><td class="label">Marital Status:</td><td class="colon"></td><td class="value" id="cv-marital" contenteditable="true">Single / Married</td></tr>
+                    <tr><td class="label">Domicile:</td><td class="colon"></td><td class="value" id="cv-domicile" contenteditable="true">District / City Name</td></tr>
+                    <tr><td class="label">Religion:</td><td class="colon"></td><td class="value" id="cv-religion" contenteditable="true">Islam</td></tr>
+                    <tr><td class="label">Nationality:</td><td class="colon"></td><td class="value" id="cv-nationality" contenteditable="true">Pakistani</td></tr>
+                </table>
+
+                <div class="cv-section-banner">Academic Qualification</div>
+                <ul class="cv-list" id="cv-academic" contenteditable="true">
+                    <li>Qualification details will appear here.</li>
+                </ul>
+
+                <div class="cv-section-banner">Computer Skills</div>
+                <ul class="cv-list" id="cv-computer" contenteditable="true">
+                    <li>Skills list will appear here.</li>
+                </ul>
+
+                <div class="cv-section-banner">Experience</div>
+                <ul class="cv-list" id="cv-experience" contenteditable="true">
+                    <li>Work experience will appear here.</li>
+                </ul>
+
+                <div class="cv-section-banner">Language Profeciency</div>
+                <ul class="cv-list" id="cv-language" contenteditable="true">
+                    <li>Languages list will appear here.</li>
+                </ul>
+
+                <!-- FIXED REFERENCE -->
+                <div class="cv-section-banner">Reference:</div>
+                <ul class="cv-list" id="cv-reference" contenteditable="false">
+                    <li>Reference will be furnished on demand.</li>
+                </ul>
+
             </div>
-
-            <div class="cv-blue-line-thick"></div>
-            <div class="cv-blue-line-thin"></div>
-
-            <div class="cv-name-box">
-                <div class="cv-name" id="cv-name" contenteditable="true">Your Name</div>
-            </div>
-
-            <div class="cv-contact-info">
-                <div><u>Address:</u> <span id="cv-address" contenteditable="true">Your Full Address Here</span></div>
-                <div><a href="mailto:example@email.com" id="cv-email" contenteditable="true">example@email.com</a></div>
-                <div>Cell: <span id="cv-phone" contenteditable="true">0300-0000000</span></div>
-            </div>
-
-            <!-- FIXED OBJECTIVE -->
-            <div class="cv-section-banner">Objective</div>
-            <div class="cv-objective-text" id="cv-objective" contenteditable="false">
-                Devote my experience skill in reputed organization meet to the challenge in practical life. A full time purpose full position in a dynamic organization that confederates opportunities of professional improvement through training and vocational recognition's want to improve education system through devotional spirit and modern ideas.
-            </div>
-
-            <div class="cv-section-banner">Personal Information</div>
-            <table class="cv-info-table">
-                <tr><td class="label">Father's Name:</td><td class="colon"></td><td class="value" id="cv-father" contenteditable="true">Father Name</td></tr>
-                <tr><td class="label">Date of Birth:</td><td class="colon"></td><td class="value" id="cv-dob" contenteditable="true">DD-MM-YYYY</td></tr>
-                <tr><td class="label">C.N.I.C #:</td><td class="colon"></td><td class="value" id="cv-cnic" contenteditable="true">00000-0000000-0</td></tr>
-                <tr><td class="label">Marital Status:</td><td class="colon"></td><td class="value" id="cv-marital" contenteditable="true">Single / Married</td></tr>
-                <tr><td class="label">Domicile:</td><td class="colon"></td><td class="value" id="cv-domicile" contenteditable="true">District / City Name</td></tr>
-                <tr><td class="label">Religion:</td><td class="colon"></td><td class="value" id="cv-religion" contenteditable="true">Islam</td></tr>
-                <tr><td class="label">Nationality:</td><td class="colon"></td><td class="value" id="cv-nationality" contenteditable="true">Pakistani</td></tr>
-            </table>
-
-            <div class="cv-section-banner">Academic Qualification</div>
-            <ul class="cv-list" id="cv-academic" contenteditable="true">
-                <li>Qualification details will appear here.</li>
-            </ul>
-
-            <div class="cv-section-banner">Computer Skills</div>
-            <ul class="cv-list" id="cv-computer" contenteditable="true">
-                <li>Skills list will appear here.</li>
-            </ul>
-
-            <div class="cv-section-banner">Experience</div>
-            <ul class="cv-list" id="cv-experience" contenteditable="true">
-                <li>Work experience will appear here.</li>
-            </ul>
-
-            <div class="cv-section-banner">Language Profeciency</div>
-            <ul class="cv-list" id="cv-language" contenteditable="true">
-                <li>Languages list will appear here.</li>
-            </ul>
-
-            <!-- FIXED REFERENCE -->
-            <div class="cv-section-banner">Reference:</div>
-            <ul class="cv-list" id="cv-reference" contenteditable="false">
-                <li>Reference will be furnished on demand.</li>
-            </ul>
-
         </div>
     </div>
 
@@ -524,7 +565,27 @@
 
         document.getElementById('formContainer').style.display = 'none';
         document.getElementById('previewContainer').style.display = 'flex';
+        
+        adjustMobileScale(); // Adjust scale for mobile screens automatically
     }
+
+    // Auto-fit function for mobile preview
+    function adjustMobileScale() {
+        const paper = document.getElementById('cv-paper');
+        const wrapper = document.getElementById('paperWrapper');
+        const containerWidth = wrapper.offsetWidth;
+        
+        if (window.innerWidth <= 768 && containerWidth < 750) {
+            const scale = containerWidth / 750;
+            paper.style.transform = `scale(${scale})`;
+            wrapper.style.height = (paper.offsetHeight * scale + 20) + 'px';
+        } else {
+            paper.style.transform = 'none';
+            wrapper.style.height = 'auto';
+        }
+    }
+
+    window.addEventListener('resize', adjustMobileScale);
 
     // 3. Cancel Button Function
     function cancelCreation() {
@@ -562,27 +623,75 @@
         }
     }
 
-    // Download Functions
+    // 5. PDF Download Function
     function downloadPDF() {
         window.print();
     }
 
+    // 6. Fixed Image Download Function (100% Working)
     function downloadImage() {
         const cvPaper = document.getElementById('cv-paper');
-        html2canvas(cvPaper, { scale: 2 }).then(canvas => {
+        
+        // Reset scale momentarily to capture full-size image on mobile
+        const currentTransform = cvPaper.style.transform;
+        cvPaper.style.transform = 'none';
+
+        html2canvas(cvPaper, {
+            scale: 2,
+            useCORS: true,
+            allowTaint: true,
+            backgroundColor: "#ffffff",
+            scrollX: 0,
+            scrollY: -window.scrollY
+        }).then(canvas => {
+            cvPaper.style.transform = currentTransform; // restore scale
+            const imageURI = canvas.toDataURL('image/png');
             const link = document.createElement('a');
-            link.download = 'CV.png';
-            link.href = canvas.toDataURL('image/png');
+            link.download = 'CV_' + (document.getElementById('cv-name').innerText.replace(/\s+/g, '_')) + '.png';
+            link.href = imageURI;
+            document.body.appendChild(link);
             link.click();
+            document.body.removeChild(link);
+        }).catch(err => {
+            cvPaper.style.transform = currentTransform;
+            alert("Error generating image: " + err);
         });
     }
 
+    // 7. Fixed Word Export Function
     function downloadWord() {
+        const styles = `
+            <style>
+                body { font-family: 'Times New Roman', Times, serif; }
+                .cv-paper { width: 100%; padding: 20px; }
+                .cv-top-logo { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+                .cv-logo-badge { background-color: #0070c0; color: #ffffff; font-family: Arial, sans-serif; font-weight: 900; font-size: 28px; padding: 6px 12px; border-radius: 6px; display: inline-block; }
+                .cv-logo-text { color: #0070c0; font-family: cursive; font-style: italic; display: inline-block; margin-left: 10px; }
+                .cv-logo-text .line1 { font-size: 20px; letter-spacing: 2px; }
+                .cv-logo-text .line2 { font-size: 26px; letter-spacing: 4px; font-weight: bold; }
+                .cv-blue-line-thick { height: 4px; background-color: #002060; border-bottom: 3px solid #002060; margin-bottom: 2px; }
+                .cv-blue-line-thin { height: 1px; background-color: #002060; border-bottom: 1px solid #002060; margin-bottom: 15px; }
+                .cv-name-box { border: 1px solid #000000; padding: 6px; text-align: center; margin-bottom: 10px; background-color: #ffffff; }
+                .cv-name { font-size: 24px; font-weight: bold; font-style: italic; }
+                .cv-contact-info { text-align: center; font-size: 11px; font-weight: bold; font-style: italic; margin-bottom: 15px; }
+                .cv-section-banner { background-color: #c0c0c0; padding: 3px 8px; font-size: 14px; font-weight: bold; font-style: italic; color: #000000; margin-top: 12px; margin-bottom: 8px; }
+                .cv-objective-text { font-size: 12px; font-style: italic; font-weight: bold; text-align: justify; margin-bottom: 10px; }
+                .cv-info-table { width: 100%; border-collapse: collapse; margin-bottom: 10px; }
+                .cv-info-table td { padding: 3px 0; font-size: 12px; font-style: italic; font-weight: bold; }
+                .cv-info-table td.label { width: 35%; }
+                .cv-info-table td.colon { width: 5%; }
+                .cv-info-table td.value { width: 60%; }
+                .cv-list { list-style-type: square; padding-left: 20px; margin-bottom: 10px; }
+                .cv-list li { font-size: 12px; font-style: italic; font-weight: bold; margin-bottom: 3px; }
+            </style>
+        `;
+
         const header = "<html xmlns:o='urn:schemas-microsoft-com:office:office' "+
             "xmlns:w='urn:schemas-microsoft-com:office:word' "+
             "xmlns='http://www.w3.org/TR/REC-html40'>"+
-            "<head><meta charset='utf-8'><title>Export Word</title></head><body>";
+            "<head><meta charset='utf-8'><title>Export Word</title>" + styles + "</head><body>";
         const footer = "</body></html>";
+        
         const sourceHTML = header + document.getElementById('cv-paper').innerHTML + footer;
 
         const source = 'data:application/vnd.ms-word;charset=utf-8,' + encodeURIComponent(sourceHTML);
@@ -590,7 +699,7 @@
         
         document.body.appendChild(fileDownload);
         fileDownload.href = source;
-        fileDownload.download = 'CV.doc';
+        fileDownload.download = 'CV_' + (document.getElementById('cv-name').innerText.replace(/\s+/g, '_')) + '.doc';
         fileDownload.click();
         document.body.removeChild(fileDownload);
     }
