@@ -244,7 +244,48 @@
         }
 
         /* ==========================================================================
-           20 STRUCTURAL LAYOUT DESIGNS (CSS STRUCTURAL PATTERNS)
+           MAIN CV / CURRICULUM VITAE TITLE STYLES ACCORDING TO LAYOUTS
+           ========================================================================== */
+        .cv-main-header-title {
+            font-size: 20px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        .cv-sidebar .cv-main-header-title {
+            font-size: 18px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255,255,255,0.3);
+            padding-bottom: 8px;
+            margin-bottom: 15px;
+        }
+
+        /* LAYOUT SPECIFIC HEADER TITLE STYLES */
+        .layout-1 .cv-main-header-title { color: #0070c0; border-bottom: 2px solid #0070c0; display: inline-block; padding-bottom: 3px; }
+        .layout-2 .cv-main-header-title { color: #1abc9c; border-bottom-color: #1abc9c; }
+        .layout-3 .cv-main-header-title { color: #333; font-size: 24px; letter-spacing: 4px; margin-bottom: 15px; }
+        .layout-4 .cv-main-header-title { color: #00d2d3; border-bottom-color: #00d2d3; }
+        .layout-5 .cv-main-header-title { color: #fff; background: rgba(255,255,255,0.2); padding: 5px 12px; border-radius: 4px; display: inline-block; font-size: 16px; margin-bottom: 10px; }
+        .layout-6 .cv-main-header-title { color: #333; text-align: center; font-size: 22px; border-bottom: 2px solid #333; padding-bottom: 5px; margin-bottom: 15px; }
+        .layout-7 .cv-main-header-title { color: #555; font-size: 18px; letter-spacing: 3px; font-weight: normal; margin-bottom: 15px; }
+        .layout-8 .cv-main-header-title { color: #00796b; border-bottom-color: #00796b; }
+        .layout-9 .cv-main-header-title { color: #2e7d32; background: #e8f5e9; padding: 4px 10px; border-radius: 4px; display: inline-block; margin-bottom: 12px; }
+        .layout-10 .cv-main-header-title { color: #ffb3c1; border-bottom-color: #ffb3c1; }
+        .layout-11 .cv-main-header-title { color: #b78103; font-size: 22px; text-align: center; letter-spacing: 3px; margin-bottom: 15px; }
+        .layout-12 .cv-main-header-title { color: #333; border-left: 4px solid #333; padding-left: 8px; }
+        .layout-13 .cv-main-header-title { color: #0077b6; font-size: 20px; border-bottom: 2px solid #0077b6; display: inline-block; }
+        .layout-14 .cv-main-header-title { color: #ffccbc; border-bottom-color: #ffccbc; }
+        .layout-15 .cv-main-header-title { color: #c62828; font-size: 22px; letter-spacing: 2px; }
+        .layout-16 .cv-main-header-title { color: #8fbc8f; border-bottom-color: #8fbc8f; }
+        .layout-17 .cv-main-header-title { color: #e65100; font-size: 20px; font-weight: bold; }
+        .layout-18 .cv-main-header-title { color: #4a0072; font-size: 24px; letter-spacing: 3px; text-align: center; }
+        .layout-19 .cv-main-header-title { color: #80cbc4; border-bottom-color: #80cbc4; }
+        .layout-20 .cv-main-header-title { color: #1a237e; text-align: center; font-size: 22px; border-bottom: 2px solid #1a237e; padding-bottom: 5px; margin-bottom: 15px; }
+
+        /* ==========================================================================
+           20 STRUCTURAL LAYOUT DESIGNS
            ========================================================================== */
 
         /* LAYOUT 1: Classic Header Banner (Default) */
@@ -587,12 +628,16 @@
 
         const photoHTML = uploadedPhotoData ? `<div class="cv-photo-container"><img src="${uploadedPhotoData}" alt="Profile Photo"></div>` : `<div class="cv-photo-container"></div>`;
 
+        // Dynamic Curriculum Vitae Title based on Layout
+        const headerTitleHTML = `<div class="cv-main-header-title">CURRICULUM VITAE</div>`;
+
         // Check if layout is Two-Column (Layouts 2, 4, 8, 10, 14, 16, 19)
         const isTwoColumn = ['layout-2', 'layout-4', 'layout-8', 'layout-10', 'layout-14', 'layout-16', 'layout-19'].includes(currentLayout);
 
         if (isTwoColumn) {
             cvPaper.innerHTML = `
                 <div class="cv-sidebar">
+                    ${headerTitleHTML}
                     ${photoHTML}
                     <div class="cv-name" contenteditable="true">${name}</div>
                     <div class="cv-contact">
@@ -628,10 +673,51 @@
                     <ul class="cv-list"><li>Reference will be furnished on demand.</li></ul>
                 </div>
             `;
+        } else if (currentLayout === 'layout-12') {
+            // Special layout wrapper for Layout 12
+            cvPaper.innerHTML = `
+                <div class="cv-sidebar"></div>
+                <div class="cv-wrapper-body">
+                    ${headerTitleHTML}
+                    <div class="cv-header">
+                        <div>
+                            <div class="cv-name" contenteditable="true">${name}</div>
+                            <div class="cv-contact">
+                                <div><b>Address:</b> ${address} | <b>Email:</b> ${email} | <b>Cell:</b> ${phone}</div>
+                            </div>
+                        </div>
+                        ${photoHTML}
+                    </div>
+                    <div class="cv-body">
+                        <div class="cv-section-title">Objective</div>
+                        <div style="font-size: 13px; line-height: 1.4; text-align: justify; margin-bottom: 10px;">
+                            Devote my experience skill in reputed organization meet to the challenge in practical life. A full time purpose full position in a dynamic organization that confederates opportunities of professional improvement.
+                        </div>
+                        <div class="cv-section-title">Personal Information</div>
+                        <table class="cv-info-table">
+                            <tr><td class="label">Father's Name:</td><td>${father}</td><td class="label">Date of Birth:</td><td>${dob}</td></tr>
+                            <tr><td class="label">C.N.I.C #:</td><td>${cnic}</td><td class="label">Marital Status:</td><td>${marital}</td></tr>
+                            <tr><td class="label">Domicile:</td><td>${domicile}</td><td class="label">Religion:</td><td>${religion}</td></tr>
+                            <tr><td class="label">Nationality:</td><td colspan="3">${nationality}</td></tr>
+                        </table>
+                        <div class="cv-section-title">Academic Qualification</div>
+                        ${academicHTML}
+                        <div class="cv-section-title">Computer Skills</div>
+                        ${computerHTML}
+                        <div class="cv-section-title">Experience</div>
+                        ${expHTML}
+                        <div class="cv-section-title">Language Proficiency</div>
+                        ${langHTML}
+                        <div class="cv-section-title">Reference</div>
+                        <ul class="cv-list"><li>Reference will be furnished on demand.</li></ul>
+                    </div>
+                </div>
+            `;
         } else {
             // Standard Single-Column / Top Banner Layout Structure
             cvPaper.innerHTML = `
                 <div class="cv-inner-box">
+                    ${headerTitleHTML}
                     <div class="cv-header">
                         <div>
                             <div class="cv-name" contenteditable="true">${name}</div>
@@ -727,6 +813,7 @@
         const cvHTML = document.getElementById('cv-paper').innerHTML;
         const styles = `<style>
             body { font-family: Arial, sans-serif; }
+            .cv-main-header-title { font-size: 20px; font-weight: bold; text-align: center; margin-bottom: 15px; }
             .cv-sidebar { width: 30%; float: left; background: #f4f4f4; padding: 15px; }
             .cv-main-content { width: 65%; float: right; padding: 15px; }
             .cv-name { font-size: 22px; font-weight: bold; }
