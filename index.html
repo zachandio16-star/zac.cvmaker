@@ -16,7 +16,7 @@
 
         body {
             background-color: #f0f2f5;
-            padding: 20px;
+            padding: 20px 10px;
         }
 
         /* 1. POPUP / MODAL STYLES */
@@ -35,7 +35,7 @@
 
         .modal-content {
             background: #ffffff;
-            padding: 40px;
+            padding: 40px 20px;
             border-radius: 12px;
             text-align: center;
             max-width: 500px;
@@ -208,16 +208,18 @@
         .btn-word { background-color: #1976d2; }
         .btn-edit-back { background-color: #616161; }
 
+        /* FIXED MOBILE RESPONSIVE PREVIEW WRAPPER */
         .cv-paper-wrapper {
             width: 100%;
-            overflow-x: auto;
-            background: #e4e7eb;
-            padding: 10px 0;
             display: flex;
             justify-content: center;
+            align-items: flex-start;
+            background: #e4e7eb;
+            padding: 20px 0;
+            overflow: hidden; /* Prevent horizontal scrollbars */
         }
 
-        /* BASE CV PAPER (A4 Dimension Aspect Ratio) */
+        /* BASE CV PAPER (Desktop Native Dimensions) */
         .cv-paper {
             width: 790px;
             min-height: 1000px;
@@ -227,6 +229,7 @@
             flex-shrink: 0;
             position: relative;
             color: #333;
+            transform-origin: top center; /* Scales evenly from center top */
         }
 
         /* Helper Classes for Dynamic Hide/Show Photo */
@@ -444,7 +447,7 @@
             body { background-color: #ffffff; padding: 0; margin: 0; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
             body * { visibility: hidden; }
             #cv-paper, #cv-paper * { visibility: visible; }
-            #cv-paper { position: absolute; left: 0; top: 0; width: 100%; padding: 0; box-shadow: none; }
+            #cv-paper { position: absolute; left: 0; top: 0; width: 100%; padding: 0; box-shadow: none; transform: scale(1) !important; margin-bottom: 0 !important; }
             .modal-overlay, .form-container, .btn-top-bar, .theme-selector-box { display: none !important; }
             [contenteditable="true"]:hover { outline: none; background-color: transparent; }
         }
@@ -604,6 +607,34 @@
         changeLayout(document.getElementById('layoutSelect').value);
     }
 
+    /* AUTOMATIC MOBILE PREVIEW SCALING FUNCTION */
+    function adjustCVScale() {
+        const wrapper = document.getElementById('paperWrapper');
+        const cvPaper = document.getElementById('cv-paper');
+
+        if (!wrapper || !cvPaper) return;
+
+        // Reset scaling before calculation
+        cvPaper.style.transform = 'scale(1)';
+        cvPaper.style.marginBottom = '0px';
+
+        const wrapperWidth = wrapper.clientWidth - 20; // Available width with padding
+        const baseWidth = 790; // Desktop A4 Canvas Base Width
+
+        if (wrapperWidth < baseWidth) {
+            const scale = wrapperWidth / baseWidth;
+            cvPaper.style.transform = `scale(${scale})`;
+            
+            // Adjust margin bottom to fix extra whitespace created by transform scale
+            const scaledHeight = cvPaper.offsetHeight * scale;
+            const heightDifference = cvPaper.offsetHeight - scaledHeight;
+            cvPaper.style.marginBottom = `-${heightDifference}px`;
+        }
+    }
+
+    // Trigger scaling on resize and orientation change
+    window.addEventListener('resize', adjustCVScale);
+
     function renderCVContent() {
         const name = document.getElementById('in-name').value || "Your Name";
         const address = document.getElementById('in-address').value || "Your Full Address";
@@ -760,6 +791,9 @@
                 </div>
             `;
         }
+
+        // Adjust scale right after rendering
+        setTimeout(adjustCVScale, 50);
     }
 
     function getListHTML(inputId, defaultText) {
