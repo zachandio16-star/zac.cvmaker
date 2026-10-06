@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ZAC CV MAKER</title>
+    <title>ZAC CV MAKER - Multi Template</title>
     <!-- html2canvas Library for PNG Download -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
@@ -75,7 +75,7 @@
 
         /* 2. FORM PAGE STYLES */
         .form-container {
-            display: none; /* Initially Hidden */
+            display: none;
             max-width: 750px;
             margin: 20px auto;
             background: #ffffff;
@@ -104,7 +104,7 @@
             color: #333;
         }
 
-        .form-group input, .form-group textarea {
+        .form-group input, .form-group textarea, .form-group select {
             width: 100%;
             padding: 10px;
             border: 1px solid #ccc;
@@ -149,9 +149,9 @@
 
         /* 3. PREVIEW PAGE STYLES */
         .preview-container {
-            display: none; /* Initially Hidden */
+            display: none;
             width: 100%;
-            max-width: 750px;
+            max-width: 800px;
             margin: 0 auto;
             flex-direction: column;
             align-items: center;
@@ -163,11 +163,41 @@
             gap: 10px;
             margin-bottom: 15px;
             flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .theme-selector-box {
+            width: 100%;
+            background: #ffffff;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            font-family: Arial, sans-serif;
+        }
+
+        .theme-selector-box label {
+            font-weight: bold;
+            color: #333;
+            white-space: nowrap;
+        }
+
+        .theme-selector-box select {
+            width: 100%;
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid #0070c0;
+            font-weight: bold;
+            color: #0070c0;
+            cursor: pointer;
         }
 
         .btn-action {
             flex: 1;
-            min-width: 140px;
+            min-width: 130px;
             padding: 10px;
             border: none;
             border-radius: 5px;
@@ -183,7 +213,6 @@
         .btn-word { background-color: #1976d2; }
         .btn-edit-back { background-color: #616161; }
 
-        /* CV Paper Container for Mobile Scroll / Fit View */
         .cv-paper-wrapper {
             width: 100%;
             overflow-x: auto;
@@ -193,17 +222,47 @@
             justify-content: center;
         }
 
-        /* CV Paper Exact Replica */
+        /* CV Paper Standard Base */
         .cv-paper {
-            width: 750px; /* Fixed standard Desktop preview width */
+            width: 750px;
             background: #ffffff;
             padding: 30px 40px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.15);
             box-sizing: border-box;
             flex-shrink: 0;
+            position: relative;
         }
 
-        /* Fixed Top Logo Area Alignment */
+        /* Header Layout Options */
+        .cv-header-grid {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 15px;
+        }
+
+        .cv-header-left {
+            flex: 1;
+        }
+
+        .cv-photo-box {
+            width: 110px;
+            height: 130px;
+            border: 2px solid #333;
+            border-radius: 4px;
+            overflow: hidden;
+            display: none; /* Shown if photo is uploaded */
+            background-color: #f9f9f9;
+            flex-shrink: 0;
+        }
+
+        .cv-photo-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
         .cv-top-logo {
             display: flex;
             align-items: center;
@@ -211,9 +270,8 @@
             margin-bottom: 10px;
         }
 
-        /* Clean Straight Stylish CV Badge Icon */
         .cv-logo-badge {
-            background-color: #0070c0;
+            background-color: var(--primary-color, #0070c0);
             color: #ffffff;
             font-family: Arial, Helvetica, sans-serif;
             font-weight: 900;
@@ -227,28 +285,18 @@
         }
 
         .cv-logo-text {
-            color: #0070c0;
+            color: var(--primary-color, #0070c0);
             font-family: 'Brush Script MT', 'Comic Sans MS', cursive, sans-serif;
             font-style: italic;
             line-height: 0.95;
             user-select: none;
         }
 
-        .cv-logo-text .line1 { 
-            font-size: 24px; 
-            letter-spacing: 3px; 
-            font-weight: normal;
-        }
+        .cv-logo-text .line1 { font-size: 24px; letter-spacing: 3px; font-weight: normal; }
+        .cv-logo-text .line2 { font-size: 32px; letter-spacing: 6px; font-weight: bold; margin-top: 2px; }
 
-        .cv-logo-text .line2 { 
-            font-size: 32px; 
-            letter-spacing: 6px; 
-            font-weight: bold; 
-            margin-top: 2px;
-        }
-
-        .cv-blue-line-thick { height: 4px; background-color: #002060; margin-bottom: 2px; }
-        .cv-blue-line-thin { height: 1px; background-color: #002060; margin-bottom: 15px; }
+        .cv-blue-line-thick { height: 4px; background-color: var(--secondary-color, #002060); margin-bottom: 2px; }
+        .cv-blue-line-thin { height: 1px; background-color: var(--secondary-color, #002060); margin-bottom: 15px; }
 
         .cv-name-box {
             border: 1px solid #000;
@@ -279,12 +327,12 @@
         .cv-contact-info a { color: #0000ff; text-decoration: underline; }
 
         .cv-section-banner {
-            background-color: #c0c0c0;
-            padding: 2px 8px;
+            background-color: var(--banner-bg, #c0c0c0);
+            color: var(--banner-text, #000);
+            padding: 3px 8px;
             font-size: 16px;
             font-weight: bold;
             font-style: italic;
-            color: #000;
             margin-top: 10px;
             margin-bottom: 8px;
             border-radius: 2px;
@@ -342,56 +390,87 @@
         }
 
         [contenteditable="true"]:hover {
-            outline: 1px dashed #0070c0;
+            outline: 1px dashed var(--primary-color, #0070c0);
             background-color: #f0f8ff;
             cursor: text;
         }
 
-        /* MOBILE SPECIFIC RESPONSIVE PREVIEW ADJUSTMENT */
+        /* -------------------------------------------------------------
+           THEME STYLES (16 UNIQUE DESIGNS)
+        ------------------------------------------------------------- */
+        /* Theme 1: Default Classic Blue */
+        .theme-1 { --primary-color: #0070c0; --secondary-color: #002060; --banner-bg: #c0c0c0; --banner-text: #000; }
+        
+        /* Theme 2: Modern Teal */
+        .theme-2 { --primary-color: #008080; --secondary-color: #004d4d; --banner-bg: #008080; --banner-text: #fff; }
+        
+        /* Theme 3: Charcoal Professional */
+        .theme-3 { --primary-color: #333333; --secondary-color: #1a1a1a; --banner-bg: #4a4a4a; --banner-text: #fff; }
+        
+        /* Theme 4: Emerald Green */
+        .theme-4 { --primary-color: #2e7d32; --secondary-color: #1b5e20; --banner-bg: #a5d6a7; --banner-text: #000; }
+        
+        /* Theme 5: Corporate Navy */
+        .theme-5 { --primary-color: #1a365d; --secondary-color: #0f2942; --banner-bg: #2b6cb0; --banner-text: #fff; }
+        
+        /* Theme 6: Elegant Burgundy */
+        .theme-6 { --primary-color: #800020; --secondary-color: #4a0013; --banner-bg: #800020; --banner-text: #fff; }
+        
+        /* Theme 7: Minimal Dark Accent */
+        .theme-7 { --primary-color: #212121; --secondary-color: #424242; --banner-bg: #e0e0e0; --banner-text: #000; }
+        
+        /* Theme 8: Royal Purple */
+        .theme-8 { --primary-color: #4a148c; --secondary-color: #311b92; --banner-bg: #7b1fa2; --banner-text: #fff; }
+        
+        /* Theme 9: Warm Coral */
+        .theme-9 { --primary-color: #d84315; --secondary-color: #bf360c; --banner-bg: #ff7043; --banner-text: #fff; }
+        
+        /* Theme 10: Slate Gray */
+        .theme-10 { --primary-color: #455a64; --secondary-color: #263238; --banner-bg: #78909c; --banner-text: #fff; }
+        
+        /* Theme 11: Gold Accent */
+        .theme-11 { --primary-color: #b78103; --secondary-color: #5c4100; --banner-bg: #f2c94c; --banner-text: #000; }
+        
+        /* Theme 12: Forest Green */
+        .theme-12 { --primary-color: #1b4332; --secondary-color: #081c15; --banner-bg: #40916c; --banner-text: #fff; }
+        
+        /* Theme 13: Ocean Cyan */
+        .theme-13 { --primary-color: #0077b6; --secondary-color: #03045e; --banner-bg: #90e0ef; --banner-text: #000; }
+        
+        /* Theme 14: Dark Chocolate */
+        .theme-14 { --primary-color: #3e2723; --secondary-color: #1b0000; --banner-bg: #6d4c41; --banner-text: #fff; }
+        
+        /* Theme 15: Crimson Red */
+        .theme-15 { --primary-color: #c62828; --secondary-color: #8e0000; --banner-bg: #ef5350; --banner-text: #fff; }
+
+        /* Theme 16: Olive Prestige */
+        .theme-16 { --primary-color: #556b2f; --secondary-color: #2e3b12; --banner-bg: #8fbc8f; --banner-text: #000; }
+
         @media screen and (max-width: 768px) {
             body { padding: 8px; }
             .cv-paper-wrapper { padding: 0; }
-            /* Automatic Scaling for Mobile Screens so whole Desktop CV fits exactly */
-            .cv-paper {
-                transform-origin: top left;
-            }
+            .cv-paper { transform-origin: top left; }
         }
 
-        /* EXACT PRINT STYLES FOR PERFECT PDF */
+        /* PRINT STYLES */
         @media print {
-            @page {
-                size: A4;
-                margin: 0;
-            }
-            body {
-                background-color: #ffffff;
-                padding: 0;
-                margin: 0;
-                -webkit-print-color-adjust: exact !important;
-                print-color-adjust: exact !important;
-            }
+            @page { size: A4; margin: 0; }
+            body { background-color: #ffffff; padding: 0; margin: 0; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
             body * { visibility: hidden; }
             #cv-paper, #cv-paper * { visibility: visible; }
-            #cv-paper {
-                position: absolute;
-                left: 0;
-                top: 0;
-                width: 100%;
-                padding: 40px 50px;
-                box-shadow: none;
-            }
-            .modal-overlay, .form-container, .btn-top-bar { display: none !important; }
+            #cv-paper { position: absolute; left: 0; top: 0; width: 100%; padding: 40px 50px; box-shadow: none; }
+            .modal-overlay, .form-container, .btn-top-bar, .theme-selector-box { display: none !important; }
             [contenteditable="true"]:hover { outline: none; background-color: transparent; }
         }
     </style>
 </head>
-<body>
+<body class="theme-1">
 
     <!-- 1. WELCOME POPUP MODAL -->
     <div class="modal-overlay" id="welcomeModal">
         <div class="modal-content">
             <h1>ZAC CV MAKER</h1>
-            <p>Welcome to Professional CV Builder! Create your perfectly styled CV in just a few minutes.</p>
+            <p>Welcome to Professional CV Builder! Create your perfectly styled CV with picture and multiple designs in seconds.</p>
             <button class="btn-modal" onclick="startCVCreation()">Create New CV</button>
         </div>
     </div>
@@ -399,6 +478,11 @@
     <!-- 2. DETAILS ENTRY FORM -->
     <div class="form-container" id="formContainer">
         <h2>Enter Your CV Details</h2>
+
+        <div class="form-group">
+            <label>Profile Photo (Optional)</label>
+            <input type="file" id="in-photo" accept="image/*" onchange="previewUserPhoto(event)">
+        </div>
         
         <div class="form-group">
             <label>Full Name</label>
@@ -453,6 +537,29 @@
 
     <!-- 3. PREVIEW & DOWNLOAD PAGE -->
     <div class="preview-container" id="previewContainer">
+
+        <!-- Theme Selector Dropdown -->
+        <div class="theme-selector-box">
+            <label for="themeSelect">🎨 Select Design / Theme:</label>
+            <select id="themeSelect" onchange="changeTheme(this.value)">
+                <option value="theme-1">Design 1: Classic Blue</option>
+                <option value="theme-2">Design 2: Modern Teal</option>
+                <option value="theme-3">Design 3: Charcoal Professional</option>
+                <option value="theme-4">Design 4: Emerald Green</option>
+                <option value="theme-5">Design 5: Corporate Navy</option>
+                <option value="theme-6">Design 6: Elegant Burgundy</option>
+                <option value="theme-7">Design 7: Minimal Dark</option>
+                <option value="theme-8">Design 8: Royal Purple</option>
+                <option value="theme-9">Design 9: Warm Coral</option>
+                <option value="theme-10">Design 10: Slate Gray</option>
+                <option value="theme-11">Design 11: Gold Accent</option>
+                <option value="theme-12">Design 12: Forest Green</option>
+                <option value="theme-13">Design 13: Ocean Cyan</option>
+                <option value="theme-14">Design 14: Dark Chocolate</option>
+                <option value="theme-15">Design 15: Crimson Red</option>
+                <option value="theme-16">Design 16: Olive Prestige</option>
+            </select>
+        </div>
         
         <div class="btn-top-bar">
             <button class="btn-action btn-edit-back" onclick="backToForm()">✏ Edit Details</button>
@@ -461,17 +568,24 @@
             <button class="btn-action btn-word" onclick="downloadWord()">📝 Word Download</button>
         </div>
 
-        <!-- Scroll/Fit Wrapper for Mobile -->
         <div class="cv-paper-wrapper" id="paperWrapper">
-            <!-- CV Paper Replica -->
+            <!-- CV Paper Container -->
             <div class="cv-paper" id="cv-paper">
                 
-                <!-- Top Logo Header with Straight Stylish CV Badge -->
-                <div class="cv-top-logo">
-                    <div class="cv-logo-badge">CV</div>
-                    <div class="cv-logo-text">
-                        <div class="line1">CURRICULUM</div>
-                        <div class="line2">VITAE</div>
+                <!-- Header Grid for Logo & Photo -->
+                <div class="cv-header-grid">
+                    <div class="cv-header-left">
+                        <div class="cv-top-logo">
+                            <div class="cv-logo-badge">CV</div>
+                            <div class="cv-logo-text">
+                                <div class="line1">CURRICULUM</div>
+                                <div class="line2">VITAE</div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Photo Box -->
+                    <div class="cv-photo-box" id="cvPhotoDisplay">
+                        <img id="imgPreview" src="" alt="Profile Photo">
                     </div>
                 </div>
 
@@ -536,13 +650,32 @@
     </div>
 
 <script>
-    // 1. Popup se Form Page par jane ka function
+    let uploadedPhotoData = "";
+
+    // Photo Upload Preview
+    function previewUserPhoto(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                uploadedPhotoData = e.target.result;
+                document.getElementById('imgPreview').src = uploadedPhotoData;
+                document.getElementById('cvPhotoDisplay').style.display = 'block';
+            }
+            reader.readAsDataURL(file);
+        }
+    }
+
+    // Dynamic Theme Change
+    function changeTheme(themeClass) {
+        document.body.className = themeClass;
+    }
+
     function startCVCreation() {
         document.getElementById('welcomeModal').style.display = 'none';
         document.getElementById('formContainer').style.display = 'block';
     }
 
-    // 2. Form se Preview Page par jane ka function (Create Button)
     function generateCV() {
         document.getElementById('cv-name').innerText = document.getElementById('in-name').value || "Your Name";
         document.getElementById('cv-address').innerText = document.getElementById('in-address').value || "Your Full Address Here";
@@ -563,13 +696,16 @@
         updateList('cv-experience', 'in-experience', 'Work experience will appear here.');
         updateList('cv-language', 'in-language', 'Languages list will appear here.');
 
+        if (!uploadedPhotoData) {
+            document.getElementById('cvPhotoDisplay').style.display = 'none';
+        }
+
         document.getElementById('formContainer').style.display = 'none';
         document.getElementById('previewContainer').style.display = 'flex';
         
-        adjustMobileScale(); // Adjust scale for mobile screens automatically
+        adjustMobileScale();
     }
 
-    // Auto-fit function for mobile preview
     function adjustMobileScale() {
         const paper = document.getElementById('cv-paper');
         const wrapper = document.getElementById('paperWrapper');
@@ -587,19 +723,16 @@
 
     window.addEventListener('resize', adjustMobileScale);
 
-    // 3. Cancel Button Function
     function cancelCreation() {
         document.getElementById('formContainer').style.display = 'none';
         document.getElementById('welcomeModal').style.display = 'flex';
     }
 
-    // 4. Back to Edit Function
     function backToForm() {
         document.getElementById('previewContainer').style.display = 'none';
         document.getElementById('formContainer').style.display = 'block';
     }
 
-    // Helper Function for Bullet Lists
     function updateList(cvListId, inputId, defaultText) {
         const text = document.getElementById(inputId).value;
         const lines = text.split('\n');
@@ -623,16 +756,14 @@
         }
     }
 
-    // 5. PDF Download Function
+    // 100% Exact PDF Print Function
     function downloadPDF() {
         window.print();
     }
 
-    // 6. Fixed Image Download Function (100% Working)
+    // 100% Exact Image Export Function with CSS Computed Colors
     function downloadImage() {
         const cvPaper = document.getElementById('cv-paper');
-        
-        // Reset scale momentarily to capture full-size image on mobile
         const currentTransform = cvPaper.style.transform;
         cvPaper.style.transform = 'none';
 
@@ -644,7 +775,7 @@
             scrollX: 0,
             scrollY: -window.scrollY
         }).then(canvas => {
-            cvPaper.style.transform = currentTransform; // restore scale
+            cvPaper.style.transform = currentTransform;
             const imageURI = canvas.toDataURL('image/png');
             const link = document.createElement('a');
             link.download = 'CV_' + (document.getElementById('cv-name').innerText.replace(/\s+/g, '_')) + '.png';
@@ -658,23 +789,31 @@
         });
     }
 
-    // 7. Fixed Word Export Function
+    // 100% Exact Word Export Function
     function downloadWord() {
+        const pColor = getComputedStyle(document.body).getPropertyValue('--primary-color').trim();
+        const sColor = getComputedStyle(document.body).getPropertyValue('--secondary-color').trim();
+        const bBg = getComputedStyle(document.body).getPropertyValue('--banner-bg').trim();
+        const bText = getComputedStyle(document.body).getPropertyValue('--banner-text').trim();
+
         const styles = `
             <style>
                 body { font-family: 'Times New Roman', Times, serif; }
                 .cv-paper { width: 100%; padding: 20px; }
-                .cv-top-logo { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
-                .cv-logo-badge { background-color: #0070c0; color: #ffffff; font-family: Arial, sans-serif; font-weight: 900; font-size: 28px; padding: 6px 12px; border-radius: 6px; display: inline-block; }
-                .cv-logo-text { color: #0070c0; font-family: cursive; font-style: italic; display: inline-block; margin-left: 10px; }
+                .cv-header-grid { width: 100%; display: table; margin-bottom: 10px; }
+                .cv-header-left { display: table-cell; vertical-align: middle; }
+                .cv-photo-box { display: table-cell; width: 100px; height: 120px; text-align: right; }
+                .cv-photo-box img { width: 100px; height: 120px; }
+                .cv-logo-badge { background-color: ${pColor}; color: #ffffff; font-family: Arial, sans-serif; font-weight: 900; font-size: 28px; padding: 6px 12px; border-radius: 6px; display: inline-block; }
+                .cv-logo-text { color: ${pColor}; font-family: cursive; font-style: italic; display: inline-block; margin-left: 10px; }
                 .cv-logo-text .line1 { font-size: 20px; letter-spacing: 2px; }
                 .cv-logo-text .line2 { font-size: 26px; letter-spacing: 4px; font-weight: bold; }
-                .cv-blue-line-thick { height: 4px; background-color: #002060; border-bottom: 3px solid #002060; margin-bottom: 2px; }
-                .cv-blue-line-thin { height: 1px; background-color: #002060; border-bottom: 1px solid #002060; margin-bottom: 15px; }
+                .cv-blue-line-thick { height: 4px; background-color: ${sColor}; border-bottom: 3px solid ${sColor}; margin-bottom: 2px; }
+                .cv-blue-line-thin { height: 1px; background-color: ${sColor}; border-bottom: 1px solid ${sColor}; margin-bottom: 15px; }
                 .cv-name-box { border: 1px solid #000000; padding: 6px; text-align: center; margin-bottom: 10px; background-color: #ffffff; }
                 .cv-name { font-size: 24px; font-weight: bold; font-style: italic; }
                 .cv-contact-info { text-align: center; font-size: 11px; font-weight: bold; font-style: italic; margin-bottom: 15px; }
-                .cv-section-banner { background-color: #c0c0c0; padding: 3px 8px; font-size: 14px; font-weight: bold; font-style: italic; color: #000000; margin-top: 12px; margin-bottom: 8px; }
+                .cv-section-banner { background-color: ${bBg}; padding: 3px 8px; font-size: 14px; font-weight: bold; font-style: italic; color: ${bText}; margin-top: 12px; margin-bottom: 8px; }
                 .cv-objective-text { font-size: 12px; font-style: italic; font-weight: bold; text-align: justify; margin-bottom: 10px; }
                 .cv-info-table { width: 100%; border-collapse: collapse; margin-bottom: 10px; }
                 .cv-info-table td { padding: 3px 0; font-size: 12px; font-style: italic; font-weight: bold; }
