@@ -437,12 +437,6 @@
             background-color: #f8f9fa;
         }
 
-        [contenteditable="true"]:hover {
-            outline: 1px dashed #0070c0;
-            background-color: #f0f8ff;
-            cursor: text;
-        }
-
         .cv-main-header-title {
             font-size: 20px;
             font-weight: 800;
@@ -652,10 +646,6 @@
             }
             .modal-overlay, .form-container, .btn-top-bar, .theme-selector-box {
                 display: none !important;
-            }
-            [contenteditable="true"]:hover {
-                outline: none !important;
-                background-color: transparent !important;
             }
         }
     </style>
@@ -1024,7 +1014,7 @@
                 <div class="cv-sidebar">
                     ${headerTitleHTML}
                     ${photoHTML}
-                    <div class="cv-name" contenteditable="true">${name}</div>
+                    <div class="cv-name">${name}</div>
                     <div class="cv-contact">
                         <div><b>Address:</b> ${address}</div>
                         <div><b>Email:</b> ${email}</div>
@@ -1065,7 +1055,7 @@
                     ${headerTitleHTML}
                     <div class="cv-header">
                         <div>
-                            <div class="cv-name" contenteditable="true">${name}</div>
+                            <div class="cv-name">${name}</div>
                             <div class="cv-contact">
                                 <div><b>Address:</b> ${address} | <b>Email:</b> ${email} | <b>Cell:</b> ${phone}</div>
                             </div>
@@ -1103,7 +1093,7 @@
                     ${headerTitleHTML}
                     <div class="cv-header">
                         <div>
-                            <div class="cv-name" contenteditable="true">${name}</div>
+                            <div class="cv-name">${name}</div>
                             <div class="cv-contact">
                                 <div><b>Address:</b> ${address} | <b>Email:</b> ${email} | <b>Cell:</b> ${phone}</div>
                             </div>
@@ -1150,7 +1140,7 @@
     function getListHTML(inputId, defaultText) {
         const text = document.getElementById(inputId).value;
         const lines = text.split('\n');
-        let html = '<ul class="cv-list" contenteditable="true">';
+        let html = '<ul class="cv-list">';
         let hasData = false;
         lines.forEach(line => {
             if (line.trim() !== '') {
