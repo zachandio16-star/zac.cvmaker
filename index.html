@@ -735,12 +735,12 @@
         </div>
     </div>
 
-    <!-- GENERATING CV LOADING POPUP -->
+    <!-- GENERATING / EDIT LOADING POPUP -->
     <div class="loading-overlay" id="loadingModal">
         <div class="loading-card">
             <div class="spinner"></div>
-            <h3>Generating Your Professional CV...</h3>
-            <p>Please wait while we format and build your resume.</p>
+            <h3 id="loadingTitle">Generating Your Professional CV...</h3>
+            <p id="loadingSubtitle">Please wait while we format and build your resume.</p>
             <div class="gen-progress-bg">
                 <div class="gen-progress-fill" id="genProgressBar"></div>
             </div>
@@ -936,6 +936,43 @@
 
 <script>
     let uploadedPhotoData = "";
+    let isNavigatingByHash = false;
+
+    /* HASH ROUTING MANAGEMENT */
+    window.addEventListener('load', function() {
+        if (!window.location.hash) {
+            window.location.hash = '#/welcome';
+        }
+        handleHashChange();
+    });
+
+    window.addEventListener('hashchange', function() {
+        handleHashChange();
+    });
+
+    function navigateTo(hash) {
+        window.location.hash = hash;
+    }
+
+    function handleHashChange() {
+        const hash = window.location.hash;
+        const welcomeModal = document.getElementById('welcomeModal');
+        const formContainer = document.getElementById('formContainer');
+        const previewContainer = document.getElementById('previewContainer');
+
+        welcomeModal.style.display = 'none';
+        formContainer.style.display = 'none';
+        previewContainer.style.display = 'none';
+
+        if (hash === '#/form' || hash === '#/edit') {
+            formContainer.style.display = 'block';
+        } else if (hash === '#/preview') {
+            previewContainer.style.display = 'flex';
+            changeLayout(document.getElementById('layoutSelect').value);
+        } else {
+            welcomeModal.style.display = 'flex';
+        }
+    }
 
     /* VISUAL DROPDOWN FUNCTIONS */
     function toggleDropdown() {
@@ -1024,8 +1061,7 @@
     }
 
     function startCVCreation() {
-        document.getElementById('welcomeModal').style.display = 'none';
-        document.getElementById('formContainer').style.display = 'block';
+        navigateTo('#/form');
     }
 
     function changeLayout(layoutClass) {
@@ -1043,6 +1079,11 @@
         const loadingModal = document.getElementById('loadingModal');
         const progressBar = document.getElementById('genProgressBar');
         const progressPercent = document.getElementById('genProgressPercent');
+        const loadingTitle = document.getElementById('loadingTitle');
+        const loadingSubtitle = document.getElementById('loadingSubtitle');
+
+        loadingTitle.textContent = "Generating Your Professional CV...";
+        loadingSubtitle.textContent = "Please wait while we format and build your resume.";
 
         progressBar.style.width = '0%';
         progressPercent.textContent = '0%';
@@ -1058,12 +1099,40 @@
                 clearInterval(interval);
                 setTimeout(() => {
                     loadingModal.style.display = 'none';
-                    document.getElementById('formContainer').style.display = 'none';
-                    document.getElementById('previewContainer').style.display = 'flex';
-                    changeLayout(document.getElementById('layoutSelect').value);
+                    navigateTo('#/preview');
                 }, 200);
             }
         }, 60);
+    }
+
+    function backToForm() {
+        const loadingModal = document.getElementById('loadingModal');
+        const progressBar = document.getElementById('genProgressBar');
+        const progressPercent = document.getElementById('genProgressPercent');
+        const loadingTitle = document.getElementById('loadingTitle');
+        const loadingSubtitle = document.getElementById('loadingSubtitle');
+
+        loadingTitle.textContent = "Going to Edit Page...";
+        loadingSubtitle.textContent = "Loading your CV data into the edit section...";
+
+        progressBar.style.width = '0%';
+        progressPercent.textContent = '0%';
+        loadingModal.style.display = 'flex';
+
+        let progress = 0;
+        const interval = setInterval(() => {
+            progress += 5;
+            progressBar.style.width = progress + '%';
+            progressPercent.textContent = progress + '%';
+
+            if (progress >= 100) {
+                clearInterval(interval);
+                setTimeout(() => {
+                    loadingModal.style.display = 'none';
+                    navigateTo('#/edit');
+                }, 200);
+            }
+        }, 40);
     }
 
     function adjustCVScale() {
@@ -1262,13 +1331,7 @@
     }
 
     function cancelCreation() {
-        document.getElementById('formContainer').style.display = 'none';
-        document.getElementById('welcomeModal').style.display = 'flex';
-    }
-
-    function backToForm() {
-        document.getElementById('previewContainer').style.display = 'none';
-        document.getElementById('formContainer').style.display = 'block';
+        navigateTo('#/welcome');
     }
 
     function downloadPDF() {
