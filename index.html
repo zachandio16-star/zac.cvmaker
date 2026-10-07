@@ -115,7 +115,7 @@
             height: 75px;
         }
 
-        /* NEW PHOTO UPLOAD UI STYLES & PREVIEW */
+        /* PHOTO UPLOAD UI STYLES & PREVIEW */
         .photo-upload-container {
             border: 2px dashed #0070c0;
             padding: 15px;
@@ -162,7 +162,6 @@
             font-size: 13px;
         }
 
-        /* Photo Preview Box */
         .photo-preview-box {
             display: none;
             margin: 12px auto 8px auto;
@@ -250,32 +249,106 @@
             align-items: center;
         }
 
+        /* NEW VISUAL LAYOUT SELECTOR UI STYLES */
         .theme-selector-box {
             width: 100%;
             background: #ffffff;
-            padding: 12px;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .theme-selector-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .theme-selector-header h3 {
+            font-size: 15px;
+            color: #1a365d;
+        }
+
+        .layout-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            max-height: 280px;
+            overflow-y: auto;
+            padding: 5px;
+            border: 1px solid #e2e8f0;
             border-radius: 6px;
-            margin-bottom: 10px;
+            background: #f8fafc;
+        }
+
+        .layout-card {
+            border: 2px solid #cbd5e1;
+            border-radius: 6px;
+            padding: 8px;
+            background: #fff;
+            cursor: pointer;
+            transition: all 0.2s ease;
             display: flex;
             align-items: center;
             gap: 10px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
 
-        .theme-selector-box label {
+        .layout-card:hover {
+            border-color: #0070c0;
+            transform: translateY(-2px);
+            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+        }
+
+        .layout-card.selected {
+            border-color: #0070c0;
+            background-color: #f0f7ff;
+            box-shadow: 0 0 0 2px rgba(0, 112, 192, 0.2);
+        }
+
+        /* Mini Preview Box representing CV Layout style */
+        .layout-thumb {
+            width: 42px;
+            height: 56px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            background: #fff;
+            flex-shrink: 0;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-sizing: border-box;
+            position: relative;
+        }
+
+        .thumb-header { height: 12px; background: #0070c0; width: 100%; }
+        .thumb-line { height: 3px; background: #ddd; margin: 3px 4px 0 4px; border-radius: 1px; }
+        .thumb-line.short { width: 60%; }
+        
+        /* Two Column Thumbs */
+        .layout-thumb.two-col { flex-direction: row; }
+        .layout-thumb.two-col .thumb-side { width: 35%; background: #2c3e50; height: 100%; }
+        .layout-thumb.two-col .thumb-main { width: 65%; padding: 2px; }
+
+        .layout-info {
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .layout-title {
+            font-size: 13px;
             font-weight: bold;
             color: #333;
             white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
-        .theme-selector-box select {
-            width: 100%;
-            padding: 8px;
-            border-radius: 4px;
-            border: 1px solid #0070c0;
-            font-weight: bold;
-            color: #0070c0;
-            cursor: pointer;
+        .layout-desc {
+            font-size: 11px;
+            color: #666;
         }
 
         .btn-top-bar {
@@ -335,13 +408,13 @@
             display: block !important;
         }
 
-        /* GLOBAL PASSPORT PHOTO STYLING (No Circle, No Stretch, No Crop) */
+        /* GLOBAL PASSPORT PHOTO STYLING */
         .cv-photo-container img {
             width: 110px !important;
             height: 135px !important;
-            border-radius: 4px !important; /* Passport rectangular shape */
-            object-fit: contain !important; /* Preserves aspect ratio, no cropping or stretching */
-            background-color: #f8f9fa; /* Background if image ratio leaves small padding */
+            border-radius: 4px !important;
+            object-fit: contain !important;
+            background-color: #f8f9fa;
         }
 
         [contenteditable="true"]:hover {
@@ -389,13 +462,12 @@
         .layout-19 .cv-main-header-title { color: #80cbc4; border-bottom-color: #80cbc4; }
         .layout-20 .cv-main-header-title { color: #1a237e; text-align: center; font-size: 22px; border-bottom: 2px solid #1a237e; padding-bottom: 5px; margin-bottom: 15px; }
 
-        /* LAYOUT SPECIFIC ADJUSTMENTS FOR PASSPORT PHOTO */
+        /* LAYOUT SPECIFIC ADJUSTMENTS */
         .layout-1 { padding: 40px; }
         .layout-1 .cv-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid #0070c0; padding-bottom: 15px; margin-bottom: 20px; }
         .layout-1 .cv-photo-container img { border: 2px solid #0070c0 !important; }
         .layout-1 .cv-section-title { background: #0070c0; color: #fff; padding: 4px 10px; font-weight: bold; margin: 15px 0 10px 0; border-radius: 3px; }
 
-        /* LAYOUT 2: Modern Left Sidebar Split Layout (2 Columns) */
         .layout-2 { display: flex; min-height: 1050px; }
         .layout-2 .cv-sidebar { width: 30%; background: #2c3e50; color: #fff; padding: 30px 15px; }
         .layout-2 .cv-main-content { width: 70%; padding: 30px; }
@@ -403,14 +475,12 @@
         .layout-2 .cv-section-title { border-bottom: 2px solid #2c3e50; color: #2c3e50; font-weight: bold; margin: 15px 0 10px 0; font-size: 16px; text-transform: uppercase; }
         .layout-2 .cv-sidebar .cv-section-title { color: #1abc9c; border-bottom-color: #1abc9c; }
 
-        /* LAYOUT 3: Centered Executive Layout */
         .layout-3 { padding: 40px; text-align: center; }
         .layout-3 .cv-header { border-bottom: 1px solid #ccc; padding-bottom: 20px; margin-bottom: 20px; }
         .layout-3 .cv-photo-container img { border: 1px solid #ccc !important; margin: 0 auto 10px auto; }
         .layout-3 .cv-section-title { font-size: 18px; font-weight: bold; text-transform: uppercase; letter-spacing: 2px; color: #333; margin: 20px 0 10px 0; border-top: 1px solid #333; border-bottom: 1px solid #333; padding: 3px 0; }
         .layout-3 .cv-body { text-align: left; }
 
-        /* LAYOUT 4: Right Sidebar Dark Layout */
         .layout-4 { display: flex; flex-direction: row-reverse; min-height: 1050px; }
         .layout-4 .cv-sidebar { width: 32%; background: #1e272e; color: #f5f6fa; padding: 30px 15px; }
         .layout-4 .cv-main-content { width: 68%; padding: 30px; }
@@ -418,42 +488,36 @@
         .layout-4 .cv-section-title { border-left: 4px solid #00d2d3; padding-left: 8px; font-size: 16px; font-weight: bold; margin: 15px 0; color: #2f3640; }
         .layout-4 .cv-sidebar .cv-section-title { color: #00d2d3; }
 
-        /* LAYOUT 5: Full Dark Top Banner Layout */
         .layout-5 { padding: 0; }
         .layout-5 .cv-header { background: #0070c0; color: white; padding: 30px; display: flex; gap: 20px; align-items: center; }
         .layout-5 .cv-body { padding: 30px; }
         .layout-5 .cv-photo-container img { border: 2px solid #fff !important; }
         .layout-5 .cv-section-title { font-size: 16px; font-weight: bold; color: #0070c0; border-bottom: 2px solid #0070c0; margin: 15px 0 10px 0; padding-bottom: 3px; }
 
-        /* LAYOUT 6: Corporate Boxed Border Layout */
         .layout-6 { padding: 25px; }
         .layout-6 .cv-inner-box { border: 2px solid #333; padding: 25px; min-height: 980px; }
         .layout-6 .cv-header { display: flex; justify-content: space-between; border-bottom: 2px double #333; padding-bottom: 15px; }
         .layout-6 .cv-photo-container img { border: 1px solid #333 !important; }
         .layout-6 .cv-section-title { background: #f0f0f0; border-left: 5px solid #333; padding: 5px 10px; font-weight: bold; margin: 15px 0 10px 0; }
 
-        /* LAYOUT 7: Clean Minimalist Line-art Layout */
         .layout-7 { padding: 40px; }
         .layout-7 .cv-header { text-align: left; margin-bottom: 20px; position: relative; }
         .layout-7 .cv-photo-container { position: absolute; right: 0; top: 0; }
         .layout-7 .cv-photo-container img { border: 1px solid #ccc !important; }
         .layout-7 .cv-section-title { font-weight: bold; text-transform: uppercase; color: #444; border-bottom: 1px solid #aaa; margin: 20px 0 10px 0; letter-spacing: 1px; }
 
-        /* LAYOUT 8: Teal Two-Tone Grid Layout */
         .layout-8 { display: flex; min-height: 1050px; }
         .layout-8 .cv-sidebar { width: 35%; background: #e0f2f1; padding: 30px 15px; border-right: 3px solid #00796b; }
         .layout-8 .cv-main-content { width: 65%; padding: 30px; }
         .layout-8 .cv-photo-container img { border: 2px solid #00796b !important; margin: 0 auto 15px auto; display: block; }
         .layout-8 .cv-section-title { color: #00796b; font-size: 16px; font-weight: bold; margin: 15px 0 8px 0; border-bottom: 1px dashed #00796b; }
 
-        /* LAYOUT 9: Emerald Header Card Layout */
         .layout-9 { padding: 30px; }
         .layout-9 .cv-header { background: #2e7d32; color: #fff; padding: 25px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; }
         .layout-9 .cv-photo-container img { border: 2px solid #fff !important; }
         .layout-9 .cv-section-title { font-size: 16px; font-weight: bold; color: #2e7d32; margin: 20px 0 10px 0; display: flex; align-items: center; }
         .layout-9 .cv-section-title::after { content: ''; flex: 1; height: 2px; background: #2e7d32; margin-left: 10px; }
 
-        /* LAYOUT 10: Elegant Burgundy Split Layout */
         .layout-10 { display: flex; min-height: 1050px; }
         .layout-10 .cv-sidebar { width: 28%; background: #4a0013; color: #fff; padding: 30px 15px; }
         .layout-10 .cv-main-content { width: 72%; padding: 30px; }
@@ -461,13 +525,11 @@
         .layout-10 .cv-section-title { color: #800020; border-bottom: 2px solid #800020; font-weight: bold; margin: 15px 0 10px 0; }
         .layout-10 .cv-sidebar .cv-section-title { color: #ffb3c1; border-bottom-color: #ffb3c1; }
 
-        /* LAYOUT 11: Royal Gold Border Banner Layout */
         .layout-11 { padding: 35px; }
         .layout-11 .cv-header { border-top: 5px solid #b78103; border-bottom: 5px solid #b78103; padding: 20px 0; display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
         .layout-11 .cv-photo-container img { border: 2px solid #b78103 !important; }
         .layout-11 .cv-section-title { background: #fdf6e2; color: #5c4100; font-weight: bold; padding: 6px 12px; border-left: 4px solid #b78103; margin: 15px 0 10px 0; }
 
-        /* LAYOUT 12: Modern Charcoal Vertical Strip Layout */
         .layout-12 { display: flex; min-height: 1050px; }
         .layout-12 .cv-sidebar { width: 8px; background: #333333; }
         .layout-12 .cv-wrapper-body { width: calc(100% - 8px); padding: 35px; }
@@ -475,13 +537,11 @@
         .layout-12 .cv-photo-container img { border: 1px solid #333 !important; }
         .layout-12 .cv-section-title { color: #333; font-size: 16px; font-weight: bold; margin: 15px 0 10px 0; text-transform: uppercase; letter-spacing: 1px; }
 
-        /* LAYOUT 13: Ocean Blue Carded Section Layout */
         .layout-13 { padding: 35px; background: #f4f9fc; min-height: 1050px; }
         .layout-13 .cv-header { background: #fff; padding: 20px; border-radius: 6px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
         .layout-13 .cv-photo-container img { border: 2px solid #0077b6 !important; }
         .layout-13 .cv-section-title { background: #0077b6; color: #fff; padding: 6px 12px; border-radius: 4px; font-weight: bold; margin: 15px 0 10px 0; }
 
-        /* LAYOUT 14: Dark Chocolate Full Sidebar */
         .layout-14 { display: flex; min-height: 1050px; }
         .layout-14 .cv-sidebar { width: 33%; background: #3e2723; color: #d7ccc8; padding: 30px 15px; }
         .layout-14 .cv-main-content { width: 67%; padding: 30px; }
@@ -489,13 +549,11 @@
         .layout-14 .cv-section-title { color: #3e2723; font-weight: bold; border-bottom: 2px solid #3e2723; margin: 15px 0 10px 0; }
         .layout-14 .cv-sidebar .cv-section-title { color: #ffccbc; border-bottom-color: #ffccbc; }
 
-        /* LAYOUT 15: Crimson Red Bold Header */
         .layout-15 { padding: 35px; }
         .layout-15 .cv-header { border-left: 8px solid #c62828; padding-left: 20px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
         .layout-15 .cv-photo-container img { border: 1px solid #c62828 !important; }
         .layout-15 .cv-section-title { color: #c62828; font-weight: bold; font-size: 16px; border-bottom: 1px solid #c62828; margin: 15px 0 10px 0; padding-bottom: 3px; }
 
-        /* LAYOUT 16: Olive Prestige Split Column */
         .layout-16 { display: flex; min-height: 1050px; }
         .layout-16 .cv-sidebar { width: 30%; background: #2e3b12; color: #f0f4e8; padding: 30px 15px; }
         .layout-16 .cv-main-content { width: 70%; padding: 30px; }
@@ -503,19 +561,16 @@
         .layout-16 .cv-section-title { color: #556b2f; font-weight: bold; border-bottom: 2px solid #556b2f; margin: 15px 0 10px 0; }
         .layout-16 .cv-sidebar .cv-section-title { color: #8fbc8f; border-bottom-color: #8fbc8f; }
 
-        /* LAYOUT 17: Sunset Amber Header Layout */
         .layout-17 { padding: 35px; }
         .layout-17 .cv-header { background: #fff3e0; border: 1px solid #ffe0b2; padding: 20px; border-radius: 6px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
         .layout-17 .cv-photo-container img { border: 2px solid #ff6f00 !important; }
         .layout-17 .cv-section-title { color: #e65100; font-weight: bold; border-bottom: 2px solid #ff6f00; margin: 15px 0 10px 0; }
 
-        /* LAYOUT 18: Plum Elegance Centered Avatar */
         .layout-18 { padding: 40px; }
         .layout-18 .cv-header { text-align: center; border-bottom: 2px solid #4a0072; padding-bottom: 20px; margin-bottom: 20px; }
         .layout-18 .cv-photo-container img { border: 2px solid #880e4f !important; margin: 0 auto 10px auto; }
         .layout-18 .cv-section-title { color: #4a0072; font-weight: bold; text-align: center; background: #f3e5f5; padding: 4px; margin: 15px 0 10px 0; }
 
-        /* LAYOUT 19: Deep Emerald Two Column Dark Sidebar */
         .layout-19 { display: flex; min-height: 1050px; }
         .layout-19 .cv-sidebar { width: 32%; background: #00251a; color: #e0f2f1; padding: 30px 15px; }
         .layout-19 .cv-main-content { width: 68%; padding: 30px; }
@@ -523,7 +578,6 @@
         .layout-19 .cv-section-title { color: #004d40; font-weight: bold; border-bottom: 2px solid #004d40; margin: 15px 0 10px 0; }
         .layout-19 .cv-sidebar .cv-section-title { color: #80cbc4; border-bottom-color: #80cbc4; }
 
-        /* LAYOUT 20: Indigo Classic Frame Layout */
         .layout-20 { padding: 35px; border: 10px solid #1a237e; min-height: 1050px; }
         .layout-20 .cv-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px dashed #1a237e; padding-bottom: 15px; margin-bottom: 20px; }
         .layout-20 .cv-photo-container img { border: 2px solid #1a237e !important; }
@@ -687,31 +741,238 @@
     <!-- 3. PREVIEW & DOWNLOAD PAGE -->
     <div class="preview-container" id="previewContainer">
 
-        <!-- Theme / Layout Selector Dropdown -->
+        <!-- NEW VISUAL LAYOUT SELECTOR PANEL (2 BY 2 GRID VISUAL TEMPLATES) -->
         <div class="theme-selector-box">
-            <label for="layoutSelect">📐 Select Structural Layout Structure:</label>
-            <select id="layoutSelect" onchange="changeLayout(this.value)">
-                <option value="layout-1">Layout 1: Classic Header Banner</option>
-                <option value="layout-2">Layout 2: Modern Left Sidebar Split (2-Column)</option>
-                <option value="layout-3">Layout 3: Centered Executive</option>
-                <option value="layout-4">Layout 4: Right Dark Sidebar (2-Column)</option>
-                <option value="layout-5">Layout 5: Full Top Banner</option>
-                <option value="layout-6">Layout 6: Corporate Boxed Border</option>
-                <option value="layout-7">Layout 7: Clean Minimalist Line-Art</option>
-                <option value="layout-8">Layout 8: Teal Two-Tone Split</option>
-                <option value="layout-9">Layout 9: Emerald Header Card</option>
-                <option value="layout-10">Layout 10: Elegant Burgundy Split</option>
-                <option value="layout-11">Layout 11: Royal Gold Double Border</option>
-                <option value="layout-12">Layout 12: Charcoal Vertical Accent Strip</option>
-                <option value="layout-13">Layout 13: Ocean Blue Carded</option>
-                <option value="layout-14">Layout 14: Dark Chocolate Full Sidebar</option>
-                <option value="layout-15">Layout 15: Crimson Bold Left Stripe</option>
-                <option value="layout-16">Layout 16: Olive Prestige Split</option>
-                <option value="layout-17">Layout 17: Sunset Amber Header</option>
-                <option value="layout-18">Layout 18: Plum Centered Avatar</option>
-                <option value="layout-19">Layout 19: Deep Emerald Two-Column</option>
-                <option value="layout-20">Layout 20: Indigo Classic Full Frame</option>
-            </select>
+            <div class="theme-selector-header">
+                <h3>🎨 Choose CV Layout Design:</h3>
+            </div>
+            
+            <div class="layout-grid" id="layoutGrid">
+                <!-- Layout items will be generated dynamically or manually -->
+                <div class="layout-card selected" onclick="selectLayoutCard('layout-1', this)">
+                    <div class="layout-thumb">
+                        <div class="thumb-header"></div>
+                        <div class="thumb-line"></div>
+                        <div class="thumb-line short"></div>
+                    </div>
+                    <div class="layout-info">
+                        <span class="layout-title">Layout 1</span>
+                        <span class="layout-desc">Classic Blue Banner</span>
+                    </div>
+                </div>
+
+                <div class="layout-card" onclick="selectLayoutCard('layout-2', this)">
+                    <div class="layout-thumb two-col">
+                        <div class="thumb-side"></div>
+                        <div class="thumb-main">
+                            <div class="thumb-line"></div>
+                            <div class="thumb-line short"></div>
+                        </div>
+                    </div>
+                    <div class="layout-info">
+                        <span class="layout-title">Layout 2</span>
+                        <span class="layout-desc">Modern Split 2-Col</span>
+                    </div>
+                </div>
+
+                <div class="layout-card" onclick="selectLayoutCard('layout-3', this)">
+                    <div class="layout-thumb" style="align-items:center;">
+                        <div class="thumb-line" style="width: 70%; height: 5px;"></div>
+                        <div class="thumb-line short"></div>
+                    </div>
+                    <div class="layout-info">
+                        <span class="layout-title">Layout 3</span>
+                        <span class="layout-desc">Centered Executive</span>
+                    </div>
+                </div>
+
+                <div class="layout-card" onclick="selectLayoutCard('layout-4', this)">
+                    <div class="layout-thumb two-col" style="flex-direction: row-reverse;">
+                        <div class="thumb-side" style="background:#1e272e;"></div>
+                        <div class="thumb-main">
+                            <div class="thumb-line"></div>
+                            <div class="thumb-line short"></div>
+                        </div>
+                    </div>
+                    <div class="layout-info">
+                        <span class="layout-title">Layout 4</span>
+                        <span class="layout-desc">Dark Right Sidebar</span>
+                    </div>
+                </div>
+
+                <div class="layout-card" onclick="selectLayoutCard('layout-5', this)">
+                    <div class="layout-thumb">
+                        <div class="thumb-header" style="height:20px; background:#0070c0;"></div>
+                        <div class="thumb-line"></div>
+                    </div>
+                    <div class="layout-info">
+                        <span class="layout-title">Layout 5</span>
+                        <span class="layout-desc">Full Top Banner</span>
+                    </div>
+                </div>
+
+                <div class="layout-card" onclick="selectLayoutCard('layout-6', this)">
+                    <div class="layout-thumb" style="border: 2px solid #333;">
+                        <div class="thumb-line"></div>
+                        <div class="thumb-line short"></div>
+                    </div>
+                    <div class="layout-info">
+                        <span class="layout-title">Layout 6</span>
+                        <span class="layout-desc">Corporate Boxed Border</span>
+                    </div>
+                </div>
+
+                <div class="layout-card" onclick="selectLayoutCard('layout-7', this)">
+                    <div class="layout-thumb">
+                        <div class="thumb-line" style="background:#444;"></div>
+                        <div class="thumb-line short"></div>
+                    </div>
+                    <div class="layout-info">
+                        <span class="layout-title">Layout 7</span>
+                        <span class="layout-desc">Clean Minimalist</span>
+                    </div>
+                </div>
+
+                <div class="layout-card" onclick="selectLayoutCard('layout-8', this)">
+                    <div class="layout-thumb two-col">
+                        <div class="thumb-side" style="background:#00796b;"></div>
+                        <div class="thumb-main">
+                            <div class="thumb-line"></div>
+                        </div>
+                    </div>
+                    <div class="layout-info">
+                        <span class="layout-title">Layout 8</span>
+                        <span class="layout-desc">Teal Two-Tone</span>
+                    </div>
+                </div>
+
+                <div class="layout-card" onclick="selectLayoutCard('layout-9', this)">
+                    <div class="layout-thumb">
+                        <div class="thumb-header" style="background:#2e7d32;"></div>
+                        <div class="thumb-line"></div>
+                    </div>
+                    <div class="layout-info">
+                        <span class="layout-title">Layout 9</span>
+                        <span class="layout-desc">Emerald Header Card</span>
+                    </div>
+                </div>
+
+                <div class="layout-card" onclick="selectLayoutCard('layout-10', this)">
+                    <div class="layout-thumb two-col">
+                        <div class="thumb-side" style="background:#4a0013;"></div>
+                        <div class="thumb-main">
+                            <div class="thumb-line"></div>
+                        </div>
+                    </div>
+                    <div class="layout-info">
+                        <span class="layout-title">Layout 10</span>
+                        <span class="layout-desc">Burgundy Split</span>
+                    </div>
+                </div>
+
+                <div class="layout-card" onclick="selectLayoutCard('layout-11', this)">
+                    <div class="layout-thumb" style="border-top:3px solid #b78103; border-bottom:3px solid #b78103;">
+                        <div class="thumb-line"></div>
+                    </div>
+                    <div class="layout-info">
+                        <span class="layout-title">Layout 11</span>
+                        <span class="layout-desc">Royal Gold Double Border</span>
+                    </div>
+                </div>
+
+                <div class="layout-card" onclick="selectLayoutCard('layout-12', this)">
+                    <div class="layout-thumb" style="border-left:3px solid #333;">
+                        <div class="thumb-line"></div>
+                    </div>
+                    <div class="layout-info">
+                        <span class="layout-title">Layout 12</span>
+                        <span class="layout-desc">Charcoal Strip</span>
+                    </div>
+                </div>
+
+                <div class="layout-card" onclick="selectLayoutCard('layout-13', this)">
+                    <div class="layout-thumb" style="background:#f4f9fc;">
+                        <div class="thumb-header" style="background:#0077b6;"></div>
+                    </div>
+                    <div class="layout-info">
+                        <span class="layout-title">Layout 13</span>
+                        <span class="layout-desc">Ocean Blue Carded</span>
+                    </div>
+                </div>
+
+                <div class="layout-card" onclick="selectLayoutCard('layout-14', this)">
+                    <div class="layout-thumb two-col">
+                        <div class="thumb-side" style="background:#3e2723;"></div>
+                        <div class="thumb-main"><div class="thumb-line"></div></div>
+                    </div>
+                    <div class="layout-info">
+                        <span class="layout-title">Layout 14</span>
+                        <span class="layout-desc">Chocolate Sidebar</span>
+                    </div>
+                </div>
+
+                <div class="layout-card" onclick="selectLayoutCard('layout-15', this)">
+                    <div class="layout-thumb" style="border-left:4px solid #c62828;">
+                        <div class="thumb-line"></div>
+                    </div>
+                    <div class="layout-info">
+                        <span class="layout-title">Layout 15</span>
+                        <span class="layout-desc">Crimson Left Stripe</span>
+                    </div>
+                </div>
+
+                <div class="layout-card" onclick="selectLayoutCard('layout-16', this)">
+                    <div class="layout-thumb two-col">
+                        <div class="thumb-side" style="background:#2e3b12;"></div>
+                        <div class="thumb-main"><div class="thumb-line"></div></div>
+                    </div>
+                    <div class="layout-info">
+                        <span class="layout-title">Layout 16</span>
+                        <span class="layout-desc">Olive Prestige Split</span>
+                    </div>
+                </div>
+
+                <div class="layout-card" onclick="selectLayoutCard('layout-17', this)">
+                    <div class="layout-thumb" style="background:#fff3e0;">
+                        <div class="thumb-line" style="background:#e65100;"></div>
+                    </div>
+                    <div class="layout-info">
+                        <span class="layout-title">Layout 17</span>
+                        <span class="layout-desc">Sunset Amber</span>
+                    </div>
+                </div>
+
+                <div class="layout-card" onclick="selectLayoutCard('layout-18', this)">
+                    <div class="layout-thumb" style="align-items:center;">
+                        <div style="width:12px; height:12px; border-radius:50%; background:#4a0072; margin-top:3px;"></div>
+                    </div>
+                    <div class="layout-info">
+                        <span class="layout-title">Layout 18</span>
+                        <span class="layout-desc">Plum Centered Avatar</span>
+                    </div>
+                </div>
+
+                <div class="layout-card" onclick="selectLayoutCard('layout-19', this)">
+                    <div class="layout-thumb two-col">
+                        <div class="thumb-side" style="background:#00251a;"></div>
+                        <div class="thumb-main"><div class="thumb-line"></div></div>
+                    </div>
+                    <div class="layout-info">
+                        <span class="layout-title">Layout 19</span>
+                        <span class="layout-desc">Deep Emerald 2-Col</span>
+                    </div>
+                </div>
+
+                <div class="layout-card" onclick="selectLayoutCard('layout-20', this)">
+                    <div class="layout-thumb" style="border: 2px solid #1a237e;">
+                        <div class="thumb-header" style="background:#1a237e;"></div>
+                    </div>
+                    <div class="layout-info">
+                        <span class="layout-title">Layout 20</span>
+                        <span class="layout-desc">Indigo Classic Frame</span>
+                    </div>
+                </div>
+            </div>
         </div>
         
         <div class="btn-top-bar">
@@ -731,6 +992,20 @@
 
 <script>
     let uploadedPhotoData = "";
+    let selectedLayoutClass = "layout-1";
+
+    /* FEATURE: VISUAL CARD SELECTION FUNCTION FOR LAYOUTS */
+    function selectLayoutCard(layoutClass, cardElement) {
+        // Remove active class from all cards
+        const cards = document.querySelectorAll('.layout-card');
+        cards.forEach(card => card.classList.remove('selected'));
+        
+        // Add active class to clicked card
+        cardElement.classList.add('selected');
+        
+        selectedLayoutClass = layoutClass;
+        changeLayout(layoutClass);
+    }
 
     /* FEATURE: PHOTO UPLOAD WITH PROGRESS BAR, PREVIEW & CONTROLS */
     function handlePhotoUpload(event) {
@@ -746,7 +1021,6 @@
         const uploadPreviewImg = document.getElementById('uploadPreviewImg');
         const fileInput = document.getElementById('in-photo');
 
-        // Hide old states and show progress bar
         fileInput.style.display = 'none';
         uploadSuccess.style.display = 'none';
         photoActions.style.display = 'none';
@@ -762,13 +1036,11 @@
             if (progress >= 100) {
                 clearInterval(interval);
                 
-                // Read File when loading completes
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     uploadedPhotoData = e.target.result;
                     progressBox.style.display = 'none';
                     
-                    // Show Preview Image & Controls
                     uploadPreviewImg.src = uploadedPhotoData;
                     photoPreviewBox.style.display = 'block';
                     uploadSuccess.style.display = 'block';
@@ -815,7 +1087,7 @@
     function generateCV() {
         document.getElementById('formContainer').style.display = 'none';
         document.getElementById('previewContainer').style.display = 'flex';
-        changeLayout(document.getElementById('layoutSelect').value);
+        changeLayout(selectedLayoutClass);
     }
 
     /* AUTOMATIC MOBILE PREVIEW SCALING FUNCTION */
@@ -862,7 +1134,7 @@
         const expHTML = getListHTML('in-experience', 'Experience details will appear here.');
         const langHTML = getListHTML('in-language', 'Languages will appear here.');
 
-        const currentLayout = document.getElementById('layoutSelect').value;
+        const currentLayout = selectedLayoutClass;
         const cvPaper = document.getElementById('cv-paper');
 
         const photoHTML = uploadedPhotoData ? `<div class="cv-photo-container"><img src="${uploadedPhotoData}" alt="Profile Photo"></div>` : `<div class="cv-photo-container"></div>`;
@@ -1030,11 +1302,10 @@
         window.print();
     }
 
-    /* PERFECT IMAGE DOWNLOAD (Fixes scaling clipping issues) */
+    /* PERFECT IMAGE DOWNLOAD */
     function downloadImage() {
         const cvPaper = document.getElementById('cv-paper');
         
-        // Temporarily reset CSS scale transform for html2canvas
         const originalTransform = cvPaper.style.transform;
         const originalMarginBottom = cvPaper.style.marginBottom;
         cvPaper.style.transform = 'scale(1)';
@@ -1047,7 +1318,6 @@
             width: cvPaper.offsetWidth,
             height: cvPaper.offsetHeight
         }).then(canvas => {
-            // Restore scaling
             cvPaper.style.transform = originalTransform;
             cvPaper.style.marginBottom = originalMarginBottom;
 
@@ -1058,7 +1328,7 @@
         });
     }
 
-    /* PERFECT WORD DOWNLOAD (Preserves exact A4 Margins) */
+    /* PERFECT WORD DOWNLOAD */
     function downloadWord() {
         const cvPaper = document.getElementById('cv-paper');
         const cvHTML = cvPaper.innerHTML;
