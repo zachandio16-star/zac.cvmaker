@@ -750,7 +750,7 @@
 
     <!-- 2. DETAILS ENTRY FORM -->
     <div class="form-container" id="formContainer">
-        <h2>Enter Your CV Details</h2>
+        <h2 id="formTitle">Enter Your CV Details</h2>
 
         <div class="form-group">
             <label>Profile Photo (Optional)</label>
@@ -814,8 +814,8 @@
         </div>
 
         <div class="form-actions">
-            <button class="btn-create" onclick="generateCV()">Generate CV</button>
-            <button class="btn-cancel" onclick="cancelCreation()">Cancel</button>
+            <button class="btn-create" id="btnSubmitForm" onclick="generateCV()">Generate CV</button>
+            <button class="btn-cancel" id="btnCancelForm" onclick="cancelCreation()">Cancel</button>
         </div>
     </div>
 
@@ -959,13 +959,24 @@
         const welcomeModal = document.getElementById('welcomeModal');
         const formContainer = document.getElementById('formContainer');
         const previewContainer = document.getElementById('previewContainer');
+        const formTitle = document.getElementById('formTitle');
+        const btnSubmitForm = document.getElementById('btnSubmitForm');
+        const btnCancelForm = document.getElementById('btnCancelForm');
 
         welcomeModal.style.display = 'none';
         formContainer.style.display = 'none';
         previewContainer.style.display = 'none';
 
-        if (hash === '#/form' || hash === '#/edit') {
+        if (hash === '#/form') {
             formContainer.style.display = 'block';
+            if (formTitle) formTitle.textContent = "Enter Your CV Details";
+            if (btnSubmitForm) btnSubmitForm.textContent = "Generate CV";
+            if (btnCancelForm) btnCancelForm.textContent = "Cancel";
+        } else if (hash === '#/edit') {
+            formContainer.style.display = 'block';
+            if (formTitle) formTitle.textContent = "Edit Your CV Details";
+            if (btnSubmitForm) btnSubmitForm.textContent = "Confirm Edit";
+            if (btnCancelForm) btnCancelForm.textContent = "Cancel Edit";
         } else if (hash === '#/preview') {
             previewContainer.style.display = 'flex';
             changeLayout(document.getElementById('layoutSelect').value);
@@ -1331,7 +1342,11 @@
     }
 
     function cancelCreation() {
-        navigateTo('#/welcome');
+        if (window.location.hash === '#/edit') {
+            navigateTo('#/preview');
+        } else {
+            navigateTo('#/welcome');
+        }
     }
 
     function downloadPDF() {
