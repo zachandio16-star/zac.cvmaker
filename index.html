@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Online CV Makeing App</title>
+    <title>Online CV Making App</title>
     <!-- html2canvas Library for PNG Download -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
@@ -243,19 +243,19 @@
         .preview-container {
             display: none;
             width: 100%;
-            max-width: 850px;
+            max-width: 900px;
             margin: 0 auto;
             flex-direction: column;
             align-items: center;
         }
 
-        /* NEW VISUAL LAYOUT SELECTOR UI STYLES */
+        /* NEW VISUAL LAYOUT SELECTOR (HORIZONTAL CARDS GRID) */
         .theme-selector-box {
             width: 100%;
             background: #ffffff;
-            padding: 15px;
+            padding: 16px;
             border-radius: 8px;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
 
@@ -267,88 +267,145 @@
         }
 
         .theme-selector-header h3 {
-            font-size: 15px;
+            font-size: 16px;
             color: #1a365d;
         }
 
+        /* 2 Column Grid for Layout Cards */
         .layout-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 12px;
             max-height: 280px;
             overflow-y: auto;
-            padding: 5px;
-            border: 1px solid #e2e8f0;
-            border-radius: 6px;
-            background: #f8fafc;
+            padding-right: 5px;
         }
 
+        /* Custom Scrollbar for Layout Grid */
+        .layout-grid::-webkit-scrollbar {
+            width: 6px;
+        }
+        .layout-grid::-webkit-scrollbar-thumb {
+            background-color: #0070c0;
+            border-radius: 4px;
+        }
+
+        /* Horizontal Card Style */
         .layout-card {
-            border: 2px solid #cbd5e1;
-            border-radius: 6px;
-            padding: 8px;
-            background: #fff;
-            cursor: pointer;
-            transition: all 0.2s ease;
             display: flex;
             align-items: center;
-            gap: 10px;
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 6px;
+            padding: 8px 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            gap: 12px;
         }
 
         .layout-card:hover {
             border-color: #0070c0;
-            transform: translateY(-2px);
-            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+            background: #f0f7ff;
+            transform: translateY(-1px);
         }
 
-        .layout-card.selected {
+        .layout-card.active {
             border-color: #0070c0;
-            background-color: #f0f7ff;
+            background: #e6f0fa;
             box-shadow: 0 0 0 2px rgba(0, 112, 192, 0.2);
         }
 
-        /* Mini Preview Box representing CV Layout style */
-        .layout-thumb {
-            width: 42px;
-            height: 56px;
+        /* Mini Wireframe Visual Preview Inside Card */
+        .mini-preview {
+            width: 36px;
+            height: 48px;
+            background: #ffffff;
             border: 1px solid #ccc;
             border-radius: 3px;
-            background: #fff;
             flex-shrink: 0;
-            overflow: hidden;
             display: flex;
-            flex-direction: column;
-            box-sizing: border-box;
-            position: relative;
+            padding: 3px;
+            gap: 2px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
         }
 
-        .thumb-header { height: 12px; background: #0070c0; width: 100%; }
-        .thumb-line { height: 3px; background: #ddd; margin: 3px 4px 0 4px; border-radius: 1px; }
-        .thumb-line.short { width: 60%; }
-        
-        /* Two Column Thumbs */
-        .layout-thumb.two-col { flex-direction: row; }
-        .layout-thumb.two-col .thumb-side { width: 35%; background: #2c3e50; height: 100%; }
-        .layout-thumb.two-col .thumb-main { width: 65%; padding: 2px; }
+        /* Mini Layout Wireframe Variants */
+        .mini-preview.type-top-banner {
+            flex-direction: column;
+        }
+        .mini-preview.type-top-banner .mini-head {
+            height: 12px;
+            background: #0070c0;
+            width: 100%;
+            margin-bottom: 3px;
+        }
+        .mini-preview.type-top-banner .mini-line {
+            height: 3px;
+            background: #cbd5e1;
+            margin-bottom: 2px;
+            width: 100%;
+        }
 
-        .layout-info {
+        .mini-preview.type-sidebar-left {
+            flex-direction: row;
+        }
+        .mini-preview.type-sidebar-left .mini-side {
+            width: 35%;
+            background: #2c3e50;
+            height: 100%;
+        }
+        .mini-preview.type-sidebar-left .mini-main {
+            width: 65%;
+            padding-left: 2px;
+        }
+
+        .mini-preview.type-sidebar-right {
+            flex-direction: row-reverse;
+        }
+        .mini-preview.type-sidebar-right .mini-side {
+            width: 35%;
+            background: #1e272e;
+            height: 100%;
+        }
+        .mini-preview.type-sidebar-right .mini-main {
+            width: 65%;
+        }
+
+        .mini-preview.type-centered {
+            flex-direction: column;
+            align-items: center;
+        }
+        .mini-preview.type-centered .mini-head {
+            height: 8px;
+            width: 80%;
+            background: #333;
+            margin-bottom: 4px;
+        }
+
+        .mini-preview.type-boxed {
+            border: 2px solid #333;
+            flex-direction: column;
+        }
+
+        .layout-card-info {
             display: flex;
             flex-direction: column;
             overflow: hidden;
         }
 
-        .layout-title {
+        .layout-card-title {
             font-size: 13px;
             font-weight: bold;
-            color: #333;
+            color: #1e293b;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
         }
 
-        .layout-desc {
+        .layout-card-desc {
             font-size: 11px;
-            color: #666;
+            color: #64748b;
+            margin-top: 2px;
         }
 
         .btn-top-bar {
@@ -400,7 +457,6 @@
             transform-origin: top center;
         }
 
-        /* Helper Classes for Dynamic Hide/Show Photo */
         .cv-photo-container {
             display: none;
         }
@@ -408,7 +464,6 @@
             display: block !important;
         }
 
-        /* GLOBAL PASSPORT PHOTO STYLING */
         .cv-photo-container img {
             width: 110px !important;
             height: 135px !important;
@@ -423,7 +478,6 @@
             cursor: text;
         }
 
-        /* MAIN CV TITLE STYLES ACCORDING TO LAYOUTS */
         .cv-main-header-title {
             font-size: 20px;
             font-weight: 800;
@@ -593,6 +647,12 @@
         .cv-list li { font-size: 13px; position: relative; margin-bottom: 4px; line-height: 1.3; }
         .cv-list li::before { content: "•"; position: absolute; left: -12px; font-weight: bold; }
 
+        @media (max-width: 600px) {
+            .layout-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
         /* FIXED PERFECT PRINT STYLES */
         @media print {
             @page {
@@ -661,7 +721,6 @@
             <div class="photo-upload-container">
                 <input type="file" id="in-photo" accept="image/*" onchange="handlePhotoUpload(event)">
                 
-                <!-- Progress Bar & Status -->
                 <div class="upload-progress-box" id="progressBox">
                     <div class="progress-bar-bg">
                         <div class="progress-bar-fill" id="progressBar"></div>
@@ -672,14 +731,12 @@
                     </div>
                 </div>
                 
-                <!-- Photo Upload Preview Box -->
                 <div class="photo-preview-box" id="photoPreviewBox">
                     <img id="uploadPreviewImg" src="" alt="Photo Preview">
                 </div>
 
                 <div class="upload-success-msg" id="uploadSuccess">✓ Photo uploaded successfully!</div>
 
-                <!-- Action Buttons: Change Picture & Delete -->
                 <div class="photo-actions-btn" id="photoActions">
                     <button type="button" class="btn-photo-change" onclick="triggerFileInput()">Change Picture</button>
                     <button type="button" class="btn-photo-delete" onclick="deletePhoto()">Delete Photo</button>
@@ -741,235 +798,239 @@
     <!-- 3. PREVIEW & DOWNLOAD PAGE -->
     <div class="preview-container" id="previewContainer">
 
-        <!-- NEW VISUAL LAYOUT SELECTOR PANEL (2 BY 2 GRID VISUAL TEMPLATES) -->
+        <!-- NEW VISUAL LAYOUT SELECTOR CARD GRID -->
         <div class="theme-selector-box">
             <div class="theme-selector-header">
-                <h3>🎨 Choose CV Layout Design:</h3>
+                <h3>📐 Select Structural Layout Design:</h3>
             </div>
             
             <div class="layout-grid" id="layoutGrid">
-                <!-- Layout items will be generated dynamically or manually -->
-                <div class="layout-card selected" onclick="selectLayoutCard('layout-1', this)">
-                    <div class="layout-thumb">
-                        <div class="thumb-header"></div>
-                        <div class="thumb-line"></div>
-                        <div class="thumb-line short"></div>
+                <!-- Layout 1 -->
+                <div class="layout-card active" onclick="selectLayout('layout-1', this)">
+                    <div class="mini-preview type-top-banner">
+                        <div class="mini-head"></div>
+                        <div class="mini-line"></div>
+                        <div class="mini-line"></div>
                     </div>
-                    <div class="layout-info">
-                        <span class="layout-title">Layout 1</span>
-                        <span class="layout-desc">Classic Blue Banner</span>
-                    </div>
-                </div>
-
-                <div class="layout-card" onclick="selectLayoutCard('layout-2', this)">
-                    <div class="layout-thumb two-col">
-                        <div class="thumb-side"></div>
-                        <div class="thumb-main">
-                            <div class="thumb-line"></div>
-                            <div class="thumb-line short"></div>
-                        </div>
-                    </div>
-                    <div class="layout-info">
-                        <span class="layout-title">Layout 2</span>
-                        <span class="layout-desc">Modern Split 2-Col</span>
+                    <div class="layout-card-info">
+                        <div class="layout-card-title">Layout 1: Classic Header</div>
+                        <div class="layout-card-desc">Top Blue Banner with Clean Structure</div>
                     </div>
                 </div>
 
-                <div class="layout-card" onclick="selectLayoutCard('layout-3', this)">
-                    <div class="layout-thumb" style="align-items:center;">
-                        <div class="thumb-line" style="width: 70%; height: 5px;"></div>
-                        <div class="thumb-line short"></div>
+                <!-- Layout 2 -->
+                <div class="layout-card" onclick="selectLayout('layout-2', this)">
+                    <div class="mini-preview type-sidebar-left">
+                        <div class="mini-side"></div>
+                        <div class="mini-main"></div>
                     </div>
-                    <div class="layout-info">
-                        <span class="layout-title">Layout 3</span>
-                        <span class="layout-desc">Centered Executive</span>
-                    </div>
-                </div>
-
-                <div class="layout-card" onclick="selectLayoutCard('layout-4', this)">
-                    <div class="layout-thumb two-col" style="flex-direction: row-reverse;">
-                        <div class="thumb-side" style="background:#1e272e;"></div>
-                        <div class="thumb-main">
-                            <div class="thumb-line"></div>
-                            <div class="thumb-line short"></div>
-                        </div>
-                    </div>
-                    <div class="layout-info">
-                        <span class="layout-title">Layout 4</span>
-                        <span class="layout-desc">Dark Right Sidebar</span>
+                    <div class="layout-card-info">
+                        <div class="layout-card-title">Layout 2: Left Sidebar</div>
+                        <div class="layout-card-desc">Modern 2-Column Split Design</div>
                     </div>
                 </div>
 
-                <div class="layout-card" onclick="selectLayoutCard('layout-5', this)">
-                    <div class="layout-thumb">
-                        <div class="thumb-header" style="height:20px; background:#0070c0;"></div>
-                        <div class="thumb-line"></div>
+                <!-- Layout 3 -->
+                <div class="layout-card" onclick="selectLayout('layout-3', this)">
+                    <div class="mini-preview type-centered">
+                        <div class="mini-head"></div>
                     </div>
-                    <div class="layout-info">
-                        <span class="layout-title">Layout 5</span>
-                        <span class="layout-desc">Full Top Banner</span>
-                    </div>
-                </div>
-
-                <div class="layout-card" onclick="selectLayoutCard('layout-6', this)">
-                    <div class="layout-thumb" style="border: 2px solid #333;">
-                        <div class="thumb-line"></div>
-                        <div class="thumb-line short"></div>
-                    </div>
-                    <div class="layout-info">
-                        <span class="layout-title">Layout 6</span>
-                        <span class="layout-desc">Corporate Boxed Border</span>
+                    <div class="layout-card-info">
+                        <div class="layout-card-title">Layout 3: Centered Executive</div>
+                        <div class="layout-card-desc">Formal Alignment & Elegant Lines</div>
                     </div>
                 </div>
 
-                <div class="layout-card" onclick="selectLayoutCard('layout-7', this)">
-                    <div class="layout-thumb">
-                        <div class="thumb-line" style="background:#444;"></div>
-                        <div class="thumb-line short"></div>
+                <!-- Layout 4 -->
+                <div class="layout-card" onclick="selectLayout('layout-4', this)">
+                    <div class="mini-preview type-sidebar-right">
+                        <div class="mini-side"></div>
+                        <div class="mini-main"></div>
                     </div>
-                    <div class="layout-info">
-                        <span class="layout-title">Layout 7</span>
-                        <span class="layout-desc">Clean Minimalist</span>
-                    </div>
-                </div>
-
-                <div class="layout-card" onclick="selectLayoutCard('layout-8', this)">
-                    <div class="layout-thumb two-col">
-                        <div class="thumb-side" style="background:#00796b;"></div>
-                        <div class="thumb-main">
-                            <div class="thumb-line"></div>
-                        </div>
-                    </div>
-                    <div class="layout-info">
-                        <span class="layout-title">Layout 8</span>
-                        <span class="layout-desc">Teal Two-Tone</span>
+                    <div class="layout-card-info">
+                        <div class="layout-card-title">Layout 4: Dark Right Sidebar</div>
+                        <div class="layout-card-desc">Dark Theme Right Panel Split</div>
                     </div>
                 </div>
 
-                <div class="layout-card" onclick="selectLayoutCard('layout-9', this)">
-                    <div class="layout-thumb">
-                        <div class="thumb-header" style="background:#2e7d32;"></div>
-                        <div class="thumb-line"></div>
+                <!-- Layout 5 -->
+                <div class="layout-card" onclick="selectLayout('layout-5', this)">
+                    <div class="mini-preview type-top-banner">
+                        <div class="mini-head" style="height: 18px; background: #0070c0;"></div>
                     </div>
-                    <div class="layout-info">
-                        <span class="layout-title">Layout 9</span>
-                        <span class="layout-desc">Emerald Header Card</span>
-                    </div>
-                </div>
-
-                <div class="layout-card" onclick="selectLayoutCard('layout-10', this)">
-                    <div class="layout-thumb two-col">
-                        <div class="thumb-side" style="background:#4a0013;"></div>
-                        <div class="thumb-main">
-                            <div class="thumb-line"></div>
-                        </div>
-                    </div>
-                    <div class="layout-info">
-                        <span class="layout-title">Layout 10</span>
-                        <span class="layout-desc">Burgundy Split</span>
+                    <div class="layout-card-info">
+                        <div class="layout-card-title">Layout 5: Full Top Banner</div>
+                        <div class="layout-card-desc">Bold Full-Width Blue Top Block</div>
                     </div>
                 </div>
 
-                <div class="layout-card" onclick="selectLayoutCard('layout-11', this)">
-                    <div class="layout-thumb" style="border-top:3px solid #b78103; border-bottom:3px solid #b78103;">
-                        <div class="thumb-line"></div>
+                <!-- Layout 6 -->
+                <div class="layout-card" onclick="selectLayout('layout-6', this)">
+                    <div class="mini-preview type-boxed">
+                        <div style="height: 100%; width: 100%;"></div>
                     </div>
-                    <div class="layout-info">
-                        <span class="layout-title">Layout 11</span>
-                        <span class="layout-desc">Royal Gold Double Border</span>
-                    </div>
-                </div>
-
-                <div class="layout-card" onclick="selectLayoutCard('layout-12', this)">
-                    <div class="layout-thumb" style="border-left:3px solid #333;">
-                        <div class="thumb-line"></div>
-                    </div>
-                    <div class="layout-info">
-                        <span class="layout-title">Layout 12</span>
-                        <span class="layout-desc">Charcoal Strip</span>
+                    <div class="layout-card-info">
+                        <div class="layout-card-title">Layout 6: Corporate Boxed</div>
+                        <div class="layout-card-desc">Classic Boxed Border Structure</div>
                     </div>
                 </div>
 
-                <div class="layout-card" onclick="selectLayoutCard('layout-13', this)">
-                    <div class="layout-thumb" style="background:#f4f9fc;">
-                        <div class="thumb-header" style="background:#0077b6;"></div>
+                <!-- Layout 7 -->
+                <div class="layout-card" onclick="selectLayout('layout-7', this)">
+                    <div class="mini-preview">
+                        <div style="border-bottom: 1px solid #aaa; width: 100%; height: 8px;"></div>
                     </div>
-                    <div class="layout-info">
-                        <span class="layout-title">Layout 13</span>
-                        <span class="layout-desc">Ocean Blue Carded</span>
-                    </div>
-                </div>
-
-                <div class="layout-card" onclick="selectLayoutCard('layout-14', this)">
-                    <div class="layout-thumb two-col">
-                        <div class="thumb-side" style="background:#3e2723;"></div>
-                        <div class="thumb-main"><div class="thumb-line"></div></div>
-                    </div>
-                    <div class="layout-info">
-                        <span class="layout-title">Layout 14</span>
-                        <span class="layout-desc">Chocolate Sidebar</span>
+                    <div class="layout-card-info">
+                        <div class="layout-card-title">Layout 7: Clean Minimalist</div>
+                        <div class="layout-card-desc">Simple & Sleek Line Art</div>
                     </div>
                 </div>
 
-                <div class="layout-card" onclick="selectLayoutCard('layout-15', this)">
-                    <div class="layout-thumb" style="border-left:4px solid #c62828;">
-                        <div class="thumb-line"></div>
+                <!-- Layout 8 -->
+                <div class="layout-card" onclick="selectLayout('layout-8', this)">
+                    <div class="mini-preview type-sidebar-left">
+                        <div class="mini-side" style="background: #00796b;"></div>
+                        <div class="mini-main"></div>
                     </div>
-                    <div class="layout-info">
-                        <span class="layout-title">Layout 15</span>
-                        <span class="layout-desc">Crimson Left Stripe</span>
-                    </div>
-                </div>
-
-                <div class="layout-card" onclick="selectLayoutCard('layout-16', this)">
-                    <div class="layout-thumb two-col">
-                        <div class="thumb-side" style="background:#2e3b12;"></div>
-                        <div class="thumb-main"><div class="thumb-line"></div></div>
-                    </div>
-                    <div class="layout-info">
-                        <span class="layout-title">Layout 16</span>
-                        <span class="layout-desc">Olive Prestige Split</span>
+                    <div class="layout-card-info">
+                        <div class="layout-card-title">Layout 8: Teal Two-Tone</div>
+                        <div class="layout-card-desc">Teal Accent Sidebar Grid</div>
                     </div>
                 </div>
 
-                <div class="layout-card" onclick="selectLayoutCard('layout-17', this)">
-                    <div class="layout-thumb" style="background:#fff3e0;">
-                        <div class="thumb-line" style="background:#e65100;"></div>
+                <!-- Layout 9 -->
+                <div class="layout-card" onclick="selectLayout('layout-9', this)">
+                    <div class="mini-preview type-top-banner">
+                        <div class="mini-head" style="background: #2e7d32;"></div>
                     </div>
-                    <div class="layout-info">
-                        <span class="layout-title">Layout 17</span>
-                        <span class="layout-desc">Sunset Amber</span>
-                    </div>
-                </div>
-
-                <div class="layout-card" onclick="selectLayoutCard('layout-18', this)">
-                    <div class="layout-thumb" style="align-items:center;">
-                        <div style="width:12px; height:12px; border-radius:50%; background:#4a0072; margin-top:3px;"></div>
-                    </div>
-                    <div class="layout-info">
-                        <span class="layout-title">Layout 18</span>
-                        <span class="layout-desc">Plum Centered Avatar</span>
+                    <div class="layout-card-info">
+                        <div class="layout-card-title">Layout 9: Emerald Card</div>
+                        <div class="layout-card-desc">Green Rounded Top Banner</div>
                     </div>
                 </div>
 
-                <div class="layout-card" onclick="selectLayoutCard('layout-19', this)">
-                    <div class="layout-thumb two-col">
-                        <div class="thumb-side" style="background:#00251a;"></div>
-                        <div class="thumb-main"><div class="thumb-line"></div></div>
+                <!-- Layout 10 -->
+                <div class="layout-card" onclick="selectLayout('layout-10', this)">
+                    <div class="mini-preview type-sidebar-left">
+                        <div class="mini-side" style="background: #4a0013;"></div>
+                        <div class="mini-main"></div>
                     </div>
-                    <div class="layout-info">
-                        <span class="layout-title">Layout 19</span>
-                        <span class="layout-desc">Deep Emerald 2-Col</span>
+                    <div class="layout-card-info">
+                        <div class="layout-card-title">Layout 10: Burgundy Split</div>
+                        <div class="layout-card-desc">Deep Red Premium Sidebar</div>
                     </div>
                 </div>
 
-                <div class="layout-card" onclick="selectLayoutCard('layout-20', this)">
-                    <div class="layout-thumb" style="border: 2px solid #1a237e;">
-                        <div class="thumb-header" style="background:#1a237e;"></div>
+                <!-- Layout 11 -->
+                <div class="layout-card" onclick="selectLayout('layout-11', this)">
+                    <div class="mini-preview">
+                        <div style="border-top:2px solid #b78103; border-bottom:2px solid #b78103; width:100%; height:10px;"></div>
                     </div>
-                    <div class="layout-info">
-                        <span class="layout-title">Layout 20</span>
-                        <span class="layout-desc">Indigo Classic Frame</span>
+                    <div class="layout-card-info">
+                        <div class="layout-card-title">Layout 11: Royal Gold</div>
+                        <div class="layout-card-desc">Gold Double Border Header</div>
+                    </div>
+                </div>
+
+                <!-- Layout 12 -->
+                <div class="layout-card" onclick="selectLayout('layout-12', this)">
+                    <div class="mini-preview">
+                        <div style="width: 3px; background: #333; height: 100%;"></div>
+                    </div>
+                    <div class="layout-card-info">
+                        <div class="layout-card-title">Layout 12: Charcoal Strip</div>
+                        <div class="layout-card-desc">Vertical Accent Border Line</div>
+                    </div>
+                </div>
+
+                <!-- Layout 13 -->
+                <div class="layout-card" onclick="selectLayout('layout-13', this)">
+                    <div class="mini-preview type-top-banner">
+                        <div class="mini-head" style="background: #0077b6;"></div>
+                    </div>
+                    <div class="layout-card-info">
+                        <div class="layout-card-title">Layout 13: Ocean Blue Card</div>
+                        <div class="layout-card-desc">Light Blue Container Cards</div>
+                    </div>
+                </div>
+
+                <!-- Layout 14 -->
+                <div class="layout-card" onclick="selectLayout('layout-14', this)">
+                    <div class="mini-preview type-sidebar-left">
+                        <div class="mini-side" style="background: #3e2723;"></div>
+                        <div class="mini-main"></div>
+                    </div>
+                    <div class="layout-card-info">
+                        <div class="layout-card-title">Layout 14: Dark Chocolate</div>
+                        <div class="layout-card-desc">Rich Dark Brown Sidebar</div>
+                    </div>
+                </div>
+
+                <!-- Layout 15 -->
+                <div class="layout-card" onclick="selectLayout('layout-15', this)">
+                    <div class="mini-preview">
+                        <div style="border-left: 3px solid #c62828; padding-left:2px; width: 100%;"></div>
+                    </div>
+                    <div class="layout-card-info">
+                        <div class="layout-card-title">Layout 15: Crimson Stripe</div>
+                        <div class="layout-card-desc">Bold Red Left Edge Accent</div>
+                    </div>
+                </div>
+
+                <!-- Layout 16 -->
+                <div class="layout-card" onclick="selectLayout('layout-16', this)">
+                    <div class="mini-preview type-sidebar-left">
+                        <div class="mini-side" style="background: #2e3b12;"></div>
+                        <div class="mini-main"></div>
+                    </div>
+                    <div class="layout-card-info">
+                        <div class="layout-card-title">Layout 16: Olive Prestige</div>
+                        <div class="layout-card-desc">Classic Olive Green Tone</div>
+                    </div>
+                </div>
+
+                <!-- Layout 17 -->
+                <div class="layout-card" onclick="selectLayout('layout-17', this)">
+                    <div class="mini-preview type-top-banner">
+                        <div class="mini-head" style="background: #e65100;"></div>
+                    </div>
+                    <div class="layout-card-info">
+                        <div class="layout-card-title">Layout 17: Sunset Amber</div>
+                        <div class="layout-card-desc">Warm Amber Orange Header</div>
+                    </div>
+                </div>
+
+                <!-- Layout 18 -->
+                <div class="layout-card" onclick="selectLayout('layout-18', this)">
+                    <div class="mini-preview type-centered">
+                        <div class="mini-head" style="background: #4a0072;"></div>
+                    </div>
+                    <div class="layout-card-info">
+                        <div class="layout-card-title">Layout 18: Plum Elegance</div>
+                        <div class="layout-card-desc">Centered Purple Accent Style</div>
+                    </div>
+                </div>
+
+                <!-- Layout 19 -->
+                <div class="layout-card" onclick="selectLayout('layout-19', this)">
+                    <div class="mini-preview type-sidebar-left">
+                        <div class="mini-side" style="background: #00251a;"></div>
+                        <div class="mini-main"></div>
+                    </div>
+                    <div class="layout-card-info">
+                        <div class="layout-card-title">Layout 19: Deep Emerald</div>
+                        <div class="layout-card-desc">Dark Emerald Green Sidebar</div>
+                    </div>
+                </div>
+
+                <!-- Layout 20 -->
+                <div class="layout-card" onclick="selectLayout('layout-20', this)">
+                    <div class="mini-preview type-boxed">
+                        <div style="border: 2px solid #1a237e; width:100%; height:100%;"></div>
+                    </div>
+                    <div class="layout-card-info">
+                        <div class="layout-card-title">Layout 20: Indigo Frame</div>
+                        <div class="layout-card-desc">Full Indigo Blue Frame Outer</div>
                     </div>
                 </div>
             </div>
@@ -993,19 +1054,6 @@
 <script>
     let uploadedPhotoData = "";
     let selectedLayoutClass = "layout-1";
-
-    /* FEATURE: VISUAL CARD SELECTION FUNCTION FOR LAYOUTS */
-    function selectLayoutCard(layoutClass, cardElement) {
-        // Remove active class from all cards
-        const cards = document.querySelectorAll('.layout-card');
-        cards.forEach(card => card.classList.remove('selected'));
-        
-        // Add active class to clicked card
-        cardElement.classList.add('selected');
-        
-        selectedLayoutClass = layoutClass;
-        changeLayout(layoutClass);
-    }
 
     /* FEATURE: PHOTO UPLOAD WITH PROGRESS BAR, PREVIEW & CONTROLS */
     function handlePhotoUpload(event) {
@@ -1071,6 +1119,20 @@
     function startCVCreation() {
         document.getElementById('welcomeModal').style.display = 'none';
         document.getElementById('formContainer').style.display = 'block';
+    }
+
+    /* VISUAL LAYOUT CARD SELECTION FUNCTION */
+    function selectLayout(layoutClass, element) {
+        selectedLayoutClass = layoutClass;
+        
+        // Update active class on card elements
+        const cards = document.querySelectorAll('.layout-card');
+        cards.forEach(card => card.classList.remove('active'));
+        if (element) {
+            element.classList.add('active');
+        }
+
+        changeLayout(layoutClass);
     }
 
     function changeLayout(layoutClass) {
@@ -1297,12 +1359,10 @@
         document.getElementById('formContainer').style.display = 'block';
     }
 
-    /* PERFECT PDF DOWNLOAD */
     function downloadPDF() {
         window.print();
     }
 
-    /* PERFECT IMAGE DOWNLOAD */
     function downloadImage() {
         const cvPaper = document.getElementById('cv-paper');
         
@@ -1328,14 +1388,13 @@
         });
     }
 
-    /* PERFECT WORD DOWNLOAD */
     function downloadWord() {
         const cvPaper = document.getElementById('cv-paper');
         const cvHTML = cvPaper.innerHTML;
         
         const styles = `<style>
             @page WordSection1 {
-                size: 595.3pt 841.9pt; /* A4 Size */
+                size: 595.3pt 841.9pt;
                 margin: 0.5in 0.5in 0.5in 0.5in;
                 mso-header-margin: 35.4pt;
                 mso-footer-margin: 35.4pt;
