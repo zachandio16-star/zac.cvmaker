@@ -115,7 +115,7 @@
             height: 75px;
         }
 
-        /* PHOTO UPLOAD UI STYLES & PREVIEW */
+        /* PHOTO UPLOAD UI STYLES */
         .photo-upload-container {
             border: 2px dashed #0070c0;
             padding: 15px;
@@ -243,170 +243,135 @@
         .preview-container {
             display: none;
             width: 100%;
-            max-width: 900px;
+            max-width: 850px;
             margin: 0 auto;
             flex-direction: column;
             align-items: center;
         }
 
-        /* NEW VISUAL LAYOUT SELECTOR (HORIZONTAL CARDS GRID) */
         .theme-selector-box {
             width: 100%;
             background: #ffffff;
-            padding: 16px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
 
-        .theme-selector-header {
+        .theme-selector-box label {
+            font-weight: bold;
+            color: #333;
+        }
+
+        /* VISUAL CUSTOM DROPDOWN GRID STYLES */
+        .custom-dropdown {
+            position: relative;
+            width: 100%;
+        }
+
+        .dropdown-selected {
+            padding: 12px 14px;
+            background: #ffffff;
+            border: 2px solid #0070c0;
+            border-radius: 6px;
+            font-weight: bold;
+            color: #0070c0;
+            cursor: pointer;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 12px;
         }
 
-        .theme-selector-header h3 {
-            font-size: 16px;
-            color: #1a365d;
-        }
-
-        /* 2 Column Grid for Layout Cards */
-        .layout-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-            max-height: 280px;
-            overflow-y: auto;
-            padding-right: 5px;
-        }
-
-        /* Custom Scrollbar for Layout Grid */
-        .layout-grid::-webkit-scrollbar {
-            width: 6px;
-        }
-        .layout-grid::-webkit-scrollbar-thumb {
-            background-color: #0070c0;
-            border-radius: 4px;
-        }
-
-        /* Horizontal Card Style */
-        .layout-card {
-            display: flex;
-            align-items: center;
-            background: #f8fafc;
-            border: 2px solid #e2e8f0;
-            border-radius: 6px;
-            padding: 8px 12px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            gap: 12px;
-        }
-
-        .layout-card:hover {
-            border-color: #0070c0;
-            background: #f0f7ff;
-            transform: translateY(-1px);
-        }
-
-        .layout-card.active {
-            border-color: #0070c0;
-            background: #e6f0fa;
-            box-shadow: 0 0 0 2px rgba(0, 112, 192, 0.2);
-        }
-
-        /* Mini Wireframe Visual Preview Inside Card */
-        .mini-preview {
-            width: 36px;
-            height: 48px;
+        .dropdown-menu-grid {
+            display: none;
+            position: absolute;
+            top: 105%;
+            left: 0;
+            width: 100%;
             background: #ffffff;
             border: 1px solid #ccc;
-            border-radius: 3px;
-            flex-shrink: 0;
-            display: flex;
-            padding: 3px;
-            gap: 2px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+            padding: 15px;
+            z-index: 1000;
+            grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+            gap: 12px;
+            max-height: 340px;
+            overflow-y: auto;
         }
 
-        /* Mini Layout Wireframe Variants */
-        .mini-preview.type-top-banner {
-            flex-direction: column;
-        }
-        .mini-preview.type-top-banner .mini-head {
-            height: 12px;
-            background: #0070c0;
-            width: 100%;
-            margin-bottom: 3px;
-        }
-        .mini-preview.type-top-banner .mini-line {
-            height: 3px;
-            background: #cbd5e1;
-            margin-bottom: 2px;
-            width: 100%;
+        .dropdown-menu-grid.show {
+            display: grid !important;
         }
 
-        .mini-preview.type-sidebar-left {
-            flex-direction: row;
-        }
-        .mini-preview.type-sidebar-left .mini-side {
-            width: 35%;
-            background: #2c3e50;
-            height: 100%;
-        }
-        .mini-preview.type-sidebar-left .mini-main {
-            width: 65%;
-            padding-left: 2px;
+        .grid-item {
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            padding: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background: #f8fafc;
         }
 
-        .mini-preview.type-sidebar-right {
-            flex-direction: row-reverse;
-        }
-        .mini-preview.type-sidebar-right .mini-side {
-            width: 35%;
-            background: #1e272e;
-            height: 100%;
-        }
-        .mini-preview.type-sidebar-right .mini-main {
-            width: 65%;
+        .grid-item:hover, .grid-item.active {
+            border-color: #0070c0;
+            background: #eef6fc;
+            transform: translateY(-2px);
         }
 
-        .mini-preview.type-centered {
-            flex-direction: column;
-            align-items: center;
-        }
-        .mini-preview.type-centered .mini-head {
-            height: 8px;
-            width: 80%;
-            background: #333;
-            margin-bottom: 4px;
-        }
-
-        .mini-preview.type-boxed {
-            border: 2px solid #333;
-            flex-direction: column;
-        }
-
-        .layout-card-info {
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-        }
-
-        .layout-card-title {
-            font-size: 13px;
-            font-weight: bold;
-            color: #1e293b;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .layout-card-desc {
+        .grid-item span {
+            display: block;
             font-size: 11px;
-            color: #64748b;
-            margin-top: 2px;
+            font-weight: bold;
+            margin-top: 6px;
+            color: #333;
         }
+
+        /* MINI PREVIEWS FOR LAYOUTS */
+        .mini-preview {
+            width: 100%;
+            height: 60px;
+            background: #fff;
+            border: 1px solid #bbb;
+            border-radius: 3px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .layout-1-thumb .m-header { height: 35%; background: #0070c0; }
+        .layout-2-thumb { display: flex; }
+        .layout-2-thumb .m-side { width: 35%; background: #2c3e50; height: 100%; }
+        .layout-2-thumb .m-main { width: 65%; background: #fff; height: 100%; }
+        .layout-3-thumb .m-center { height: 25%; background: #333; margin: 8px auto; width: 60%; }
+        .layout-4-thumb { display: flex; }
+        .layout-4-thumb .m-main { width: 65%; background: #fff; height: 100%; }
+        .layout-4-thumb .m-side { width: 35%; background: #1e272e; height: 100%; }
+        .layout-5-thumb .m-banner { height: 45%; background: #0070c0; }
+        .layout-6-thumb .m-box { border: 2px solid #333; height: 85%; margin: 4px; }
+        .layout-7-thumb .m-line { border-bottom: 2px solid #444; height: 20%; margin: 5px; }
+        .layout-8-thumb { display: flex; }
+        .layout-8-thumb .m-side { width: 35%; background: #e0f2f1; border-right: 2px solid #00796b; height: 100%; }
+        .layout-9-thumb .m-card { background: #2e7d32; height: 35%; margin: 4px; border-radius: 3px; }
+        .layout-10-thumb { display: flex; }
+        .layout-10-thumb .m-side { width: 30%; background: #4a0013; height: 100%; }
+        .layout-11-thumb { border-top: 3px solid #b78103; border-bottom: 3px solid #b78103; }
+        .layout-12-thumb { display: flex; }
+        .layout-12-thumb .m-strip { width: 10%; background: #333; height: 100%; }
+        .layout-13-thumb .m-card { background: #0077b6; height: 30%; margin: 4px; border-radius: 3px; }
+        .layout-14-thumb { display: flex; }
+        .layout-14-thumb .m-side { width: 35%; background: #3e2723; height: 100%; }
+        .layout-15-thumb { border-left: 5px solid #c62828; }
+        .layout-16-thumb { display: flex; }
+        .layout-16-thumb .m-side { width: 35%; background: #2e3b12; height: 100%; }
+        .layout-17-thumb .m-header { background: #fff3e0; border-bottom: 2px solid #ff6f00; height: 35%; }
+        .layout-18-thumb .m-header { background: #f3e5f5; height: 30%; border-bottom: 2px solid #4a0072; }
+        .layout-19-thumb { display: flex; }
+        .layout-19-thumb .m-side { width: 35%; background: #00251a; height: 100%; }
+        .layout-20-thumb { border: 3px solid #1a237e; }
 
         .btn-top-bar {
             width: 100%;
@@ -433,7 +398,7 @@
         .btn-word { background-color: #1976d2; }
         .btn-edit-back { background-color: #616161; }
 
-        /* FIXED MOBILE RESPONSIVE PREVIEW WRAPPER */
+        /* CV PAPER WRAPPER */
         .cv-paper-wrapper {
             width: 100%;
             display: flex;
@@ -444,7 +409,7 @@
             overflow: hidden;
         }
 
-        /* BASE CV PAPER (Desktop Native Dimensions) */
+        /* BASE CV PAPER */
         .cv-paper {
             width: 790px;
             min-height: 1050px;
@@ -647,13 +612,7 @@
         .cv-list li { font-size: 13px; position: relative; margin-bottom: 4px; line-height: 1.3; }
         .cv-list li::before { content: "•"; position: absolute; left: -12px; font-weight: bold; }
 
-        @media (max-width: 600px) {
-            .layout-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* FIXED PERFECT PRINT STYLES */
+        /* PRINT STYLES */
         @media print {
             @page {
                 size: A4 portrait;
@@ -706,7 +665,7 @@
     <!-- 1. WELCOME POPUP MODAL -->
     <div class="modal-overlay" id="welcomeModal">
         <div class="modal-content">
-            <h1>ZAC CV MAKEING APP</h1>
+            <h1>ZAC CV MAKING APP</h1>
             <p>Welcome to Professional CV Builder! Create your perfectly styled CV in just a few minutes</p>
             <button class="btn-modal" onclick="startCVCreation()">Create CV Now</button>
         </div>
@@ -744,22 +703,10 @@
             </div>
         </div>
         
-        <div class="form-group">
-            <label>Full Name</label>
-            <input type="text" id="in-name" placeholder="e.g. John Doe">
-        </div>
-        <div class="form-group">
-            <label>Address</label>
-            <input type="text" id="in-address" placeholder="e.g. House #123, Street 4, City, Country">
-        </div>
-        <div class="form-group">
-            <label>Email Address</label>
-            <input type="text" id="in-email" placeholder="e.g. example@email.com">
-        </div>
-        <div class="form-group">
-            <label>Cell / Phone</label>
-            <input type="text" id="in-phone" placeholder="e.g. 0300-1234567">
-        </div>
+        <div class="form-group"><label>Full Name</label><input type="text" id="in-name" placeholder="e.g. John Doe"></div>
+        <div class="form-group"><label>Address</label><input type="text" id="in-address" placeholder="e.g. House #123, Street 4, City, Country"></div>
+        <div class="form-group"><label>Email Address</label><input type="text" id="in-email" placeholder="e.g. example@email.com"></div>
+        <div class="form-group"><label>Cell / Phone</label><input type="text" id="in-phone" placeholder="e.g. 0300-1234567"></div>
 
         <div class="form-group"><label>Father's Name</label><input type="text" id="in-father" placeholder="e.g. Father Name"></div>
         <div class="form-group"><label>Date of Birth</label><input type="text" id="in-dob" placeholder="e.g. DD-MM-YYYY"></div>
@@ -798,242 +745,102 @@
     <!-- 3. PREVIEW & DOWNLOAD PAGE -->
     <div class="preview-container" id="previewContainer">
 
-        <!-- NEW VISUAL LAYOUT SELECTOR CARD GRID -->
+        <!-- Theme Selector Box with Visual Grid Dropdown -->
         <div class="theme-selector-box">
-            <div class="theme-selector-header">
-                <h3>📐 Select Structural Layout Design:</h3>
-            </div>
+            <label>📐 Select Structural Layout Structure:</label>
             
-            <div class="layout-grid" id="layoutGrid">
-                <!-- Layout 1 -->
-                <div class="layout-card active" onclick="selectLayout('layout-1', this)">
-                    <div class="mini-preview type-top-banner">
-                        <div class="mini-head"></div>
-                        <div class="mini-line"></div>
-                        <div class="mini-line"></div>
-                    </div>
-                    <div class="layout-card-info">
-                        <div class="layout-card-title">Layout 1: Classic Header</div>
-                        <div class="layout-card-desc">Top Blue Banner with Clean Structure</div>
-                    </div>
+            <div class="custom-dropdown" id="customDropdown">
+                <div class="dropdown-selected" onclick="toggleDropdown()">
+                    <span id="selectedLayoutText">Layout 1: Classic Header Banner</span>
+                    <span class="arrow">▼</span>
                 </div>
-
-                <!-- Layout 2 -->
-                <div class="layout-card" onclick="selectLayout('layout-2', this)">
-                    <div class="mini-preview type-sidebar-left">
-                        <div class="mini-side"></div>
-                        <div class="mini-main"></div>
+                
+                <div class="dropdown-menu-grid" id="dropdownMenuGrid">
+                    <div class="grid-item active" onclick="selectLayoutOption('layout-1', 'Layout 1: Classic Header Banner', this)">
+                        <div class="mini-preview layout-1-thumb"><div class="m-header"></div></div>
+                        <span>Layout 1</span>
                     </div>
-                    <div class="layout-card-info">
-                        <div class="layout-card-title">Layout 2: Left Sidebar</div>
-                        <div class="layout-card-desc">Modern 2-Column Split Design</div>
+                    <div class="grid-item" onclick="selectLayoutOption('layout-2', 'Layout 2: Modern Left Sidebar Split', this)">
+                        <div class="mini-preview layout-2-thumb"><div class="m-side"></div><div class="m-main"></div></div>
+                        <span>Layout 2</span>
                     </div>
-                </div>
-
-                <!-- Layout 3 -->
-                <div class="layout-card" onclick="selectLayout('layout-3', this)">
-                    <div class="mini-preview type-centered">
-                        <div class="mini-head"></div>
+                    <div class="grid-item" onclick="selectLayoutOption('layout-3', 'Layout 3: Centered Executive', this)">
+                        <div class="mini-preview layout-3-thumb"><div class="m-center"></div></div>
+                        <span>Layout 3</span>
                     </div>
-                    <div class="layout-card-info">
-                        <div class="layout-card-title">Layout 3: Centered Executive</div>
-                        <div class="layout-card-desc">Formal Alignment & Elegant Lines</div>
+                    <div class="grid-item" onclick="selectLayoutOption('layout-4', 'Layout 4: Right Dark Sidebar', this)">
+                        <div class="mini-preview layout-4-thumb"><div class="m-main"></div><div class="m-side"></div></div>
+                        <span>Layout 4</span>
                     </div>
-                </div>
-
-                <!-- Layout 4 -->
-                <div class="layout-card" onclick="selectLayout('layout-4', this)">
-                    <div class="mini-preview type-sidebar-right">
-                        <div class="mini-side"></div>
-                        <div class="mini-main"></div>
+                    <div class="grid-item" onclick="selectLayoutOption('layout-5', 'Layout 5: Full Top Banner', this)">
+                        <div class="mini-preview layout-5-thumb"><div class="m-banner"></div></div>
+                        <span>Layout 5</span>
                     </div>
-                    <div class="layout-card-info">
-                        <div class="layout-card-title">Layout 4: Dark Right Sidebar</div>
-                        <div class="layout-card-desc">Dark Theme Right Panel Split</div>
+                    <div class="grid-item" onclick="selectLayoutOption('layout-6', 'Layout 6: Corporate Boxed Border', this)">
+                        <div class="mini-preview layout-6-thumb"><div class="m-box"></div></div>
+                        <span>Layout 6</span>
                     </div>
-                </div>
-
-                <!-- Layout 5 -->
-                <div class="layout-card" onclick="selectLayout('layout-5', this)">
-                    <div class="mini-preview type-top-banner">
-                        <div class="mini-head" style="height: 18px; background: #0070c0;"></div>
+                    <div class="grid-item" onclick="selectLayoutOption('layout-7', 'Layout 7: Clean Minimalist Line-Art', this)">
+                        <div class="mini-preview layout-7-thumb"><div class="m-line"></div></div>
+                        <span>Layout 7</span>
                     </div>
-                    <div class="layout-card-info">
-                        <div class="layout-card-title">Layout 5: Full Top Banner</div>
-                        <div class="layout-card-desc">Bold Full-Width Blue Top Block</div>
+                    <div class="grid-item" onclick="selectLayoutOption('layout-8', 'Layout 8: Teal Two-Tone Split', this)">
+                        <div class="mini-preview layout-8-thumb"><div class="m-side"></div><div class="m-main"></div></div>
+                        <span>Layout 8</span>
                     </div>
-                </div>
-
-                <!-- Layout 6 -->
-                <div class="layout-card" onclick="selectLayout('layout-6', this)">
-                    <div class="mini-preview type-boxed">
-                        <div style="height: 100%; width: 100%;"></div>
+                    <div class="grid-item" onclick="selectLayoutOption('layout-9', 'Layout 9: Emerald Header Card', this)">
+                        <div class="mini-preview layout-9-thumb"><div class="m-card"></div></div>
+                        <span>Layout 9</span>
                     </div>
-                    <div class="layout-card-info">
-                        <div class="layout-card-title">Layout 6: Corporate Boxed</div>
-                        <div class="layout-card-desc">Classic Boxed Border Structure</div>
+                    <div class="grid-item" onclick="selectLayoutOption('layout-10', 'Layout 10: Elegant Burgundy Split', this)">
+                        <div class="mini-preview layout-10-thumb"><div class="m-side"></div><div class="m-main"></div></div>
+                        <span>Layout 10</span>
                     </div>
-                </div>
-
-                <!-- Layout 7 -->
-                <div class="layout-card" onclick="selectLayout('layout-7', this)">
-                    <div class="mini-preview">
-                        <div style="border-bottom: 1px solid #aaa; width: 100%; height: 8px;"></div>
+                    <div class="grid-item" onclick="selectLayoutOption('layout-11', 'Layout 11: Royal Gold Double Border', this)">
+                        <div class="mini-preview layout-11-thumb"></div>
+                        <span>Layout 11</span>
                     </div>
-                    <div class="layout-card-info">
-                        <div class="layout-card-title">Layout 7: Clean Minimalist</div>
-                        <div class="layout-card-desc">Simple & Sleek Line Art</div>
+                    <div class="grid-item" onclick="selectLayoutOption('layout-12', 'Layout 12: Charcoal Vertical Strip', this)">
+                        <div class="mini-preview layout-12-thumb"><div class="m-strip"></div></div>
+                        <span>Layout 12</span>
                     </div>
-                </div>
-
-                <!-- Layout 8 -->
-                <div class="layout-card" onclick="selectLayout('layout-8', this)">
-                    <div class="mini-preview type-sidebar-left">
-                        <div class="mini-side" style="background: #00796b;"></div>
-                        <div class="mini-main"></div>
+                    <div class="grid-item" onclick="selectLayoutOption('layout-13', 'Layout 13: Ocean Blue Carded', this)">
+                        <div class="mini-preview layout-13-thumb"><div class="m-card"></div></div>
+                        <span>Layout 13</span>
                     </div>
-                    <div class="layout-card-info">
-                        <div class="layout-card-title">Layout 8: Teal Two-Tone</div>
-                        <div class="layout-card-desc">Teal Accent Sidebar Grid</div>
+                    <div class="grid-item" onclick="selectLayoutOption('layout-14', 'Layout 14: Dark Chocolate Full Sidebar', this)">
+                        <div class="mini-preview layout-14-thumb"><div class="m-side"></div></div>
+                        <span>Layout 14</span>
                     </div>
-                </div>
-
-                <!-- Layout 9 -->
-                <div class="layout-card" onclick="selectLayout('layout-9', this)">
-                    <div class="mini-preview type-top-banner">
-                        <div class="mini-head" style="background: #2e7d32;"></div>
+                    <div class="grid-item" onclick="selectLayoutOption('layout-15', 'Layout 15: Crimson Bold Left Stripe', this)">
+                        <div class="mini-preview layout-15-thumb"></div>
+                        <span>Layout 15</span>
                     </div>
-                    <div class="layout-card-info">
-                        <div class="layout-card-title">Layout 9: Emerald Card</div>
-                        <div class="layout-card-desc">Green Rounded Top Banner</div>
+                    <div class="grid-item" onclick="selectLayoutOption('layout-16', 'Layout 16: Olive Prestige Split', this)">
+                        <div class="mini-preview layout-16-thumb"><div class="m-side"></div></div>
+                        <span>Layout 16</span>
                     </div>
-                </div>
-
-                <!-- Layout 10 -->
-                <div class="layout-card" onclick="selectLayout('layout-10', this)">
-                    <div class="mini-preview type-sidebar-left">
-                        <div class="mini-side" style="background: #4a0013;"></div>
-                        <div class="mini-main"></div>
+                    <div class="grid-item" onclick="selectLayoutOption('layout-17', 'Layout 17: Sunset Amber Header', this)">
+                        <div class="mini-preview layout-17-thumb"><div class="m-header"></div></div>
+                        <span>Layout 17</span>
                     </div>
-                    <div class="layout-card-info">
-                        <div class="layout-card-title">Layout 10: Burgundy Split</div>
-                        <div class="layout-card-desc">Deep Red Premium Sidebar</div>
+                    <div class="grid-item" onclick="selectLayoutOption('layout-18', 'Layout 18: Plum Centered Avatar', this)">
+                        <div class="mini-preview layout-18-thumb"><div class="m-header"></div></div>
+                        <span>Layout 18</span>
                     </div>
-                </div>
-
-                <!-- Layout 11 -->
-                <div class="layout-card" onclick="selectLayout('layout-11', this)">
-                    <div class="mini-preview">
-                        <div style="border-top:2px solid #b78103; border-bottom:2px solid #b78103; width:100%; height:10px;"></div>
+                    <div class="grid-item" onclick="selectLayoutOption('layout-19', 'Layout 19: Deep Emerald Two-Column', this)">
+                        <div class="mini-preview layout-19-thumb"><div class="m-side"></div></div>
+                        <span>Layout 19</span>
                     </div>
-                    <div class="layout-card-info">
-                        <div class="layout-card-title">Layout 11: Royal Gold</div>
-                        <div class="layout-card-desc">Gold Double Border Header</div>
-                    </div>
-                </div>
-
-                <!-- Layout 12 -->
-                <div class="layout-card" onclick="selectLayout('layout-12', this)">
-                    <div class="mini-preview">
-                        <div style="width: 3px; background: #333; height: 100%;"></div>
-                    </div>
-                    <div class="layout-card-info">
-                        <div class="layout-card-title">Layout 12: Charcoal Strip</div>
-                        <div class="layout-card-desc">Vertical Accent Border Line</div>
-                    </div>
-                </div>
-
-                <!-- Layout 13 -->
-                <div class="layout-card" onclick="selectLayout('layout-13', this)">
-                    <div class="mini-preview type-top-banner">
-                        <div class="mini-head" style="background: #0077b6;"></div>
-                    </div>
-                    <div class="layout-card-info">
-                        <div class="layout-card-title">Layout 13: Ocean Blue Card</div>
-                        <div class="layout-card-desc">Light Blue Container Cards</div>
-                    </div>
-                </div>
-
-                <!-- Layout 14 -->
-                <div class="layout-card" onclick="selectLayout('layout-14', this)">
-                    <div class="mini-preview type-sidebar-left">
-                        <div class="mini-side" style="background: #3e2723;"></div>
-                        <div class="mini-main"></div>
-                    </div>
-                    <div class="layout-card-info">
-                        <div class="layout-card-title">Layout 14: Dark Chocolate</div>
-                        <div class="layout-card-desc">Rich Dark Brown Sidebar</div>
-                    </div>
-                </div>
-
-                <!-- Layout 15 -->
-                <div class="layout-card" onclick="selectLayout('layout-15', this)">
-                    <div class="mini-preview">
-                        <div style="border-left: 3px solid #c62828; padding-left:2px; width: 100%;"></div>
-                    </div>
-                    <div class="layout-card-info">
-                        <div class="layout-card-title">Layout 15: Crimson Stripe</div>
-                        <div class="layout-card-desc">Bold Red Left Edge Accent</div>
-                    </div>
-                </div>
-
-                <!-- Layout 16 -->
-                <div class="layout-card" onclick="selectLayout('layout-16', this)">
-                    <div class="mini-preview type-sidebar-left">
-                        <div class="mini-side" style="background: #2e3b12;"></div>
-                        <div class="mini-main"></div>
-                    </div>
-                    <div class="layout-card-info">
-                        <div class="layout-card-title">Layout 16: Olive Prestige</div>
-                        <div class="layout-card-desc">Classic Olive Green Tone</div>
-                    </div>
-                </div>
-
-                <!-- Layout 17 -->
-                <div class="layout-card" onclick="selectLayout('layout-17', this)">
-                    <div class="mini-preview type-top-banner">
-                        <div class="mini-head" style="background: #e65100;"></div>
-                    </div>
-                    <div class="layout-card-info">
-                        <div class="layout-card-title">Layout 17: Sunset Amber</div>
-                        <div class="layout-card-desc">Warm Amber Orange Header</div>
-                    </div>
-                </div>
-
-                <!-- Layout 18 -->
-                <div class="layout-card" onclick="selectLayout('layout-18', this)">
-                    <div class="mini-preview type-centered">
-                        <div class="mini-head" style="background: #4a0072;"></div>
-                    </div>
-                    <div class="layout-card-info">
-                        <div class="layout-card-title">Layout 18: Plum Elegance</div>
-                        <div class="layout-card-desc">Centered Purple Accent Style</div>
-                    </div>
-                </div>
-
-                <!-- Layout 19 -->
-                <div class="layout-card" onclick="selectLayout('layout-19', this)">
-                    <div class="mini-preview type-sidebar-left">
-                        <div class="mini-side" style="background: #00251a;"></div>
-                        <div class="mini-main"></div>
-                    </div>
-                    <div class="layout-card-info">
-                        <div class="layout-card-title">Layout 19: Deep Emerald</div>
-                        <div class="layout-card-desc">Dark Emerald Green Sidebar</div>
-                    </div>
-                </div>
-
-                <!-- Layout 20 -->
-                <div class="layout-card" onclick="selectLayout('layout-20', this)">
-                    <div class="mini-preview type-boxed">
-                        <div style="border: 2px solid #1a237e; width:100%; height:100%;"></div>
-                    </div>
-                    <div class="layout-card-info">
-                        <div class="layout-card-title">Layout 20: Indigo Frame</div>
-                        <div class="layout-card-desc">Full Indigo Blue Frame Outer</div>
+                    <div class="grid-item" onclick="selectLayoutOption('layout-20', 'Layout 20: Indigo Classic Full Frame', this)">
+                        <div class="mini-preview layout-20-thumb"></div>
+                        <span>Layout 20</span>
                     </div>
                 </div>
             </div>
+
+            <!-- Hidden input for code internal tracking -->
+            <input type="hidden" id="layoutSelect" value="layout-1">
         </div>
         
         <div class="btn-top-bar">
@@ -1044,18 +851,41 @@
         </div>
 
         <div class="cv-paper-wrapper" id="paperWrapper">
-            <!-- CV Paper Canvas Container -->
             <div class="cv-paper layout-1" id="cv-paper">
-                <!-- Content gets dynamically populated inside layout structure via JavaScript -->
+                <!-- Dynamic Content Here -->
             </div>
         </div>
     </div>
 
 <script>
     let uploadedPhotoData = "";
-    let selectedLayoutClass = "layout-1";
 
-    /* FEATURE: PHOTO UPLOAD WITH PROGRESS BAR, PREVIEW & CONTROLS */
+    /* VISUAL DROPDOWN FUNCTIONS */
+    function toggleDropdown() {
+        const grid = document.getElementById('dropdownMenuGrid');
+        grid.classList.toggle('show');
+    }
+
+    function selectLayoutOption(layoutClass, layoutName, element) {
+        document.getElementById('selectedLayoutText').textContent = layoutName;
+        document.getElementById('layoutSelect').value = layoutClass;
+        
+        const items = document.querySelectorAll('.grid-item');
+        items.forEach(item => item.classList.remove('active'));
+        element.classList.add('active');
+
+        document.getElementById('dropdownMenuGrid').classList.remove('show');
+        changeLayout(layoutClass);
+    }
+
+    window.addEventListener('click', function(e) {
+        const dropdown = document.getElementById('customDropdown');
+        if (dropdown && !dropdown.contains(e.target)) {
+            document.getElementById('dropdownMenuGrid').classList.remove('show');
+        }
+    });
+
+    /* PHOTO UPLOAD HANDLER */
     function handlePhotoUpload(event) {
         const file = event.target.files[0];
         if (!file) return;
@@ -1121,20 +951,6 @@
         document.getElementById('formContainer').style.display = 'block';
     }
 
-    /* VISUAL LAYOUT CARD SELECTION FUNCTION */
-    function selectLayout(layoutClass, element) {
-        selectedLayoutClass = layoutClass;
-        
-        // Update active class on card elements
-        const cards = document.querySelectorAll('.layout-card');
-        cards.forEach(card => card.classList.remove('active'));
-        if (element) {
-            element.classList.add('active');
-        }
-
-        changeLayout(layoutClass);
-    }
-
     function changeLayout(layoutClass) {
         const cvPaper = document.getElementById('cv-paper');
         cvPaper.className = 'cv-paper ' + layoutClass;
@@ -1149,10 +965,9 @@
     function generateCV() {
         document.getElementById('formContainer').style.display = 'none';
         document.getElementById('previewContainer').style.display = 'flex';
-        changeLayout(selectedLayoutClass);
+        changeLayout(document.getElementById('layoutSelect').value);
     }
 
-    /* AUTOMATIC MOBILE PREVIEW SCALING FUNCTION */
     function adjustCVScale() {
         const wrapper = document.getElementById('paperWrapper');
         const cvPaper = document.getElementById('cv-paper');
@@ -1196,11 +1011,10 @@
         const expHTML = getListHTML('in-experience', 'Experience details will appear here.');
         const langHTML = getListHTML('in-language', 'Languages will appear here.');
 
-        const currentLayout = selectedLayoutClass;
+        const currentLayout = document.getElementById('layoutSelect').value;
         const cvPaper = document.getElementById('cv-paper');
 
         const photoHTML = uploadedPhotoData ? `<div class="cv-photo-container"><img src="${uploadedPhotoData}" alt="Profile Photo"></div>` : `<div class="cv-photo-container"></div>`;
-
         const headerTitleHTML = `<div class="cv-main-header-title">CURRICULUM VITAE</div>`;
 
         const isTwoColumn = ['layout-2', 'layout-4', 'layout-8', 'layout-10', 'layout-14', 'layout-16', 'layout-19'].includes(currentLayout);
@@ -1365,7 +1179,6 @@
 
     function downloadImage() {
         const cvPaper = document.getElementById('cv-paper');
-        
         const originalTransform = cvPaper.style.transform;
         const originalMarginBottom = cvPaper.style.marginBottom;
         cvPaper.style.transform = 'scale(1)';
@@ -1396,9 +1209,6 @@
             @page WordSection1 {
                 size: 595.3pt 841.9pt;
                 margin: 0.5in 0.5in 0.5in 0.5in;
-                mso-header-margin: 35.4pt;
-                mso-footer-margin: 35.4pt;
-                mso-paper-source: 0;
             }
             div.WordSection1 { page: WordSection1; }
             body { font-family: Arial, sans-serif; font-size: 11pt; }
